@@ -52,7 +52,112 @@ class DevicesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(body: Center(), bottomNavigationBar: HomeAppBar()),
+        child: Scaffold(
+            body: Column(children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  IconButton(
+                      icon: Icon(Icons.chevron_left),
+                      iconSize: 36,
+                      color: Colors.white,
+                      onPressed: () {
+                        Navigator.pop(context);
+                      }),
+                  Text(
+                    "Devices",
+                    style: GoogleFonts.oleoScript(
+                        fontSize: 52, color: Colors.white),
+                  ),
+                  IconButton(
+                      icon: Icon(Icons.remove_circle_outline),
+                      iconSize: 36,
+                      color: Colors.white,
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            // return object of type Dialog
+                            return AlertDialog(
+                              title: new Text("Alert Dialog title"),
+                              content: new Text("Alert Dialog body"),
+                              actions: <Widget>[
+                                // usually buttons at the bottom of the dialog
+                                new FlatButton(
+                                  child: new Text("Close"),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      }),
+                ],
+              ),
+              Flexible(
+                child: GridView.count(
+                  shrinkWrap: true,
+                  physics: BouncingScrollPhysics(),
+                  padding: EdgeInsets.all(24.0),
+                  mainAxisSpacing: 24,
+                  crossAxisSpacing: 24,
+                  crossAxisCount: 2,
+                  children: <Widget>[
+                    DeviceItem(),
+                    DeviceItem(),
+                    DeviceItem(),
+                    DeviceItem(),
+                    DeviceItem(),
+                    DeviceItem(),
+                    DeviceItem(),
+                    DeviceItem(),
+                    DeviceItem(),
+                    DeviceItem(),
+                    DeviceItem(),
+                    DeviceItem(),
+                    DeviceItem(),
+                    DeviceItem(),
+                    DeviceItem(),
+                  ],
+                ),
+              ),
+            ]),
+            bottomNavigationBar: HomeAppBar()));
+  }
+}
+
+class DeviceItem extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return new Flexible(
+      child: new Material(
+        borderRadius: BorderRadius.circular(10),
+        child: Ink(
+            child: InkWell(
+          borderRadius: BorderRadius.circular(10),
+          onTap: () {},
+          child: Center(
+              child: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+              SvgPicture.asset(
+                "assets/plug.svg",
+                width: 120,
+              ),
+              Text(
+                "Left Outlet",
+                style: GoogleFonts.roboto(
+                  fontWeight: FontWeight.w900,
+                  fontSize: 24,
+                ),
+              ),
+            ],
+          )),
+        )),
+      ),
     );
   }
 }
