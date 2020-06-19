@@ -16,6 +16,7 @@ class App extends StatelessWidget {
       routes: {
         '/': (context) => HomePage(),
         '/Devices': (context) => DevicesPage(),
+        '/Groups': (context) => GroupsPage(),
       },
     );
   }
@@ -35,7 +36,7 @@ class HomePage extends StatelessWidget {
                 new SizedBox(
                   height: 24,
                 ),
-                HomeItem("Groups", "/Devices"),
+                HomeItem("Groups", "/Groups"),
                 new SizedBox(
                   height: 24,
                 ),
@@ -70,23 +71,30 @@ class DevicesPage extends StatelessWidget {
                         fontSize: 52, color: Colors.white),
                   ),
                   IconButton(
-                      icon: Icon(Icons.remove_circle_outline),
+                      icon: Icon(Icons.add),
                       iconSize: 36,
                       color: Colors.white,
                       onPressed: () {
                         showDialog(
                           context: context,
                           builder: (BuildContext context) {
-                            // return object of type Dialog
                             return AlertDialog(
-                              title: new Text("Alert Dialog title"),
-                              content: new Text("Alert Dialog body"),
+                              title: new Text("Remove Device"),
+                              content: new Text(
+                                  "Are you sure you want to remove this device"),
                               actions: <Widget>[
-                                // usually buttons at the bottom of the dialog
                                 new FlatButton(
+                                  textColor: Colors.black,
                                   child: new Text("Close"),
                                   onPressed: () {
-                                    Navigator.of(context).pop();
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                                new FlatButton(
+                                  textColor: Colors.red[700],
+                                  child: new Text("Remove"),
+                                  onPressed: () {
+                                    Navigator.pop(context);
                                   },
                                 ),
                               ],
@@ -105,21 +113,20 @@ class DevicesPage extends StatelessWidget {
                   crossAxisSpacing: 24,
                   crossAxisCount: 2,
                   children: <Widget>[
-                    DeviceItem(),
-                    DeviceItem(),
-                    DeviceItem(),
-                    DeviceItem(),
-                    DeviceItem(),
-                    DeviceItem(),
-                    DeviceItem(),
-                    DeviceItem(),
-                    DeviceItem(),
-                    DeviceItem(),
-                    DeviceItem(),
-                    DeviceItem(),
-                    DeviceItem(),
-                    DeviceItem(),
-                    DeviceItem(),
+                    Item("Device", "/"),
+                    Item("Device", "/"),
+                    Item("Device", "/"),
+                    Item("Device", "/"),
+                    Item("Device", "/"),
+                    Item("Device", "/"),
+                    Item("Device", "/"),
+                    Item("Device", "/"),
+                    Item("Device", "/"),
+                    Item("Device", "/"),
+                    Item("Device", "/"),
+                    Item("Device", "/"),
+                    Item("Device", "/"),
+                    Item("Device", "/"),
                   ],
                 ),
               ),
@@ -128,7 +135,70 @@ class DevicesPage extends StatelessWidget {
   }
 }
 
-class DeviceItem extends StatelessWidget {
+class GroupsPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+        child: Scaffold(
+            body: Column(children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  IconButton(
+                      icon: Icon(Icons.chevron_left),
+                      iconSize: 36,
+                      color: Colors.white,
+                      onPressed: () {
+                        Navigator.pop(context);
+                      }),
+                  Text(
+                    "Groups",
+                    style: GoogleFonts.oleoScript(
+                        fontSize: 52, color: Colors.white),
+                  ),
+                  IconButton(
+                      icon: Icon(Icons.add),
+                      iconSize: 36,
+                      color: Colors.white,
+                      onPressed: () {}),
+                ],
+              ),
+              Flexible(
+                child: GridView.count(
+                  shrinkWrap: true,
+                  physics: BouncingScrollPhysics(),
+                  padding: EdgeInsets.all(24.0),
+                  mainAxisSpacing: 24,
+                  crossAxisSpacing: 24,
+                  crossAxisCount: 2,
+                  children: <Widget>[
+                    Item("Groups", "/"),
+                    Item("Groups", "/"),
+                    Item("Groups", "/"),
+                    Item("Groups", "/"),
+                    Item("Groups", "/"),
+                    Item("Groups", "/"),
+                    Item("Groups", "/"),
+                    Item("Groups", "/"),
+                    Item("Groups", "/"),
+                    Item("Groups", "/"),
+                    Item("Groups", "/"),
+                    Item("Groups", "/"),
+                    Item("Groups", "/"),
+                    Item("Groups", "/"),
+                  ],
+                ),
+              ),
+            ]),
+            bottomNavigationBar: HomeAppBar()));
+  }
+}
+
+class Item extends StatelessWidget {
+  Item(this.text, this.route);
+  final String text;
+  final String route;
+
   @override
   Widget build(BuildContext context) {
     return new Flexible(
@@ -137,7 +207,9 @@ class DeviceItem extends StatelessWidget {
         child: Ink(
             child: InkWell(
           borderRadius: BorderRadius.circular(10),
-          onTap: () {},
+          onTap: () {
+            Navigator.pushNamed(context, route);
+          },
           child: Center(
               child: Column(
             mainAxisSize: MainAxisSize.max,
@@ -148,7 +220,7 @@ class DeviceItem extends StatelessWidget {
                 width: 120,
               ),
               Text(
-                "Left Outlet",
+                text,
                 style: GoogleFonts.roboto(
                   fontWeight: FontWeight.w900,
                   fontSize: 24,
