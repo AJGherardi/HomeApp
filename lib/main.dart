@@ -57,7 +57,138 @@ class DevicePage extends StatelessWidget {
     return SafeArea(
         child: Scaffold(
       body: Column(
-        children: <Widget>[],
+        children: <Widget>[
+          Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              IconButton(
+                  icon: Icon(Icons.chevron_left),
+                  iconSize: 36,
+                  color: Colors.white,
+                  onPressed: () {
+                    Navigator.pop(context);
+                  }),
+              IconButton(
+                  icon: Icon(Icons.remove_circle_outline),
+                  iconSize: 36,
+                  color: Colors.white,
+                  onPressed: () {
+                    Navigator.pop(context);
+                  }),
+            ],
+          ),
+          Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+              SvgPicture.asset(
+                "assets/plug.svg",
+                width: 120,
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: <Widget>[
+                  Text(
+                    "Left outlet",
+                    style: GoogleFonts.roboto(
+                        fontWeight: FontWeight.w900,
+                        fontSize: 32,
+                        color: Colors.white),
+                  ),
+                  Text(
+                    "Living room",
+                    style: GoogleFonts.roboto(
+                        fontWeight: FontWeight.w900,
+                        fontSize: 24,
+                        color: Colors.white),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          new Flexible(
+            child: Container(
+                margin: EdgeInsets.fromLTRB(24, 36, 24, 12),
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(12)),
+                child: Center(
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
+                      SvgPicture.asset(
+                        "assets/power.svg",
+                        width: 120,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            "State",
+                            style: GoogleFonts.roboto(
+                                fontWeight: FontWeight.w900,
+                                fontSize: 36,
+                                color: Colors.black),
+                          ),
+                          MaterialButton(
+                            onPressed: () {},
+                            color: Colors.black,
+                            child: Text(
+                              'Off',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          )
+                        ],
+                      )
+                    ],
+                  ),
+                )),
+          ),
+          new Flexible(
+            child: Container(
+                margin: EdgeInsets.fromLTRB(24, 12, 24, 36),
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(12)),
+                child: Center(
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
+                      SvgPicture.asset(
+                        "assets/power.svg",
+                        width: 120,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            "State",
+                            style: GoogleFonts.roboto(
+                                fontWeight: FontWeight.w900,
+                                fontSize: 36,
+                                color: Colors.black),
+                          ),
+                          MaterialButton(
+                            onPressed: () {},
+                            color: Colors.black,
+                            child: Text(
+                              'Off',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          )
+                        ],
+                      )
+                    ],
+                  ),
+                )),
+          ),
+        ],
       ),
       bottomNavigationBar: BottomBar(),
     ));
@@ -108,14 +239,6 @@ class GroupPage extends StatelessWidget {
                     crossAxisSpacing: 24,
                     crossAxisCount: 2,
                     children: <Widget>[
-                      Item("Device", "/Device"),
-                      Item("Device", "/Device"),
-                      Item("Device", "/Device"),
-                      Item("Device", "/Device"),
-                      Item("Device", "/Device"),
-                      Item("Device", "/Device"),
-                      Item("Device", "/Device"),
-                      Item("Device", "/Device"),
                       Item("Device", "/Device"),
                       Item("Device", "/Device"),
                       Item("Device", "/Device"),
@@ -180,14 +303,6 @@ class DevicesPage extends StatelessWidget {
                     Item("Device", "/Device"),
                     Item("Device", "/Device"),
                     Item("Device", "/Device"),
-                    Item("Device", "/Device"),
-                    Item("Device", "/Device"),
-                    Item("Device", "/Device"),
-                    Item("Device", "/Device"),
-                    Item("Device", "/Device"),
-                    Item("Device", "/Device"),
-                    Item("Device", "/Device"),
-                    Item("Device", "/Device"),
                   ],
                 ),
               ),
@@ -212,16 +327,6 @@ class GroupsPage extends StatelessWidget {
                   crossAxisSpacing: 24,
                   crossAxisCount: 2,
                   children: <Widget>[
-                    Item("Group", "/Group"),
-                    Item("Group", "/Group"),
-                    Item("Group", "/Group"),
-                    Item("Group", "/Group"),
-                    Item("Group", "/Group"),
-                    Item("Group", "/Group"),
-                    Item("Group", "/Group"),
-                    Item("Group", "/Group"),
-                    Item("Group", "/Group"),
-                    Item("Group", "/Group"),
                     Item("Group", "/Group"),
                     Item("Group", "/Group"),
                     Item("Group", "/Group"),
@@ -274,35 +379,33 @@ class Item extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new Flexible(
-      child: new Material(
+    return new Material(
+      borderRadius: BorderRadius.circular(10),
+      child: Ink(
+          child: InkWell(
         borderRadius: BorderRadius.circular(10),
-        child: Ink(
-            child: InkWell(
-          borderRadius: BorderRadius.circular(10),
-          onTap: () {
-            Navigator.pushNamed(context, route);
-          },
-          child: Center(
-              child: Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              SvgPicture.asset(
-                "assets/plug.svg",
-                width: 120,
+        onTap: () {
+          Navigator.pushNamed(context, route);
+        },
+        child: Center(
+            child: Column(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: <Widget>[
+            SvgPicture.asset(
+              "assets/plug.svg",
+              width: 120,
+            ),
+            Text(
+              text,
+              style: GoogleFonts.roboto(
+                fontWeight: FontWeight.w900,
+                fontSize: 24,
               ),
-              Text(
-                text,
-                style: GoogleFonts.roboto(
-                  fontWeight: FontWeight.w900,
-                  fontSize: 24,
-                ),
-              ),
-            ],
-          )),
+            ),
+          ],
         )),
-      ),
+      )),
     );
   }
 }
