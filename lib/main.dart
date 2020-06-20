@@ -21,6 +21,7 @@ class App extends StatelessWidget {
         '/Device': (context) => DevicePage(),
         '/AddDeviceSplash': (context) => AddDeviceSplash(),
         '/AvailableDevices': (context) => AvailableDevices(),
+        '/AvailableGroups': (context) => AvailableGroups(),
         '/AddDevice': (context) => AddDevice(),
       },
     );
@@ -86,6 +87,34 @@ class AddDevice extends StatelessWidget {
   }
 }
 
+class AvailableGroups extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+        child: Scaffold(
+            body: Center(
+                child: Column(
+      children: <Widget>[
+        Text(
+          "Available Groups",
+          style: GoogleFonts.roboto(
+              fontWeight: FontWeight.w900, fontSize: 48, color: Colors.white),
+        ),
+        Flexible(
+          child: ListView.builder(
+              shrinkWrap: true,
+              physics: BouncingScrollPhysics(),
+              padding: EdgeInsets.all(24.0),
+              itemCount: 12,
+              itemBuilder: (BuildContext ctxt, int index) {
+                return new ListItem("Group", "/AvailableDevices");
+              }),
+        ),
+      ],
+    ))));
+  }
+}
+
 class AvailableDevices extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -106,7 +135,7 @@ class AvailableDevices extends StatelessWidget {
               padding: EdgeInsets.all(24.0),
               itemCount: 12,
               itemBuilder: (BuildContext ctxt, int index) {
-                return new ListItem();
+                return new ListItem("Device", "/AddDevice");
               }),
         ),
       ],
@@ -115,6 +144,10 @@ class AvailableDevices extends StatelessWidget {
 }
 
 class ListItem extends StatelessWidget {
+  ListItem(this.text, this.route);
+  final String text;
+  final String route;
+
   @override
   Widget build(BuildContext context) {
     return new Container(
@@ -126,7 +159,7 @@ class ListItem extends StatelessWidget {
             child: InkWell(
               borderRadius: BorderRadius.circular(10),
               onTap: () {
-                Navigator.pushNamed(context, "/AddDevice");
+                Navigator.pushNamed(context, route);
               },
               child: Container(
                   margin: EdgeInsets.all(10),
@@ -135,7 +168,7 @@ class ListItem extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
                       Text(
-                        "Text",
+                        text,
                         style: GoogleFonts.roboto(
                             fontWeight: FontWeight.w900,
                             fontSize: 24,
@@ -169,7 +202,7 @@ class AddDeviceSplash extends StatelessWidget {
           ),
           MaterialButton(
             onPressed: () {
-              Navigator.pushNamed(context, "/AvailableDevices");
+              Navigator.pushNamed(context, "/AvailableGroups");
             },
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10.0),
