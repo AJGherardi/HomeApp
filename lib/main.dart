@@ -59,7 +59,7 @@ class AddDevice extends StatelessWidget {
                   Container(
                     margin: EdgeInsets.all(36),
                     child: Text(
-                      "Stay within 2-4 ft of your device",
+                      "This may take a minute",
                       textAlign: TextAlign.center,
                       style: GoogleFonts.roboto(
                           fontWeight: FontWeight.w900,
@@ -71,14 +71,75 @@ class AddDevice extends StatelessWidget {
               )),
           MaterialButton(
             onPressed: () {
-              Navigator.pushNamed(context, "/");
+              showModalBottomSheet(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(14),
+                          topRight: Radius.circular(14))),
+                  context: context,
+                  builder: (BuildContext bc) {
+                    return AnimatedPadding(
+                      padding: MediaQuery.of(context).viewInsets,
+                      duration: const Duration(milliseconds: 100),
+                      curve: Curves.decelerate,
+                      child: Container(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            Container(
+                              margin: EdgeInsets.all(16),
+                              child: Text(
+                                "Set Name",
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.roboto(
+                                    fontWeight: FontWeight.w900,
+                                    fontSize: 36,
+                                    color: Colors.black),
+                              ),
+                            ),
+                            Container(
+                              margin: EdgeInsets.all(16),
+                              child: TextField(
+                                cursorColor: Colors.yellow[400],
+                                decoration: InputDecoration(
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.yellow[400], width: 3),
+                                  ),
+                                  hintText: "Type name hear",
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(5.0),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              margin: EdgeInsets.all(16),
+                              child: MaterialButton(
+                                onPressed: () {},
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12.0),
+                                ),
+                                color: Colors.black,
+                                child: Text(
+                                  'Add',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                minWidth: 300,
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    );
+                  });
             },
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10.0),
             ),
             color: Colors.white,
             child: Text(
-              'Next',
+              'Add',
               style: TextStyle(color: Colors.black),
             ),
             minWidth: 250,
@@ -95,12 +156,15 @@ class AvailableGroups extends StatelessWidget {
             body: Center(
                 child: Column(
       children: <Widget>[
-        Text(
-          "Available Groups",
-          style: GoogleFonts.roboto(
-              fontWeight: FontWeight.w900, fontSize: 48, color: Colors.white),
+        Container(
+          margin: EdgeInsets.all(18),
+          child: Text(
+            "Available Groups",
+            style: GoogleFonts.roboto(
+                fontWeight: FontWeight.w900, fontSize: 48, color: Colors.white),
+          ),
         ),
-        Flexible(
+        Expanded(
           child: ListView.builder(
               shrinkWrap: true,
               physics: BouncingScrollPhysics(),
@@ -123,10 +187,13 @@ class AvailableDevices extends StatelessWidget {
             body: Center(
                 child: Column(
       children: <Widget>[
-        Text(
-          "Available Devices",
-          style: GoogleFonts.roboto(
-              fontWeight: FontWeight.w900, fontSize: 48, color: Colors.white),
+        Container(
+          margin: EdgeInsets.all(14),
+          child: Text(
+            "Available Devices",
+            style: GoogleFonts.roboto(
+                fontWeight: FontWeight.w900, fontSize: 48, color: Colors.white),
+          ),
         ),
         Flexible(
           child: ListView.builder(
