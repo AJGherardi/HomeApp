@@ -19,8 +19,171 @@ class App extends StatelessWidget {
         '/Groups': (context) => GroupsPage(),
         '/Group': (context) => GroupPage(),
         '/Device': (context) => DevicePage(),
+        '/AddDeviceSplash': (context) => AddDeviceSplash(),
+        '/AvailableDevices': (context) => AvailableDevices(),
+        '/AddDevice': (context) => AddDevice(),
       },
     );
+  }
+}
+
+class AddDevice extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+        child: Scaffold(
+            body: Center(
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
+          Text(
+            "Add Device",
+            style: GoogleFonts.roboto(
+                fontWeight: FontWeight.w900, fontSize: 48, color: Colors.white),
+          ),
+          Container(
+              margin: EdgeInsets.fromLTRB(28, 0, 28, 0),
+              decoration: BoxDecoration(
+                  color: Colors.white, borderRadius: BorderRadius.circular(12)),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.all(36),
+                    child: SvgPicture.asset(
+                      "assets/range.svg",
+                      width: 250,
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.all(36),
+                    child: Text(
+                      "Stay within 2-4 ft of your device",
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.roboto(
+                          fontWeight: FontWeight.w900,
+                          fontSize: 36,
+                          color: Colors.black),
+                    ),
+                  )
+                ],
+              )),
+          MaterialButton(
+            onPressed: () {
+              Navigator.pushNamed(context, "/");
+            },
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            color: Colors.white,
+            child: Text(
+              'Next',
+              style: TextStyle(color: Colors.black),
+            ),
+            minWidth: 250,
+          )
+        ]))));
+  }
+}
+
+class AvailableDevices extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+        child: Scaffold(
+            body: Center(
+                child: Column(
+      children: <Widget>[
+        Text(
+          "Available Devices",
+          style: GoogleFonts.roboto(
+              fontWeight: FontWeight.w900, fontSize: 48, color: Colors.white),
+        ),
+        Flexible(
+          child: ListView.builder(
+              shrinkWrap: true,
+              physics: BouncingScrollPhysics(),
+              padding: EdgeInsets.all(24.0),
+              itemCount: 12,
+              itemBuilder: (BuildContext ctxt, int index) {
+                return new ListItem();
+              }),
+        ),
+      ],
+    ))));
+  }
+}
+
+class ListItem extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return new Container(
+      margin: EdgeInsets.all(8),
+      child: Material(
+          color: Colors.grey[900],
+          borderRadius: BorderRadius.circular(10),
+          child: Ink(
+            child: InkWell(
+              borderRadius: BorderRadius.circular(10),
+              onTap: () {
+                Navigator.pushNamed(context, "/AddDevice");
+              },
+              child: Container(
+                  margin: EdgeInsets.all(10),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
+                      Text(
+                        "Text",
+                        style: GoogleFonts.roboto(
+                            fontWeight: FontWeight.w900,
+                            fontSize: 24,
+                            color: Colors.white),
+                      ),
+                    ],
+                  )),
+            ),
+          )),
+    );
+  }
+}
+
+class AddDeviceSplash extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+        child: Scaffold(
+            body: Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: <Widget>[
+          Text(
+            "Add a Device",
+            style: GoogleFonts.roboto(
+                fontWeight: FontWeight.w900, fontSize: 48, color: Colors.white),
+          ),
+          SvgPicture.asset(
+            "assets/outlet.svg",
+            width: 260,
+          ),
+          MaterialButton(
+            onPressed: () {
+              Navigator.pushNamed(context, "/AvailableDevices");
+            },
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            color: Colors.white,
+            child: Text(
+              'Next',
+              style: TextStyle(color: Colors.black),
+            ),
+            minWidth: 260,
+          )
+        ],
+      ),
+    )));
   }
 }
 
@@ -74,7 +237,32 @@ class DevicePage extends StatelessWidget {
                   iconSize: 36,
                   color: Colors.white,
                   onPressed: () {
-                    Navigator.pop(context);
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: new Text("Remove Group"),
+                          content: new Text(
+                              "Are you sure you want to remove this group"),
+                          actions: <Widget>[
+                            new FlatButton(
+                              textColor: Colors.black,
+                              child: new Text("Close"),
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                            ),
+                            new FlatButton(
+                              textColor: Colors.red[700],
+                              child: new Text("Remove"),
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    );
                   }),
             ],
           ),
@@ -136,6 +324,9 @@ class DevicePage extends StatelessWidget {
                           ),
                           MaterialButton(
                             onPressed: () {},
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
                             color: Colors.black,
                             child: Text(
                               'Off',
@@ -176,6 +367,9 @@ class DevicePage extends StatelessWidget {
                           ),
                           MaterialButton(
                             onPressed: () {},
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
                             color: Colors.black,
                             child: Text(
                               'Off',
@@ -190,7 +384,6 @@ class DevicePage extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: BottomBar(),
     ));
   }
 }
@@ -202,34 +395,7 @@ class GroupPage extends StatelessWidget {
         child: Scaffold(
             body: Column(
               children: <Widget>[
-                TopBar("Group Name", Icons.remove_circle_outline, () {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: new Text("Remove Group"),
-                        content: new Text(
-                            "Are you sure you want to remove this group"),
-                        actions: <Widget>[
-                          new FlatButton(
-                            textColor: Colors.black,
-                            child: new Text("Close"),
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                          ),
-                          new FlatButton(
-                            textColor: Colors.red[700],
-                            child: new Text("Remove"),
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                          ),
-                        ],
-                      );
-                    },
-                  );
-                }),
+                TopBar("Group Name", Icons.remove_circle_outline, () {}),
                 Flexible(
                   child: GridView.count(
                     shrinkWrap: true,
@@ -261,32 +427,7 @@ class DevicesPage extends StatelessWidget {
         child: Scaffold(
             body: Column(children: <Widget>[
               TopBar("Devices", Icons.add, () {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return AlertDialog(
-                      title: new Text("Remove Device"),
-                      content: new Text(
-                          "Are you sure you want to remove this device"),
-                      actions: <Widget>[
-                        new FlatButton(
-                          textColor: Colors.black,
-                          child: new Text("Close"),
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                        ),
-                        new FlatButton(
-                          textColor: Colors.red[700],
-                          child: new Text("Remove"),
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                        ),
-                      ],
-                    );
-                  },
-                );
+                Navigator.pushNamed(context, "/AddDeviceSplash");
               }),
               Flexible(
                 child: GridView.count(
@@ -461,7 +602,9 @@ class _BottomBarState extends State<BottomBar> {
                           new ListTile(
                             leading: new Icon(Icons.add_circle),
                             title: new Text('Device'),
-                            onTap: () => {},
+                            onTap: () => {
+                              Navigator.pushNamed(context, "/AddDeviceSplash")
+                            },
                           ),
                         ],
                       ),
