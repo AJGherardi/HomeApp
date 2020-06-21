@@ -20,15 +20,17 @@ class App extends StatelessWidget {
         '/Group': (context) => GroupPage(),
         '/Device': (context) => DevicePage(),
         '/AddDeviceSplash': (context) => AddDeviceSplash(),
-        '/AvailableDevices': (context) => AvailableDevices(),
-        '/AvailableGroups': (context) => AvailableGroups(),
-        '/AddDevice': (context) => AddDevice(),
+        '/AddGroupSplash': (context) => AddGroupSplash(),
+        '/AvailableDevices': (context) => AvailableDevicesPage(),
+        '/AvailableGroups': (context) => AvailableGroupsPage(),
+        '/AddDevice': (context) => AddDevicePage(),
+        '/AddGroup': (context) => AddGroupPage(),
       },
     );
   }
 }
 
-class AddDevice extends StatelessWidget {
+class AddGroupPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -57,6 +59,150 @@ class AddDevice extends StatelessWidget {
                       child: SvgPicture.asset(
                         "assets/range.svg",
                         width: 250,
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(left: 18, right: 18),
+                      child: Divider(
+                        thickness: 2,
+                        color: Colors.black,
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.all(36),
+                      child: Text(
+                        "A group is a collection of devices",
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.roboto(
+                            fontWeight: FontWeight.w900,
+                            fontSize: 36,
+                            color: Colors.black),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              MaterialButton(
+                onPressed: () {
+                  showModalBottomSheet(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(14),
+                            topRight: Radius.circular(14))),
+                    context: context,
+                    builder: (BuildContext bc) {
+                      return AnimatedPadding(
+                        padding: MediaQuery.of(context).viewInsets,
+                        duration: const Duration(milliseconds: 100),
+                        curve: Curves.decelerate,
+                        child: Container(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              Container(
+                                margin: EdgeInsets.all(16),
+                                child: Text(
+                                  "Set Name",
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.roboto(
+                                    fontWeight: FontWeight.w900,
+                                    fontSize: 36,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.all(16),
+                                child: TextField(
+                                  cursorColor: Colors.yellow[400],
+                                  decoration: InputDecoration(
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Colors.yellow[400], width: 3),
+                                    ),
+                                    hintText: "Type name hear",
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(5.0),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.all(16),
+                                child: MaterialButton(
+                                  onPressed: () {},
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12.0),
+                                  ),
+                                  color: Colors.black,
+                                  child: Text(
+                                    'Add',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                  minWidth: 300,
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                },
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                color: Colors.white,
+                child: Text(
+                  'Add',
+                  style: TextStyle(color: Colors.black),
+                ),
+                minWidth: 250,
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class AddDevicePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Scaffold(
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+              Text(
+                "Add Device",
+                style: GoogleFonts.roboto(
+                    fontWeight: FontWeight.w900,
+                    fontSize: 48,
+                    color: Colors.white),
+              ),
+              Container(
+                margin: EdgeInsets.fromLTRB(28, 0, 28, 0),
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(12)),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Container(
+                      margin: EdgeInsets.all(36),
+                      child: SvgPicture.asset(
+                        "assets/range.svg",
+                        width: 250,
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(left: 18, right: 18),
+                      child: Divider(
+                        thickness: 2,
+                        color: Colors.black,
                       ),
                     ),
                     Container(
@@ -158,7 +304,7 @@ class AddDevice extends StatelessWidget {
   }
 }
 
-class AvailableGroups extends StatelessWidget {
+class AvailableGroupsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -195,7 +341,7 @@ class AvailableGroups extends StatelessWidget {
   }
 }
 
-class AvailableDevices extends StatelessWidget {
+class AvailableDevicesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -267,6 +413,50 @@ class ListItem extends StatelessWidget {
                 ],
               ),
             ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class AddGroupSplash extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Scaffold(
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+              Text(
+                "Add a Group",
+                style: GoogleFonts.roboto(
+                    fontWeight: FontWeight.w900,
+                    fontSize: 48,
+                    color: Colors.white),
+              ),
+              SvgPicture.asset(
+                "assets/outlet.svg",
+                width: 260,
+              ),
+              MaterialButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, "/AddGroup");
+                },
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                color: Colors.white,
+                child: Text(
+                  'Next',
+                  style: TextStyle(
+                    color: Colors.black,
+                  ),
+                ),
+                minWidth: 260,
+              )
+            ],
           ),
         ),
       ),
@@ -611,7 +801,9 @@ class GroupsPage extends StatelessWidget {
       child: Scaffold(
         body: Column(
           children: <Widget>[
-            TopBar("Groups", Icons.add, () {}),
+            TopBar("Groups", Icons.add, () {
+              Navigator.pushNamed(context, "/AddGroupSplash");
+            }),
             Flexible(
               child: GridView.count(
                 shrinkWrap: true,
@@ -759,7 +951,10 @@ class _BottomBarState extends State<BottomBar> {
                         new ListTile(
                             leading: new Icon(Icons.group_work),
                             title: new Text('Group'),
-                            onTap: () => {}),
+                            onTap: () => {
+                                  Navigator.pushNamed(
+                                      context, "/AddGroupSplash")
+                                }),
                         new ListTile(
                           leading: new Icon(Icons.add_circle),
                           title: new Text('Device'),
