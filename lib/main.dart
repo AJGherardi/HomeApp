@@ -11,22 +11,19 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(scaffoldBackgroundColor: Colors.black),
-      initialRoute: '/',
-      routes: {
-        '/': (context) => HomePage(),
-        '/Devices': (context) => DevicesPage(),
-        '/Groups': (context) => GroupsPage(),
-        '/Group': (context) => GroupPage(),
-        '/Device': (context) => DevicePage(),
-        '/AddDeviceSplash': (context) => AddDeviceSplash(),
-        '/AddGroupSplash': (context) => AddGroupSplash(),
-        '/AvailableDevices': (context) => AvailableDevicesPage(),
-        '/AvailableGroups': (context) => AvailableGroupsPage(),
-        '/AddDevice': (context) => AddDevicePage(),
-        '/AddGroup': (context) => AddGroupPage(),
-      },
-    );
+        theme: ThemeData(scaffoldBackgroundColor: Colors.black),
+        home: HomePage());
+  }
+}
+
+class FadeRoute<T> extends MaterialPageRoute<T> {
+  FadeRoute({WidgetBuilder builder, RouteSettings settings})
+      : super(builder: builder, settings: settings);
+
+  @override
+  Widget buildTransitions(BuildContext context, Animation<double> animation,
+      Animation<double> secondaryAnimation, Widget child) {
+    return new FadeTransition(opacity: animation, child: child);
   }
 }
 
@@ -312,15 +309,12 @@ class AvailableGroupsPage extends StatelessWidget {
         body: Center(
           child: Column(
             children: <Widget>[
-              Container(
-                margin: EdgeInsets.all(18),
-                child: Text(
-                  "Available Groups",
-                  style: GoogleFonts.roboto(
-                      fontWeight: FontWeight.w900,
-                      fontSize: 48,
-                      color: Colors.white),
-                ),
+              Text(
+                "Available Groups",
+                style: GoogleFonts.roboto(
+                    fontWeight: FontWeight.w900,
+                    fontSize: 48,
+                    color: Colors.white),
               ),
               Expanded(
                 child: ListView.builder(
@@ -329,7 +323,7 @@ class AvailableGroupsPage extends StatelessWidget {
                   padding: EdgeInsets.all(24.0),
                   itemCount: 12,
                   itemBuilder: (BuildContext ctxt, int index) {
-                    return new ListItem("Group", "/AvailableDevices");
+                    return new ListItem("Group", AvailableDevicesPage());
                   },
                 ),
               ),
@@ -349,15 +343,12 @@ class AvailableDevicesPage extends StatelessWidget {
         body: Center(
           child: Column(
             children: <Widget>[
-              Container(
-                margin: EdgeInsets.all(14),
-                child: Text(
-                  "Available Devices",
-                  style: GoogleFonts.roboto(
-                      fontWeight: FontWeight.w900,
-                      fontSize: 48,
-                      color: Colors.white),
-                ),
+              Text(
+                "Available Devices",
+                style: GoogleFonts.roboto(
+                    fontWeight: FontWeight.w900,
+                    fontSize: 48,
+                    color: Colors.white),
               ),
               Flexible(
                 child: ListView.builder(
@@ -366,7 +357,7 @@ class AvailableDevicesPage extends StatelessWidget {
                   padding: EdgeInsets.all(24.0),
                   itemCount: 12,
                   itemBuilder: (BuildContext ctxt, int index) {
-                    return new ListItem("Device", "/AddDevice");
+                    return new ListItem("Device", AddDevicePage());
                   },
                 ),
               ),
@@ -379,9 +370,9 @@ class AvailableDevicesPage extends StatelessWidget {
 }
 
 class ListItem extends StatelessWidget {
-  ListItem(this.text, this.route);
+  ListItem(this.text, this.page);
   final String text;
-  final String route;
+  final Widget page;
 
   @override
   Widget build(BuildContext context) {
@@ -394,7 +385,10 @@ class ListItem extends StatelessWidget {
           child: InkWell(
             borderRadius: BorderRadius.circular(10),
             onTap: () {
-              Navigator.pushNamed(context, route);
+              Navigator.push(
+                context,
+                new FadeRoute(builder: (context) => page),
+              );
             },
             child: Container(
               margin: EdgeInsets.all(10),
@@ -442,7 +436,10 @@ class AddGroupSplash extends StatelessWidget {
               ),
               MaterialButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, "/AddGroup");
+                  Navigator.push(
+                    context,
+                    new FadeRoute(builder: (context) => AddGroupPage()),
+                  );
                 },
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0),
@@ -486,7 +483,10 @@ class AddDeviceSplash extends StatelessWidget {
               ),
               MaterialButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, "/AvailableGroups");
+                  Navigator.push(
+                    context,
+                    new FadeRoute(builder: (context) => AvailableGroupsPage()),
+                  );
                 },
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0),
@@ -518,15 +518,15 @@ class HomePage extends StatelessWidget {
             margin: EdgeInsets.all(24),
             child: Column(
               children: <Widget>[
-                HomeItem("Devices", "/Devices"),
+                HomeItem("Devices", DevicesPage()),
                 new SizedBox(
                   height: 24,
                 ),
-                HomeItem("Groups", "/Groups"),
+                HomeItem("Groups", GroupsPage()),
                 new SizedBox(
                   height: 24,
                 ),
-                HomeItem("Actions", "/Devices")
+                HomeItem("Actions", DevicesPage())
               ],
             ),
           )),
@@ -737,12 +737,11 @@ class GroupPage extends StatelessWidget {
                 crossAxisSpacing: 24,
                 crossAxisCount: 2,
                 children: <Widget>[
-                  Item("Device", "/Device"),
-                  Item("Device", "/Device"),
-                  Item("Device", "/Device"),
-                  Item("Device", "/Device"),
-                  Item("Device", "/Device"),
-                  Item("Device", "/Device"),
+                  Item("Device", DevicePage()),
+                  Item("Device", DevicePage()),
+                  Item("Device", DevicePage()),
+                  Item("Device", DevicePage()),
+                  Item("Device", DevicePage()),
                 ],
               ),
             ),
@@ -765,7 +764,10 @@ class DevicesPage extends StatelessWidget {
               "Devices",
               Icons.add,
               () {
-                Navigator.pushNamed(context, "/AddDeviceSplash");
+                Navigator.push(
+                  context,
+                  new FadeRoute(builder: (context) => AddDeviceSplash()),
+                );
               },
             ),
             Flexible(
@@ -777,12 +779,12 @@ class DevicesPage extends StatelessWidget {
                 crossAxisSpacing: 24,
                 crossAxisCount: 2,
                 children: <Widget>[
-                  Item("Device", "/Device"),
-                  Item("Device", "/Device"),
-                  Item("Device", "/Device"),
-                  Item("Device", "/Device"),
-                  Item("Device", "/Device"),
-                  Item("Device", "/Device"),
+                  Item("Device", DevicePage()),
+                  Item("Device", DevicePage()),
+                  Item("Device", DevicePage()),
+                  Item("Device", DevicePage()),
+                  Item("Device", DevicePage()),
+                  Item("Device", DevicePage()),
                 ],
               ),
             ),
@@ -802,7 +804,10 @@ class GroupsPage extends StatelessWidget {
         body: Column(
           children: <Widget>[
             TopBar("Groups", Icons.add, () {
-              Navigator.pushNamed(context, "/AddGroupSplash");
+              Navigator.push(
+                context,
+                new FadeRoute(builder: (context) => AddGroupSplash()),
+              );
             }),
             Flexible(
               child: GridView.count(
@@ -813,10 +818,11 @@ class GroupsPage extends StatelessWidget {
                 crossAxisSpacing: 24,
                 crossAxisCount: 2,
                 children: <Widget>[
-                  Item("Group", "/Group"),
-                  Item("Group", "/Group"),
-                  Item("Group", "/Group"),
-                  Item("Group", "/Group"),
+                  Item("Group", GroupPage()),
+                  Item("Group", GroupPage()),
+                  Item("Group", GroupPage()),
+                  Item("Group", GroupPage()),
+                  Item("Group", GroupPage()),
                 ],
               ),
             ),
@@ -863,9 +869,9 @@ class TopBar extends StatelessWidget {
 }
 
 class Item extends StatelessWidget {
-  Item(this.text, this.route);
+  Item(this.text, this.page);
   final String text;
-  final String route;
+  final Widget page;
 
   @override
   Widget build(BuildContext context) {
@@ -875,7 +881,10 @@ class Item extends StatelessWidget {
         child: InkWell(
           borderRadius: BorderRadius.circular(10),
           onTap: () {
-            Navigator.pushNamed(context, route);
+            Navigator.push(
+              context,
+              new FadeRoute(builder: (context) => page),
+            );
           },
           child: Center(
             child: Column(
@@ -952,14 +961,21 @@ class _BottomBarState extends State<BottomBar> {
                             leading: new Icon(Icons.group_work),
                             title: new Text('Group'),
                             onTap: () => {
-                                  Navigator.pushNamed(
-                                      context, "/AddGroupSplash")
+                                  Navigator.push(
+                                    context,
+                                    new FadeRoute(
+                                        builder: (context) => AddGroupSplash()),
+                                  )
                                 }),
                         new ListTile(
                           leading: new Icon(Icons.add_circle),
                           title: new Text('Device'),
                           onTap: () => {
-                            Navigator.pushNamed(context, "/AddDeviceSplash")
+                            Navigator.push(
+                              context,
+                              new FadeRoute(
+                                  builder: (context) => AddDeviceSplash()),
+                            )
                           },
                         ),
                       ],
@@ -976,9 +992,9 @@ class _BottomBarState extends State<BottomBar> {
 }
 
 class HomeItem extends StatelessWidget {
-  HomeItem(this.text, this.route);
+  HomeItem(this.text, this.page);
   final String text;
-  final String route;
+  final Widget page;
 
   @override
   Widget build(BuildContext context) {
@@ -989,7 +1005,10 @@ class HomeItem extends StatelessWidget {
           child: InkWell(
             borderRadius: BorderRadius.circular(18),
             onTap: () {
-              Navigator.pushNamed(context, route);
+              Navigator.push(
+                context,
+                new FadeRoute(builder: (context) => page),
+              );
             },
             child: Center(
               child: Row(
