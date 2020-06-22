@@ -1,3 +1,4 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -11,8 +12,8 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        theme: ThemeData(scaffoldBackgroundColor: Colors.black),
-        home: HomePage());
+      home: HomePage(),
+    );
   }
 }
 
@@ -37,17 +38,19 @@ class AddGroupPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
               Text(
-                "Add Device",
+                "Add Group",
                 style: GoogleFonts.roboto(
-                    fontWeight: FontWeight.w900,
-                    fontSize: 48,
-                    color: Colors.white),
+                  fontWeight: FontWeight.w900,
+                  fontSize: 48,
+                  color: Colors.black,
+                ),
               ),
               Container(
                 margin: EdgeInsets.fromLTRB(28, 0, 28, 0),
                 decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(12)),
+                  border: Border.all(color: Colors.black),
+                  borderRadius: BorderRadius.circular(12),
+                ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
@@ -71,9 +74,10 @@ class AddGroupPage extends StatelessWidget {
                         "A group is a collection of devices",
                         textAlign: TextAlign.center,
                         style: GoogleFonts.roboto(
-                            fontWeight: FontWeight.w900,
-                            fontSize: 36,
-                            color: Colors.black),
+                          fontWeight: FontWeight.w900,
+                          fontSize: 36,
+                          color: Colors.black,
+                        ),
                       ),
                     ),
                   ],
@@ -149,10 +153,10 @@ class AddGroupPage extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0),
                 ),
-                color: Colors.white,
+                color: Colors.black,
                 child: Text(
                   'Add',
-                  style: TextStyle(color: Colors.black),
+                  style: TextStyle(color: Colors.white),
                 ),
                 minWidth: 250,
               )
@@ -178,13 +182,14 @@ class AddDevicePage extends StatelessWidget {
                 style: GoogleFonts.roboto(
                     fontWeight: FontWeight.w900,
                     fontSize: 48,
-                    color: Colors.white),
+                    color: Colors.black),
               ),
               Container(
                 margin: EdgeInsets.fromLTRB(28, 0, 28, 0),
                 decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(12)),
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: Colors.black),
+                ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
@@ -208,9 +213,10 @@ class AddDevicePage extends StatelessWidget {
                         "This may take a minute",
                         textAlign: TextAlign.center,
                         style: GoogleFonts.roboto(
-                            fontWeight: FontWeight.w900,
-                            fontSize: 36,
-                            color: Colors.black),
+                          fontWeight: FontWeight.w900,
+                          fontSize: 36,
+                          color: Colors.black,
+                        ),
                       ),
                     ),
                   ],
@@ -220,9 +226,11 @@ class AddDevicePage extends StatelessWidget {
                 onPressed: () {
                   showModalBottomSheet(
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(14),
-                            topRight: Radius.circular(14))),
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(14),
+                        topRight: Radius.circular(14),
+                      ),
+                    ),
                     context: context,
                     builder: (BuildContext bc) {
                       return AnimatedPadding(
@@ -286,10 +294,10 @@ class AddDevicePage extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0),
                 ),
-                color: Colors.white,
+                color: Colors.black,
                 child: Text(
                   'Add',
-                  style: TextStyle(color: Colors.black),
+                  style: TextStyle(color: Colors.white),
                 ),
                 minWidth: 250,
               )
@@ -314,7 +322,7 @@ class AvailableGroupsPage extends StatelessWidget {
                 style: GoogleFonts.roboto(
                     fontWeight: FontWeight.w900,
                     fontSize: 48,
-                    color: Colors.white),
+                    color: Colors.black),
               ),
               Expanded(
                 child: ListView.builder(
@@ -348,7 +356,7 @@ class AvailableDevicesPage extends StatelessWidget {
                 style: GoogleFonts.roboto(
                     fontWeight: FontWeight.w900,
                     fontSize: 48,
-                    color: Colors.white),
+                    color: Colors.black),
               ),
               Flexible(
                 child: ListView.builder(
@@ -379,11 +387,14 @@ class ListItem extends StatelessWidget {
     return new Container(
       margin: EdgeInsets.all(8),
       child: Material(
-        color: Colors.grey[900],
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(6),
         child: Ink(
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.black),
+            borderRadius: BorderRadius.circular(6),
+          ),
           child: InkWell(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(6),
             onTap: () {
               Navigator.push(
                 context,
@@ -401,7 +412,6 @@ class ListItem extends StatelessWidget {
                     style: GoogleFonts.roboto(
                       fontWeight: FontWeight.w900,
                       fontSize: 24,
-                      color: Colors.white,
                     ),
                   ),
                 ],
@@ -428,7 +438,7 @@ class AddGroupSplash extends StatelessWidget {
                 style: GoogleFonts.roboto(
                     fontWeight: FontWeight.w900,
                     fontSize: 48,
-                    color: Colors.white),
+                    color: Colors.black),
               ),
               SvgPicture.asset(
                 "assets/outlet.svg",
@@ -444,11 +454,11 @@ class AddGroupSplash extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0),
                 ),
-                color: Colors.white,
+                color: Colors.black,
                 child: Text(
                   'Next',
                   style: TextStyle(
-                    color: Colors.black,
+                    color: Colors.white,
                   ),
                 ),
                 minWidth: 260,
@@ -475,7 +485,7 @@ class AddDeviceSplash extends StatelessWidget {
                 style: GoogleFonts.roboto(
                     fontWeight: FontWeight.w900,
                     fontSize: 48,
-                    color: Colors.white),
+                    color: Colors.black),
               ),
               SvgPicture.asset(
                 "assets/outlet.svg",
@@ -489,13 +499,13 @@ class AddDeviceSplash extends StatelessWidget {
                   );
                 },
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0),
+                  borderRadius: BorderRadius.circular(6.0),
                 ),
-                color: Colors.white,
+                color: Colors.black,
                 child: Text(
                   'Next',
                   style: TextStyle(
-                    color: Colors.black,
+                    color: Colors.white,
                   ),
                 ),
                 minWidth: 260,
@@ -508,30 +518,68 @@ class AddDeviceSplash extends StatelessWidget {
   }
 }
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  int _currentIndex = 0;
+  final List<Widget> _children = [
+    ControlPage(),
+    ActionsPage(),
+    ManagePage(),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-          body: Center(
-              child: Container(
-            margin: EdgeInsets.all(24),
-            child: Column(
-              children: <Widget>[
-                HomeItem("Devices", DevicesPage()),
-                new SizedBox(
-                  height: 24,
-                ),
-                HomeItem("Groups", GroupsPage()),
-                new SizedBox(
-                  height: 24,
-                ),
-                HomeItem("Actions", DevicesPage())
-              ],
+        body: PageTransitionSwitcher(
+          transitionBuilder: (
+            Widget child,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+          ) {
+            return FadeThroughTransition(
+              animation: animation,
+              secondaryAnimation: secondaryAnimation,
+              child: child,
+            );
+          },
+          child: _children[_currentIndex],
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          backgroundColor: Colors.red[700],
+          unselectedItemColor: Color(0xBFFFFFFF),
+          fixedColor: Colors.white,
+          showSelectedLabels: false,
+          showUnselectedLabels: false,
+          onTap: onTabTapped,
+          currentIndex: _currentIndex,
+          items: [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.power_settings_new),
+              title: Text(''),
             ),
-          )),
-          bottomNavigationBar: BottomBar()),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.done_outline),
+              title: Text(''),
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.settings),
+              title: Text(''),
+            ),
+          ],
+        ),
+      ),
     );
+  }
+
+  void onTabTapped(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
   }
 }
 
@@ -549,7 +597,7 @@ class DevicePage extends StatelessWidget {
                 IconButton(
                   icon: Icon(Icons.chevron_left),
                   iconSize: 36,
-                  color: Colors.white,
+                  color: Colors.black,
                   onPressed: () {
                     Navigator.pop(context);
                   },
@@ -557,7 +605,7 @@ class DevicePage extends StatelessWidget {
                 IconButton(
                   icon: Icon(Icons.remove_circle_outline),
                   iconSize: 36,
-                  color: Colors.white,
+                  color: Colors.black,
                   onPressed: () {
                     showDialog(
                       context: context,
@@ -565,7 +613,8 @@ class DevicePage extends StatelessWidget {
                         return AlertDialog(
                           title: new Text("Remove Group"),
                           content: new Text(
-                              "Are you sure you want to remove this group"),
+                            "Are you sure you want to remove this group",
+                          ),
                           actions: <Widget>[
                             new FlatButton(
                               textColor: Colors.black,
@@ -606,7 +655,7 @@ class DevicePage extends StatelessWidget {
                       style: GoogleFonts.roboto(
                         fontWeight: FontWeight.w900,
                         fontSize: 32,
-                        color: Colors.white,
+                        color: Colors.black,
                       ),
                     ),
                     Text(
@@ -614,19 +663,20 @@ class DevicePage extends StatelessWidget {
                       style: GoogleFonts.roboto(
                         fontWeight: FontWeight.w900,
                         fontSize: 24,
-                        color: Colors.white,
+                        color: Colors.black,
                       ),
                     ),
                   ],
                 ),
               ],
             ),
-            new Flexible(
+            Flexible(
               child: Container(
                 margin: EdgeInsets.fromLTRB(24, 36, 24, 12),
                 decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(12)),
+                  border: Border.all(color: Colors.black),
+                  borderRadius: BorderRadius.circular(12),
+                ),
                 child: Center(
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
@@ -666,12 +716,13 @@ class DevicePage extends StatelessWidget {
                 ),
               ),
             ),
-            new Flexible(
+            Flexible(
               child: Container(
                 margin: EdgeInsets.fromLTRB(24, 12, 24, 36),
                 decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(12)),
+                  border: Border.all(color: Colors.black),
+                  borderRadius: BorderRadius.circular(12),
+                ),
                 child: Center(
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
@@ -720,116 +771,107 @@ class DevicePage extends StatelessWidget {
   }
 }
 
-class GroupPage extends StatelessWidget {
+class ManagePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: Column(
-          children: <Widget>[
-            TopBar("Group Name", Icons.remove_circle_outline, () {}),
-            Flexible(
-              child: GridView.count(
-                shrinkWrap: true,
-                physics: BouncingScrollPhysics(),
-                padding: EdgeInsets.all(24.0),
-                mainAxisSpacing: 24,
-                crossAxisSpacing: 24,
-                crossAxisCount: 2,
-                children: <Widget>[
-                  Item("Device", DevicePage()),
-                  Item("Device", DevicePage()),
-                  Item("Device", DevicePage()),
-                  Item("Device", DevicePage()),
-                  Item("Device", DevicePage()),
-                ],
+    return Center(
+      child: Column(
+        // mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          Center(
+            child: Container(
+              margin: EdgeInsets.all(24),
+              child: Text(
+                "Manage",
+                style: GoogleFonts.roboto(
+                  fontWeight: FontWeight.w900,
+                  fontSize: 34,
+                ),
               ),
             ),
-          ],
-        ),
-        bottomNavigationBar: BottomBar(),
+          ),
+          Container(
+            margin: EdgeInsets.only(left: 8, right: 8),
+            child: ListItem("Add Device", AddDeviceSplash()),
+          ),
+          Container(
+            margin: EdgeInsets.only(left: 8, right: 8),
+            child: ListItem("Add Group", AddGroupSplash()),
+          ),
+          Container(
+            margin: EdgeInsets.only(left: 8, right: 8),
+            child: ListItem("Remove Deivce", AddGroupSplash()),
+          ),
+          Container(
+            margin: EdgeInsets.only(left: 8, right: 8),
+            child: ListItem("Remove Group", AddGroupSplash()),
+          ),
+          Container(
+            margin: EdgeInsets.only(left: 8, right: 8),
+            child: ListItem("Reset", AddGroupSplash()),
+          ),
+        ],
       ),
     );
   }
 }
 
-class DevicesPage extends StatelessWidget {
+class ActionsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: Column(
-          children: <Widget>[
-            TopBar(
-              "Devices",
-              Icons.add,
-              () {
-                Navigator.push(
-                  context,
-                  new FadeRoute(builder: (context) => AddDeviceSplash()),
-                );
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: <Widget>[
+          Container(
+            margin: EdgeInsets.all(36),
+            child: Text(
+              "Actions",
+              style: GoogleFonts.roboto(
+                fontWeight: FontWeight.w900,
+                fontSize: 34,
+              ),
+            ),
+          ),
+          Expanded(
+            child: ListView.builder(
+              shrinkWrap: true,
+              physics: BouncingScrollPhysics(),
+              padding: EdgeInsets.only(left: 24, right: 24),
+              itemCount: 12,
+              itemBuilder: (BuildContext ctxt, int index) {
+                return new ListItem("Action", null);
               },
             ),
-            Flexible(
-              child: GridView.count(
-                shrinkWrap: true,
-                physics: BouncingScrollPhysics(),
-                padding: EdgeInsets.all(24.0),
-                mainAxisSpacing: 24,
-                crossAxisSpacing: 24,
-                crossAxisCount: 2,
-                children: <Widget>[
-                  Item("Device", DevicePage()),
-                  Item("Device", DevicePage()),
-                  Item("Device", DevicePage()),
-                  Item("Device", DevicePage()),
-                  Item("Device", DevicePage()),
-                  Item("Device", DevicePage()),
-                ],
-              ),
-            ),
-          ],
-        ),
-        bottomNavigationBar: BottomBar(),
+          ),
+        ],
       ),
     );
   }
 }
 
-class GroupsPage extends StatelessWidget {
+class ControlPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: Column(
+    return Column(
+      children: <Widget>[
+        GridView.count(
+          shrinkWrap: true,
+          physics: BouncingScrollPhysics(),
+          padding: EdgeInsets.all(24.0),
+          mainAxisSpacing: 24,
+          crossAxisSpacing: 24,
+          crossAxisCount: 2,
           children: <Widget>[
-            TopBar("Groups", Icons.add, () {
-              Navigator.push(
-                context,
-                new FadeRoute(builder: (context) => AddGroupSplash()),
-              );
-            }),
-            Flexible(
-              child: GridView.count(
-                shrinkWrap: true,
-                physics: BouncingScrollPhysics(),
-                padding: EdgeInsets.all(24.0),
-                mainAxisSpacing: 24,
-                crossAxisSpacing: 24,
-                crossAxisCount: 2,
-                children: <Widget>[
-                  Item("Group", GroupPage()),
-                  Item("Group", GroupPage()),
-                  Item("Group", GroupPage()),
-                  Item("Group", GroupPage()),
-                  Item("Group", GroupPage()),
-                ],
-              ),
-            ),
+            Item("Group", DevicePage()),
+            Item("Group", DevicePage()),
+            Item("Group", DevicePage()),
+            Item("Group", DevicePage()),
+            Item("Group", DevicePage()),
           ],
         ),
-        bottomNavigationBar: BottomBar(),
-      ),
+      ],
     );
   }
 }
@@ -848,19 +890,22 @@ class TopBar extends StatelessWidget {
         IconButton(
           icon: Icon(Icons.chevron_left),
           iconSize: 36,
-          color: Colors.white,
+          color: Colors.black,
           onPressed: () {
             Navigator.pop(context);
           },
         ),
         Text(
           text,
-          style: GoogleFonts.oleoScript(fontSize: 52, color: Colors.white),
+          style: GoogleFonts.oleoScript(
+            fontSize: 52,
+            color: Colors.black,
+          ),
         ),
         IconButton(
           icon: Icon(rightIcon),
           iconSize: 36,
-          color: Colors.white,
+          color: Colors.black,
           onPressed: onPress,
         )
       ],
@@ -876,10 +921,14 @@ class Item extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Material(
-      borderRadius: BorderRadius.circular(10),
+      borderRadius: BorderRadius.circular(4),
       child: Ink(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(4),
+          border: Border.all(color: Colors.black),
+        ),
         child: InkWell(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(4),
           onTap: () {
             Navigator.push(
               context,
@@ -899,134 +948,10 @@ class Item extends StatelessWidget {
                   text,
                   style: GoogleFonts.roboto(
                     fontWeight: FontWeight.w900,
-                    fontSize: 24,
+                    fontSize: 20,
                   ),
                 ),
               ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class BottomBar extends StatefulWidget {
-  @override
-  _BottomBarState createState() => _BottomBarState();
-}
-
-class _BottomBarState extends State<BottomBar> {
-  @override
-  Widget build(BuildContext context) {
-    return new BottomAppBar(
-      color: Colors.red[700],
-      child: new Row(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          IconButton(
-            color: Colors.white,
-            icon: Icon(Icons.menu),
-            onPressed: () {
-              showModalBottomSheet(
-                context: context,
-                builder: (BuildContext bc) {
-                  return Container(
-                    child: new Wrap(
-                      children: <Widget>[
-                        new ListTile(
-                          leading: new Icon(Icons.remove_circle_outline),
-                          title: new Text('Reset'),
-                          onTap: () => {},
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              );
-            },
-          ),
-          IconButton(
-            color: Colors.white,
-            icon: Icon(Icons.add),
-            onPressed: () {
-              showModalBottomSheet(
-                context: context,
-                builder: (BuildContext bc) {
-                  return Container(
-                    child: new Wrap(
-                      children: <Widget>[
-                        new ListTile(
-                            leading: new Icon(Icons.group_work),
-                            title: new Text('Group'),
-                            onTap: () => {
-                                  Navigator.push(
-                                    context,
-                                    new FadeRoute(
-                                        builder: (context) => AddGroupSplash()),
-                                  )
-                                }),
-                        new ListTile(
-                          leading: new Icon(Icons.add_circle),
-                          title: new Text('Device'),
-                          onTap: () => {
-                            Navigator.push(
-                              context,
-                              new FadeRoute(
-                                  builder: (context) => AddDeviceSplash()),
-                            )
-                          },
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              );
-            },
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class HomeItem extends StatelessWidget {
-  HomeItem(this.text, this.page);
-  final String text;
-  final Widget page;
-
-  @override
-  Widget build(BuildContext context) {
-    return new Flexible(
-      child: new Material(
-        borderRadius: BorderRadius.circular(18),
-        child: Ink(
-          child: InkWell(
-            borderRadius: BorderRadius.circular(18),
-            onTap: () {
-              Navigator.push(
-                context,
-                new FadeRoute(builder: (context) => page),
-              );
-            },
-            child: Center(
-              child: Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
-                  Text(
-                    text,
-                    style: GoogleFonts.oleoScript(
-                      fontSize: 48,
-                    ),
-                  ),
-                  SvgPicture.asset(
-                    "assets/plug.svg",
-                    width: 150,
-                  ),
-                ],
-              ),
             ),
           ),
         ),
