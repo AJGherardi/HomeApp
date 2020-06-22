@@ -1,7 +1,6 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -13,7 +12,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: HomePage(),
+      home: WelcomePage(),
     );
   }
 }
@@ -25,7 +24,242 @@ class FadeRoute<T> extends MaterialPageRoute<T> {
   @override
   Widget buildTransitions(BuildContext context, Animation<double> animation,
       Animation<double> secondaryAnimation, Widget child) {
-    return new FadeTransition(opacity: animation, child: child);
+    return FadeTransition(opacity: animation, child: child);
+  }
+}
+
+class AddHubPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Scaffold(
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+              Text(
+                "Add Hub",
+                style: GoogleFonts.roboto(
+                  fontWeight: FontWeight.w900,
+                  fontSize: 48,
+                  color: Colors.black,
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.fromLTRB(28, 0, 28, 0),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Container(
+                      margin: EdgeInsets.all(36),
+                      child: SvgPicture.asset(
+                        "assets/range.svg",
+                        width: 250,
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(left: 18, right: 18),
+                      child: Divider(
+                        thickness: 2,
+                        color: Colors.black,
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.all(36),
+                      child: Text(
+                        "A hub is required",
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.roboto(
+                          fontWeight: FontWeight.w900,
+                          fontSize: 36,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              MaterialButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    FadeRoute(
+                      builder: (context) => HomePage(),
+                    ),
+                  );
+                },
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(6.0),
+                ),
+                color: Colors.black,
+                child: Text(
+                  'Add',
+                  style: TextStyle(color: Colors.white),
+                ),
+                minWidth: 250,
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class AvailableHubsPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Scaffold(
+        body: Center(
+          child: Column(
+            children: <Widget>[
+              Text(
+                "Available Hubs",
+                style: GoogleFonts.roboto(
+                    fontWeight: FontWeight.w900,
+                    fontSize: 48,
+                    color: Colors.black),
+              ),
+              Expanded(
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  physics: BouncingScrollPhysics(),
+                  padding: EdgeInsets.all(24.0),
+                  itemCount: 12,
+                  itemBuilder: (BuildContext ctxt, int index) {
+                    return ListItem("Hub", AddHubPage());
+                  },
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class AddHubSplash extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Scaffold(
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+              Text(
+                "Add Hub",
+                style: GoogleFonts.roboto(
+                    fontWeight: FontWeight.w900,
+                    fontSize: 48,
+                    color: Colors.black),
+              ),
+              SvgPicture.asset(
+                "assets/outlet.svg",
+                width: 260,
+              ),
+              MaterialButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    FadeRoute(
+                      builder: (context) => AvailableHubsPage(),
+                    ),
+                  );
+                },
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(6.0),
+                ),
+                color: Colors.black,
+                child: Text(
+                  'Next',
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+                minWidth: 260,
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class WelcomePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Scaffold(
+        body: Center(
+          child: Stack(
+            children: <Widget>[
+              Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Text(
+                      "Home",
+                      style: GoogleFonts.roboto(
+                        fontWeight: FontWeight.w900,
+                        fontSize: 64,
+                        color: Colors.black,
+                      ),
+                    ),
+                    Text(
+                      "By",
+                      style: GoogleFonts.roboto(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 30,
+                        color: Colors.black,
+                      ),
+                    ),
+                    Text(
+                      "Alexander Gherardi",
+                      style: GoogleFonts.oleoScript(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 30,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  margin: EdgeInsets.all(24),
+                  child: MaterialButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        FadeRoute(builder: (context) => AddHubSplash()),
+                      );
+                    },
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(6.0),
+                    ),
+                    color: Colors.black,
+                    child: Text(
+                      'Add',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    minWidth: 250,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
 
@@ -88,9 +322,11 @@ class AddGroupPage extends StatelessWidget {
                 onPressed: () {
                   showModalBottomSheet(
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(14),
-                            topRight: Radius.circular(14))),
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(14),
+                        topRight: Radius.circular(14),
+                      ),
+                    ),
                     context: context,
                     builder: (BuildContext bc) {
                       return AnimatedPadding(
@@ -124,7 +360,7 @@ class AddGroupPage extends StatelessWidget {
                                     ),
                                     hintText: "Type name hear",
                                     border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(5.0),
+                                      borderRadius: BorderRadius.circular(6.0),
                                     ),
                                   ),
                                 ),
@@ -134,7 +370,7 @@ class AddGroupPage extends StatelessWidget {
                                 child: MaterialButton(
                                   onPressed: () {},
                                   shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12.0),
+                                    borderRadius: BorderRadius.circular(6.0),
                                   ),
                                   color: Colors.black,
                                   child: Text(
@@ -152,7 +388,7 @@ class AddGroupPage extends StatelessWidget {
                   );
                 },
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0),
+                  borderRadius: BorderRadius.circular(6.0),
                 ),
                 color: Colors.black,
                 child: Text(
@@ -293,7 +529,7 @@ class AddDevicePage extends StatelessWidget {
                   );
                 },
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0),
+                  borderRadius: BorderRadius.circular(6.0),
                 ),
                 color: Colors.black,
                 child: Text(
@@ -332,7 +568,7 @@ class AvailableGroupsPage extends StatelessWidget {
                   padding: EdgeInsets.all(24.0),
                   itemCount: 12,
                   itemBuilder: (BuildContext ctxt, int index) {
-                    return new ListItem("Group", AvailableDevicesPage());
+                    return ListItem("Group", AvailableDevicesPage());
                   },
                 ),
               ),
@@ -366,7 +602,7 @@ class AvailableDevicesPage extends StatelessWidget {
                   padding: EdgeInsets.all(24.0),
                   itemCount: 12,
                   itemBuilder: (BuildContext ctxt, int index) {
-                    return new ListItem("Device", AddDevicePage());
+                    return ListItem("Device", AddDevicePage());
                   },
                 ),
               ),
@@ -385,7 +621,7 @@ class ListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new Container(
+    return Container(
       margin: EdgeInsets.all(8),
       child: Material(
         borderRadius: BorderRadius.circular(6),
@@ -399,7 +635,7 @@ class ListItem extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                new FadeRoute(builder: (context) => page),
+                FadeRoute(builder: (context) => page),
               );
             },
             child: Container(
@@ -449,11 +685,11 @@ class AddGroupSplash extends StatelessWidget {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    new FadeRoute(builder: (context) => AddGroupPage()),
+                    FadeRoute(builder: (context) => AddGroupPage()),
                   );
                 },
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0),
+                  borderRadius: BorderRadius.circular(6.0),
                 ),
                 color: Colors.black,
                 child: Text(
@@ -496,7 +732,7 @@ class AddDeviceSplash extends StatelessWidget {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    new FadeRoute(builder: (context) => AvailableGroupsPage()),
+                    FadeRoute(builder: (context) => AvailableGroupsPage()),
                   );
                 },
                 shape: RoundedRectangleBorder(
@@ -612,21 +848,21 @@ class DevicePage extends StatelessWidget {
                       context: context,
                       builder: (BuildContext context) {
                         return AlertDialog(
-                          title: new Text("Remove Group"),
-                          content: new Text(
+                          title: Text("Remove Group"),
+                          content: Text(
                             "Are you sure you want to remove this group",
                           ),
                           actions: <Widget>[
-                            new FlatButton(
+                            FlatButton(
                               textColor: Colors.black,
-                              child: new Text("Close"),
+                              child: Text("Close"),
                               onPressed: () {
                                 Navigator.pop(context);
                               },
                             ),
-                            new FlatButton(
+                            FlatButton(
                               textColor: Colors.red[700],
-                              child: new Text("Remove"),
+                              child: Text("Remove"),
                               onPressed: () {
                                 Navigator.pop(context);
                               },
@@ -702,7 +938,7 @@ class DevicePage extends StatelessWidget {
                           MaterialButton(
                             onPressed: () {},
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0),
+                              borderRadius: BorderRadius.circular(6.0),
                             ),
                             color: Colors.black,
                             child: Text(
@@ -748,7 +984,7 @@ class DevicePage extends StatelessWidget {
                           MaterialButton(
                             onPressed: () {},
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0),
+                              borderRadius: BorderRadius.circular(6.0),
                             ),
                             color: Colors.black,
                             child: Text(
@@ -930,7 +1166,7 @@ class Item extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new Material(
+    return Material(
       borderRadius: BorderRadius.circular(4),
       child: Ink(
         decoration: BoxDecoration(
@@ -942,7 +1178,7 @@ class Item extends StatelessWidget {
           onTap: () {
             Navigator.push(
               context,
-              new FadeRoute(builder: (context) => page),
+              FadeRoute(builder: (context) => page),
             );
           },
           child: Center(
