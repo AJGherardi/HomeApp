@@ -83,8 +83,9 @@ class AddHubPage extends StatelessWidget {
                   ],
                 ),
               ),
-              MaterialButton(
-                onPressed: () {
+              NextButton(
+                "Add",
+                () {
                   Navigator.push(
                     context,
                     FadeRoute(
@@ -92,20 +93,33 @@ class AddHubPage extends StatelessWidget {
                     ),
                   );
                 },
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(6.0),
-                ),
-                color: Colors.black,
-                child: Text(
-                  'Add',
-                  style: TextStyle(color: Colors.white),
-                ),
-                minWidth: 250,
-              )
+              ),
             ],
           ),
         ),
       ),
+    );
+  }
+}
+
+class NextButton extends StatelessWidget {
+  NextButton(this.text, this.onPress);
+  final String text;
+  final Function onPress;
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialButton(
+      onPressed: onPress,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(6.0),
+      ),
+      color: Colors.black,
+      child: Text(
+        text,
+        style: TextStyle(color: Colors.white),
+      ),
+      minWidth: 300,
     );
   }
 }
@@ -164,8 +178,9 @@ class AddHubSplash extends StatelessWidget {
                 "assets/outlet.svg",
                 width: 260,
               ),
-              MaterialButton(
-                onPressed: () {
+              NextButton(
+                "Next",
+                () {
                   Navigator.push(
                     context,
                     FadeRoute(
@@ -173,18 +188,7 @@ class AddHubSplash extends StatelessWidget {
                     ),
                   );
                 },
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(6.0),
-                ),
-                color: Colors.black,
-                child: Text(
-                  'Next',
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),
-                ),
-                minWidth: 260,
-              )
+              ),
             ],
           ),
         ),
@@ -236,22 +240,16 @@ class WelcomePage extends StatelessWidget {
                 alignment: Alignment.bottomCenter,
                 child: Container(
                   margin: EdgeInsets.all(24),
-                  child: MaterialButton(
-                    onPressed: () {
+                  child: NextButton(
+                    "Add",
+                    () {
                       Navigator.push(
                         context,
-                        FadeRoute(builder: (context) => AddHubSplash()),
+                        FadeRoute(
+                          builder: (context) => AddHubSplash(),
+                        ),
                       );
                     },
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(6.0),
-                    ),
-                    color: Colors.black,
-                    child: Text(
-                      'Add',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    minWidth: 250,
                   ),
                 ),
               ),
@@ -318,91 +316,79 @@ class AddGroupPage extends StatelessWidget {
                   ],
                 ),
               ),
-              MaterialButton(
-                onPressed: () {
-                  showModalBottomSheet(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(14),
-                        topRight: Radius.circular(14),
-                      ),
-                    ),
-                    context: context,
-                    builder: (BuildContext bc) {
-                      return AnimatedPadding(
-                        padding: MediaQuery.of(context).viewInsets,
-                        duration: const Duration(milliseconds: 100),
-                        curve: Curves.decelerate,
-                        child: Container(
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: <Widget>[
-                              Container(
-                                margin: EdgeInsets.all(16),
-                                child: Text(
-                                  "Set Name",
-                                  textAlign: TextAlign.center,
-                                  style: GoogleFonts.roboto(
-                                    fontWeight: FontWeight.w900,
-                                    fontSize: 36,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                margin: EdgeInsets.all(16),
-                                child: TextField(
-                                  cursorColor: Colors.yellow[400],
-                                  decoration: InputDecoration(
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: Colors.yellow[400], width: 3),
-                                    ),
-                                    hintText: "Type name hear",
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(6.0),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                margin: EdgeInsets.all(16),
-                                child: MaterialButton(
-                                  onPressed: () {},
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(6.0),
-                                  ),
-                                  color: Colors.black,
-                                  child: Text(
-                                    'Add',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                  minWidth: 300,
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      );
-                    },
-                  );
+              NextButton(
+                "Add",
+                () {
+                  showSetNameSheet(context);
                 },
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(6.0),
-                ),
-                color: Colors.black,
-                child: Text(
-                  'Add',
-                  style: TextStyle(color: Colors.white),
-                ),
-                minWidth: 250,
-              )
+              ),
             ],
           ),
         ),
       ),
     );
   }
+}
+
+void showSetNameSheet(context) {
+  showModalBottomSheet(
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(14),
+        topRight: Radius.circular(14),
+      ),
+    ),
+    context: context,
+    builder: (BuildContext bc) {
+      return AnimatedPadding(
+        padding: MediaQuery.of(context).viewInsets,
+        duration: const Duration(milliseconds: 100),
+        curve: Curves.decelerate,
+        child: Container(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Container(
+                margin: EdgeInsets.all(16),
+                child: Text(
+                  "Set Name",
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.roboto(
+                    fontWeight: FontWeight.w900,
+                    fontSize: 36,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.all(16),
+                child: TextField(
+                  cursorColor: Colors.yellow[400],
+                  decoration: InputDecoration(
+                    focusedBorder: OutlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Colors.yellow[400], width: 3),
+                    ),
+                    hintText: "Type name hear",
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(6.0),
+                    ),
+                  ),
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.all(16),
+                child: NextButton(
+                  "Add",
+                  () {},
+                ),
+              )
+            ],
+          ),
+        ),
+      );
+    },
+  );
 }
 
 class AddDevicePage extends StatelessWidget {
@@ -417,9 +403,10 @@ class AddDevicePage extends StatelessWidget {
               Text(
                 "Add Device",
                 style: GoogleFonts.roboto(
-                    fontWeight: FontWeight.w900,
-                    fontSize: 48,
-                    color: Colors.black),
+                  fontWeight: FontWeight.w900,
+                  fontSize: 48,
+                  color: Colors.black,
+                ),
               ),
               Container(
                 margin: EdgeInsets.fromLTRB(28, 0, 28, 0),
@@ -459,85 +446,12 @@ class AddDevicePage extends StatelessWidget {
                   ],
                 ),
               ),
-              MaterialButton(
-                onPressed: () {
-                  showModalBottomSheet(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(14),
-                        topRight: Radius.circular(14),
-                      ),
-                    ),
-                    context: context,
-                    builder: (BuildContext bc) {
-                      return AnimatedPadding(
-                        padding: MediaQuery.of(context).viewInsets,
-                        duration: const Duration(milliseconds: 100),
-                        curve: Curves.decelerate,
-                        child: Container(
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: <Widget>[
-                              Container(
-                                margin: EdgeInsets.all(16),
-                                child: Text(
-                                  "Set Name",
-                                  textAlign: TextAlign.center,
-                                  style: GoogleFonts.roboto(
-                                    fontWeight: FontWeight.w900,
-                                    fontSize: 36,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                margin: EdgeInsets.all(16),
-                                child: TextField(
-                                  cursorColor: Colors.yellow[400],
-                                  decoration: InputDecoration(
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: Colors.yellow[400], width: 3),
-                                    ),
-                                    hintText: "Type name hear",
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(5.0),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                margin: EdgeInsets.all(16),
-                                child: MaterialButton(
-                                  onPressed: () {},
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12.0),
-                                  ),
-                                  color: Colors.black,
-                                  child: Text(
-                                    'Add',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                  minWidth: 300,
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      );
-                    },
-                  );
+              NextButton(
+                "Add",
+                () {
+                  showSetNameSheet(context);
                 },
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(6.0),
-                ),
-                color: Colors.black,
-                child: Text(
-                  'Add',
-                  style: TextStyle(color: Colors.white),
-                ),
-                minWidth: 250,
-              )
+              ),
             ],
           ),
         ),
@@ -673,33 +587,24 @@ class AddGroupSplash extends StatelessWidget {
               Text(
                 "Add a Group",
                 style: GoogleFonts.roboto(
-                    fontWeight: FontWeight.w900,
-                    fontSize: 48,
-                    color: Colors.black),
+                  fontWeight: FontWeight.w900,
+                  fontSize: 48,
+                  color: Colors.black,
+                ),
               ),
               SvgPicture.asset(
                 "assets/outlet.svg",
                 width: 260,
               ),
-              MaterialButton(
-                onPressed: () {
+              NextButton(
+                "Next",
+                () {
                   Navigator.push(
                     context,
                     FadeRoute(builder: (context) => AddGroupPage()),
                   );
                 },
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(6.0),
-                ),
-                color: Colors.black,
-                child: Text(
-                  'Next',
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),
-                ),
-                minWidth: 260,
-              )
+              ),
             ],
           ),
         ),
@@ -728,25 +633,15 @@ class AddDeviceSplash extends StatelessWidget {
                 "assets/outlet.svg",
                 width: 260,
               ),
-              MaterialButton(
-                onPressed: () {
+              NextButton(
+                "Next",
+                () {
                   Navigator.push(
                     context,
                     FadeRoute(builder: (context) => AvailableGroupsPage()),
                   );
                 },
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(6.0),
-                ),
-                color: Colors.black,
-                child: Text(
-                  'Next',
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),
-                ),
-                minWidth: 260,
-              )
+              ),
             ],
           ),
         ),
@@ -820,6 +715,36 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
+void showRemoveDialog(context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text("Remove Group"),
+        content: Text(
+          "Are you sure you want to remove this group",
+        ),
+        actions: <Widget>[
+          FlatButton(
+            textColor: Colors.black,
+            child: Text("Close"),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+          FlatButton(
+            textColor: Colors.red[700],
+            child: Text("Remove"),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+        ],
+      );
+    },
+  );
+}
+
 class DevicePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -844,33 +769,7 @@ class DevicePage extends StatelessWidget {
                   iconSize: 36,
                   color: Colors.black,
                   onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: Text("Remove Group"),
-                          content: Text(
-                            "Are you sure you want to remove this group",
-                          ),
-                          actions: <Widget>[
-                            FlatButton(
-                              textColor: Colors.black,
-                              child: Text("Close"),
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                            ),
-                            FlatButton(
-                              textColor: Colors.red[700],
-                              child: Text("Remove"),
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                            ),
-                          ],
-                        );
-                      },
-                    );
+                    showRemoveDialog(context);
                   },
                 ),
               ],
