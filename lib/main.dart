@@ -1,6 +1,7 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -820,11 +821,11 @@ class ManagePage extends StatelessWidget {
 class ActionsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: <Widget>[
-          Container(
+    return CustomScrollView(
+      slivers: <Widget>[
+        SliverToBoxAdapter(
+          child: Center(
+              child: Container(
             margin: EdgeInsets.all(36),
             child: Text(
               "Actions",
@@ -833,20 +834,17 @@ class ActionsPage extends StatelessWidget {
                 fontSize: 34,
               ),
             ),
+          )),
+        ),
+        SliverList(
+          delegate: SliverChildBuilderDelegate(
+            (BuildContext context, int index) {
+              return ListItem("Action", null);
+            },
+            childCount: 22,
           ),
-          Expanded(
-            child: ListView.builder(
-              shrinkWrap: true,
-              physics: BouncingScrollPhysics(),
-              padding: EdgeInsets.only(left: 24, right: 24),
-              itemCount: 12,
-              itemBuilder: (BuildContext ctxt, int index) {
-                return new ListItem("Action", null);
-              },
-            ),
-          ),
-        ],
-      ),
+        )
+      ],
     );
   }
 }
@@ -854,24 +852,36 @@ class ActionsPage extends StatelessWidget {
 class ControlPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        GridView.count(
-          shrinkWrap: true,
-          physics: BouncingScrollPhysics(),
-          padding: EdgeInsets.all(24.0),
-          mainAxisSpacing: 24,
-          crossAxisSpacing: 24,
-          crossAxisCount: 2,
+    return ListView.builder(
+      padding: EdgeInsets.only(top: 12),
+      itemCount: 5,
+      itemBuilder: (BuildContext ctxt, int index) {
+        return Column(
           children: <Widget>[
-            Item("Group", DevicePage()),
-            Item("Group", DevicePage()),
-            Item("Group", DevicePage()),
-            Item("Group", DevicePage()),
-            Item("Group", DevicePage()),
+            Text(
+              "Alexander's Room",
+              style: GoogleFonts.roboto(
+                fontWeight: FontWeight.w900,
+                fontSize: 26,
+              ),
+            ),
+            GridView.count(
+              shrinkWrap: true,
+              physics: BouncingScrollPhysics(),
+              padding: EdgeInsets.all(12.0),
+              mainAxisSpacing: 24,
+              crossAxisSpacing: 24,
+              crossAxisCount: 2,
+              children: <Widget>[
+                Item("Device", DevicePage()),
+                Item("Device", DevicePage()),
+                Item("Device", DevicePage()),
+                Item("Device", DevicePage()),
+              ],
+            ),
           ],
-        ),
-      ],
+        );
+      },
     );
   }
 }
