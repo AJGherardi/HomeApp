@@ -33,69 +33,65 @@ class AddHubPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              Text(
-                "Add Hub",
-                style: GoogleFonts.roboto(
-                  fontWeight: FontWeight.w900,
-                  fontSize: 48,
-                  color: Colors.black,
-                ),
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: <Widget>[
+            Text(
+              "Add Hub",
+              style: GoogleFonts.roboto(
+                fontWeight: FontWeight.w900,
+                fontSize: 48,
+                color: Colors.black,
               ),
-              Container(
-                margin: EdgeInsets.fromLTRB(28, 0, 28, 0),
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.black),
-                  borderRadius: BorderRadius.circular(4),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Container(
-                      margin: EdgeInsets.all(36),
-                      child: SvgPicture.asset(
-                        "assets/range.svg",
-                        width: 250,
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(left: 18, right: 18),
-                      child: Divider(
-                        thickness: 2,
-                        color: Colors.black,
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.all(36),
-                      child: Text(
-                        "A hub is required",
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.roboto(
-                          fontWeight: FontWeight.w900,
-                          fontSize: 36,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+            ),
+            Container(
+              margin: EdgeInsets.all(24),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(4),
+                border: Border.all(color: Colors.black),
               ),
-              NextButton(
-                "Add",
-                () {
-                  Navigator.push(
-                    context,
-                    FadeRoute(
-                      builder: (context) => HomePage(),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  SizedBox(height: 36),
+                  SvgPicture.asset(
+                    "assets/range.svg",
+                    width: 250,
+                  ),
+                  SizedBox(height: 36),
+                  Container(
+                    margin: EdgeInsets.only(left: 18, right: 18),
+                    child: Divider(
+                      thickness: 2,
+                      color: Colors.black,
                     ),
-                  );
-                },
+                  ),
+                  SizedBox(height: 24),
+                  Text(
+                    "A hub is required",
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.roboto(
+                      fontWeight: FontWeight.w900,
+                      fontSize: 36,
+                      color: Colors.black,
+                    ),
+                  ),
+                  SizedBox(height: 24)
+                ],
               ),
-            ],
-          ),
+            ),
+            NextButton(
+              "Add",
+              () {
+                Navigator.push(
+                  context,
+                  FadeRoute(
+                    builder: (context) => HomePage(),
+                  ),
+                );
+              },
+            ),
+          ],
         ),
       ),
     );
@@ -267,64 +263,60 @@ class AddGroupPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              Text(
-                "Add Group",
-                style: GoogleFonts.roboto(
-                  fontWeight: FontWeight.w900,
-                  fontSize: 48,
-                  color: Colors.black,
-                ),
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: <Widget>[
+            Text(
+              "Add Group",
+              style: GoogleFonts.roboto(
+                fontWeight: FontWeight.w900,
+                fontSize: 48,
+                color: Colors.black,
               ),
-              Container(
-                margin: EdgeInsets.fromLTRB(28, 0, 28, 0),
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.black),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Container(
-                      margin: EdgeInsets.all(36),
-                      child: SvgPicture.asset(
-                        "assets/range.svg",
-                        width: 250,
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(left: 18, right: 18),
-                      child: Divider(
-                        thickness: 2,
-                        color: Colors.black,
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.all(36),
-                      child: Text(
-                        "A group is a collection of devices",
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.roboto(
-                          fontWeight: FontWeight.w900,
-                          fontSize: 36,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+            ),
+            Container(
+              margin: EdgeInsets.all(24),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(4),
+                border: Border.all(color: Colors.black),
               ),
-              NextButton(
-                "Add",
-                () {
-                  showSetNameSheet(context);
-                },
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  SizedBox(height: 36),
+                  SvgPicture.asset(
+                    "assets/range.svg",
+                    width: 250,
+                  ),
+                  SizedBox(height: 36),
+                  Container(
+                    margin: EdgeInsets.only(left: 18, right: 18),
+                    child: Divider(
+                      thickness: 2,
+                      color: Colors.black,
+                    ),
+                  ),
+                  SizedBox(height: 24),
+                  Text(
+                    "A group is a collection of devices",
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.roboto(
+                      fontWeight: FontWeight.w900,
+                      fontSize: 36,
+                      color: Colors.black,
+                    ),
+                  ),
+                  SizedBox(height: 24)
+                ],
               ),
-            ],
-          ),
+            ),
+            NextButton(
+              "Add",
+              () {
+                showSetNameSheet(context);
+              },
+            ),
+          ],
         ),
       ),
     );
@@ -342,50 +334,40 @@ void showSetNameSheet(context) {
     context: context,
     builder: (BuildContext bc) {
       return AnimatedPadding(
-        padding: MediaQuery.of(context).viewInsets,
+        padding: EdgeInsets.all(24),
         duration: const Duration(milliseconds: 100),
         curve: Curves.decelerate,
-        child: Container(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              Container(
-                margin: EdgeInsets.all(16),
-                child: Text(
-                  "Set Name",
-                  textAlign: TextAlign.center,
-                  style: GoogleFonts.roboto(
-                    fontWeight: FontWeight.w900,
-                    fontSize: 36,
-                    color: Colors.black,
-                  ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Text(
+              "Set Name",
+              textAlign: TextAlign.center,
+              style: GoogleFonts.roboto(
+                fontWeight: FontWeight.w900,
+                fontSize: 36,
+                color: Colors.black,
+              ),
+            ),
+            SizedBox(height: 24),
+            TextField(
+              cursorColor: Colors.yellow[400],
+              decoration: InputDecoration(
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.yellow[400], width: 3),
+                ),
+                hintText: "Type name hear",
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(6.0),
                 ),
               ),
-              Container(
-                margin: EdgeInsets.all(16),
-                child: TextField(
-                  cursorColor: Colors.yellow[400],
-                  decoration: InputDecoration(
-                    focusedBorder: OutlineInputBorder(
-                      borderSide:
-                          BorderSide(color: Colors.yellow[400], width: 3),
-                    ),
-                    hintText: "Type name hear",
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(6.0),
-                    ),
-                  ),
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.all(16),
-                child: NextButton(
-                  "Add",
-                  () {},
-                ),
-              )
-            ],
-          ),
+            ),
+            SizedBox(height: 24),
+            NextButton(
+              "Add",
+              () {},
+            ),
+          ],
         ),
       );
     },
@@ -397,64 +379,60 @@ class AddDevicePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              Text(
-                "Add Device",
-                style: GoogleFonts.roboto(
-                  fontWeight: FontWeight.w900,
-                  fontSize: 48,
-                  color: Colors.black,
-                ),
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: <Widget>[
+            Text(
+              "Add Device",
+              style: GoogleFonts.roboto(
+                fontWeight: FontWeight.w900,
+                fontSize: 48,
+                color: Colors.black,
               ),
-              Container(
-                margin: EdgeInsets.fromLTRB(28, 0, 28, 0),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: Colors.black),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Container(
-                      margin: EdgeInsets.all(36),
-                      child: SvgPicture.asset(
-                        "assets/range.svg",
-                        width: 250,
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(left: 18, right: 18),
-                      child: Divider(
-                        thickness: 2,
-                        color: Colors.black,
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.all(36),
-                      child: Text(
-                        "This may take a minute",
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.roboto(
-                          fontWeight: FontWeight.w900,
-                          fontSize: 36,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+            ),
+            Container(
+              margin: EdgeInsets.all(24),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(4),
+                border: Border.all(color: Colors.black),
               ),
-              NextButton(
-                "Add",
-                () {
-                  showSetNameSheet(context);
-                },
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  SizedBox(height: 36),
+                  SvgPicture.asset(
+                    "assets/range.svg",
+                    width: 250,
+                  ),
+                  SizedBox(height: 36),
+                  Container(
+                    margin: EdgeInsets.only(left: 18, right: 18),
+                    child: Divider(
+                      thickness: 2,
+                      color: Colors.black,
+                    ),
+                  ),
+                  SizedBox(height: 24),
+                  Text(
+                    "This may take a minute",
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.roboto(
+                      fontWeight: FontWeight.w900,
+                      fontSize: 36,
+                      color: Colors.black,
+                    ),
+                  ),
+                  SizedBox(height: 24)
+                ],
               ),
-            ],
-          ),
+            ),
+            NextButton(
+              "Add",
+              () {
+                showSetNameSheet(context);
+              },
+            ),
+          ],
         ),
       ),
     );
@@ -543,14 +521,14 @@ class ListItem extends StatelessWidget {
     return Container(
       margin: EdgeInsets.all(8),
       child: Material(
-        borderRadius: BorderRadius.circular(6),
+        borderRadius: BorderRadius.circular(4),
         child: Ink(
           decoration: BoxDecoration(
             border: Border.all(color: Colors.black),
-            borderRadius: BorderRadius.circular(6),
+            borderRadius: BorderRadius.circular(4),
           ),
           child: InkWell(
-            borderRadius: BorderRadius.circular(6),
+            borderRadius: BorderRadius.circular(4),
             onTap: () {
               Navigator.push(
                 context,
@@ -558,7 +536,7 @@ class ListItem extends StatelessWidget {
               );
             },
             child: Container(
-              margin: EdgeInsets.all(10),
+              margin: EdgeInsets.all(8),
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -755,29 +733,30 @@ class DevicePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Column(
-          children: <Widget>[
-            Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                TopIcon(
-                  Icons.chevron_left,
-                  () {
-                    Navigator.pop(context);
-                  },
-                ),
-                TopIcon(
-                  Icons.remove_circle_outline,
-                  () {
-                    showRemoveDialog(context);
-                  },
-                ),
-              ],
-            ),
-            Container(
-              margin: EdgeInsets.all(12),
-              child: Row(
+        body: Container(
+          margin: EdgeInsets.all(12),
+          child: Column(
+            children: <Widget>[
+              Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  TopIcon(
+                    Icons.chevron_left,
+                    () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                  TopIcon(
+                    Icons.remove_circle_outline,
+                    () {
+                      showRemoveDialog(context);
+                    },
+                  ),
+                ],
+              ),
+              SizedBox(height: 12),
+              Row(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
@@ -809,10 +788,12 @@ class DevicePage extends StatelessWidget {
                   ),
                 ],
               ),
-            ),
-            ControlItem(),
-            ControlItem(),
-          ],
+              SizedBox(height: 24),
+              ControlItem(),
+              SizedBox(height: 12),
+              ControlItem(),
+            ],
+          ),
         ),
       ),
     );
@@ -840,10 +821,9 @@ class ControlItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Flexible(
       child: Container(
-        margin: EdgeInsets.all(12),
         decoration: BoxDecoration(
           border: Border.all(color: Colors.black),
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(4),
         ),
         child: Row(
           mainAxisSize: MainAxisSize.max,
