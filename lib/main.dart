@@ -49,7 +49,7 @@ class AddHubPage extends StatelessWidget {
                 margin: EdgeInsets.fromLTRB(28, 0, 28, 0),
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.black),
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(4),
                 ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -128,33 +128,34 @@ class AvailableHubsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-        body: Center(
-          child: Column(
-            children: <Widget>[
-              Text(
-                "Available Hubs",
-                style: GoogleFonts.roboto(
+        child: Scaffold(
+      body: CustomScrollView(
+        slivers: <Widget>[
+          SliverToBoxAdapter(
+            child: Center(
+              child: Container(
+                margin: EdgeInsets.all(36),
+                child: Text(
+                  "Available Hubs",
+                  style: GoogleFonts.roboto(
                     fontWeight: FontWeight.w900,
-                    fontSize: 48,
-                    color: Colors.black),
-              ),
-              Expanded(
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  physics: BouncingScrollPhysics(),
-                  padding: EdgeInsets.all(24.0),
-                  itemCount: 12,
-                  itemBuilder: (BuildContext ctxt, int index) {
-                    return ListItem("Hub", AddHubPage());
-                  },
+                    fontSize: 34,
+                  ),
                 ),
               ),
-            ],
+            ),
           ),
-        ),
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (BuildContext context, int index) {
+                return ListItem("Hub", AddHubPage());
+              },
+              childCount: 22,
+            ),
+          ),
+        ],
       ),
-    );
+    ));
   }
 }
 
@@ -241,7 +242,7 @@ class WelcomePage extends StatelessWidget {
                 child: Container(
                   margin: EdgeInsets.all(24),
                   child: NextButton(
-                    "Add",
+                    "Next",
                     () {
                       Navigator.push(
                         context,
@@ -465,29 +466,31 @@ class AvailableGroupsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Center(
-          child: Column(
-            children: <Widget>[
-              Text(
-                "Available Groups",
-                style: GoogleFonts.roboto(
-                    fontWeight: FontWeight.w900,
-                    fontSize: 48,
-                    color: Colors.black),
-              ),
-              Expanded(
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  physics: BouncingScrollPhysics(),
-                  padding: EdgeInsets.all(24.0),
-                  itemCount: 12,
-                  itemBuilder: (BuildContext ctxt, int index) {
-                    return ListItem("Group", AvailableDevicesPage());
-                  },
+        body: CustomScrollView(
+          slivers: <Widget>[
+            SliverToBoxAdapter(
+              child: Center(
+                child: Container(
+                  margin: EdgeInsets.all(36),
+                  child: Text(
+                    "Available Groups",
+                    style: GoogleFonts.roboto(
+                      fontWeight: FontWeight.w900,
+                      fontSize: 34,
+                    ),
+                  ),
                 ),
               ),
-            ],
-          ),
+            ),
+            SliverList(
+              delegate: SliverChildBuilderDelegate(
+                (BuildContext context, int index) {
+                  return ListItem("Group", AvailableDevicesPage());
+                },
+                childCount: 22,
+              ),
+            )
+          ],
         ),
       ),
     );
@@ -499,29 +502,31 @@ class AvailableDevicesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Center(
-          child: Column(
-            children: <Widget>[
-              Text(
-                "Available Devices",
-                style: GoogleFonts.roboto(
-                    fontWeight: FontWeight.w900,
-                    fontSize: 48,
-                    color: Colors.black),
-              ),
-              Flexible(
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  physics: BouncingScrollPhysics(),
-                  padding: EdgeInsets.all(24.0),
-                  itemCount: 12,
-                  itemBuilder: (BuildContext ctxt, int index) {
-                    return ListItem("Device", AddDevicePage());
-                  },
+        body: CustomScrollView(
+          slivers: <Widget>[
+            SliverToBoxAdapter(
+              child: Center(
+                child: Container(
+                  margin: EdgeInsets.all(36),
+                  child: Text(
+                    "Available Devices",
+                    style: GoogleFonts.roboto(
+                      fontWeight: FontWeight.w900,
+                      fontSize: 34,
+                    ),
+                  ),
                 ),
               ),
-            ],
-          ),
+            ),
+            SliverList(
+              delegate: SliverChildBuilderDelegate(
+                (BuildContext context, int index) {
+                  return ListItem("Device", AddDevicePage());
+                },
+                childCount: 22,
+              ),
+            )
+          ],
         ),
       ),
     );
@@ -756,150 +761,123 @@ class DevicePage extends StatelessWidget {
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                IconButton(
-                  icon: Icon(Icons.chevron_left),
-                  iconSize: 36,
-                  color: Colors.black,
-                  onPressed: () {
+                TopIcon(
+                  Icons.chevron_left,
+                  () {
                     Navigator.pop(context);
                   },
                 ),
-                IconButton(
-                  icon: Icon(Icons.remove_circle_outline),
-                  iconSize: 36,
-                  color: Colors.black,
-                  onPressed: () {
+                TopIcon(
+                  Icons.remove_circle_outline,
+                  () {
                     showRemoveDialog(context);
                   },
                 ),
               ],
             ),
-            Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+            Container(
+              margin: EdgeInsets.all(12),
+              child: Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  SvgPicture.asset(
+                    "assets/plug.svg",
+                    width: 80,
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: <Widget>[
+                      Text(
+                        "Left outlet",
+                        style: GoogleFonts.roboto(
+                          fontWeight: FontWeight.w900,
+                          fontSize: 32,
+                          color: Colors.black,
+                        ),
+                      ),
+                      Text(
+                        "Living room",
+                        style: GoogleFonts.roboto(
+                          fontWeight: FontWeight.w900,
+                          fontSize: 24,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            ControlItem(),
+            ControlItem(),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class TopIcon extends StatelessWidget {
+  TopIcon(this.icon, this.onPressed);
+  final IconData icon;
+  final Function onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      icon: Icon(icon),
+      iconSize: 36,
+      color: Colors.black,
+      onPressed: onPressed,
+    );
+  }
+}
+
+class ControlItem extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Flexible(
+      child: Container(
+        margin: EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.black),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: <Widget>[
+            SvgPicture.asset(
+              "assets/power.svg",
+              width: 120,
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                SvgPicture.asset(
-                  "assets/plug.svg",
-                  width: 120,
+                Text(
+                  "State",
+                  style: GoogleFonts.roboto(
+                    fontWeight: FontWeight.w900,
+                    fontSize: 36,
+                    color: Colors.black,
+                  ),
                 ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: <Widget>[
-                    Text(
-                      "Left outlet",
-                      style: GoogleFonts.roboto(
-                        fontWeight: FontWeight.w900,
-                        fontSize: 32,
-                        color: Colors.black,
-                      ),
-                    ),
-                    Text(
-                      "Living room",
-                      style: GoogleFonts.roboto(
-                        fontWeight: FontWeight.w900,
-                        fontSize: 24,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ],
-                ),
+                MaterialButton(
+                  onPressed: () {},
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(6.0),
+                  ),
+                  color: Colors.black,
+                  child: Text(
+                    'Off',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                )
               ],
-            ),
-            Flexible(
-              child: Container(
-                margin: EdgeInsets.fromLTRB(24, 36, 24, 12),
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.black),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Center(
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: <Widget>[
-                      SvgPicture.asset(
-                        "assets/power.svg",
-                        width: 120,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Text(
-                            "State",
-                            style: GoogleFonts.roboto(
-                              fontWeight: FontWeight.w900,
-                              fontSize: 36,
-                              color: Colors.black,
-                            ),
-                          ),
-                          MaterialButton(
-                            onPressed: () {},
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(6.0),
-                            ),
-                            color: Colors.black,
-                            child: Text(
-                              'Off',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          )
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            Flexible(
-              child: Container(
-                margin: EdgeInsets.fromLTRB(24, 12, 24, 36),
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.black),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Center(
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: <Widget>[
-                      SvgPicture.asset(
-                        "assets/power.svg",
-                        width: 120,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Text(
-                            "State",
-                            style: GoogleFonts.roboto(
-                              fontWeight: FontWeight.w900,
-                              fontSize: 36,
-                              color: Colors.black,
-                            ),
-                          ),
-                          MaterialButton(
-                            onPressed: () {},
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(6.0),
-                            ),
-                            color: Colors.black,
-                            child: Text(
-                              'Off',
-                              style: TextStyle(
-                                color: Colors.white,
-                              ),
-                            ),
-                          )
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            ),
+            )
           ],
         ),
       ),
@@ -960,16 +938,17 @@ class ActionsPage extends StatelessWidget {
       slivers: <Widget>[
         SliverToBoxAdapter(
           child: Center(
-              child: Container(
-            margin: EdgeInsets.all(36),
-            child: Text(
-              "Actions",
-              style: GoogleFonts.roboto(
-                fontWeight: FontWeight.w900,
-                fontSize: 34,
+            child: Container(
+              margin: EdgeInsets.all(36),
+              child: Text(
+                "Actions",
+                style: GoogleFonts.roboto(
+                  fontWeight: FontWeight.w900,
+                  fontSize: 34,
+                ),
               ),
             ),
-          )),
+          ),
         ),
         SliverList(
           delegate: SliverChildBuilderDelegate(
@@ -987,36 +966,55 @@ class ActionsPage extends StatelessWidget {
 class ControlPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      padding: EdgeInsets.only(top: 12),
-      itemCount: 5,
-      itemBuilder: (BuildContext ctxt, int index) {
-        return Column(
-          children: <Widget>[
-            Text(
-              "Alexander's Room",
-              style: GoogleFonts.roboto(
-                fontWeight: FontWeight.w900,
-                fontSize: 26,
+    return CustomScrollView(
+      slivers: <Widget>[
+        SliverToBoxAdapter(
+          child: Center(
+            child: Container(
+              margin: EdgeInsets.all(36),
+              child: Text(
+                "Control",
+                style: GoogleFonts.roboto(
+                  fontWeight: FontWeight.w900,
+                  fontSize: 34,
+                ),
               ),
             ),
-            GridView.count(
-              shrinkWrap: true,
-              physics: BouncingScrollPhysics(),
-              padding: EdgeInsets.all(12.0),
-              mainAxisSpacing: 24,
-              crossAxisSpacing: 24,
-              crossAxisCount: 2,
-              children: <Widget>[
-                Item("Device", DevicePage()),
-                Item("Device", DevicePage()),
-                Item("Device", DevicePage()),
-                Item("Device", DevicePage()),
-              ],
-            ),
-          ],
-        );
-      },
+          ),
+        ),
+        SliverList(
+          delegate: SliverChildBuilderDelegate(
+            (BuildContext context, int index) {
+              return Column(
+                children: <Widget>[
+                  Text(
+                    "Room",
+                    style: GoogleFonts.roboto(
+                      fontWeight: FontWeight.w900,
+                      fontSize: 26,
+                    ),
+                  ),
+                  GridView.count(
+                    shrinkWrap: true,
+                    physics: BouncingScrollPhysics(),
+                    padding: EdgeInsets.all(12.0),
+                    mainAxisSpacing: 24,
+                    crossAxisSpacing: 24,
+                    crossAxisCount: 2,
+                    children: <Widget>[
+                      Item("Device", DevicePage()),
+                      Item("Device", DevicePage()),
+                      Item("Device", DevicePage()),
+                      Item("Device", DevicePage()),
+                    ],
+                  ),
+                ],
+              );
+            },
+            childCount: 22,
+          ),
+        )
+      ],
     );
   }
 }
@@ -1032,14 +1030,9 @@ class TopBar extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        IconButton(
-          icon: Icon(Icons.chevron_left),
-          iconSize: 36,
-          color: Colors.black,
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
+        TopIcon(Icons.chevron_left, () {
+          Navigator.pop(context);
+        }),
         Text(
           text,
           style: GoogleFonts.oleoScript(
@@ -1047,12 +1040,7 @@ class TopBar extends StatelessWidget {
             color: Colors.black,
           ),
         ),
-        IconButton(
-          icon: Icon(rightIcon),
-          iconSize: 36,
-          color: Colors.black,
-          onPressed: onPress,
-        )
+        TopIcon(rightIcon, onPress)
       ],
     );
   }
@@ -1083,11 +1071,11 @@ class Item extends StatelessWidget {
           child: Center(
             child: Column(
               mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 SvgPicture.asset(
                   "assets/plug.svg",
-                  width: 120,
+                  width: 100,
                 ),
                 Text(
                   text,
