@@ -5,12 +5,13 @@ import 'package:home/components/items.dart';
 import 'package:home/pages/addHubPage.dart';
 import 'package:multicast_dns/multicast_dns.dart';
 
-void find(Function(SrvResourceRecord service) add) async {
+Stream<List<SrvResourceRecord>> find() async* {
   var factory =
       (dynamic host, int port, {bool reuseAddress, bool reusePort, int ttl}) {
     return RawDatagramSocket.bind(host, port,
         reuseAddress: true, reusePort: false, ttl: 1);
   };
+  List<SrvResourceRecord> services = [];
   const String name = '_alexandergherardi._tcp.local';
   var client = MDnsClient(rawDatagramSocketFactory: factory);
   await client.start();
@@ -19,28 +20,18 @@ void find(Function(SrvResourceRecord service) add) async {
     await for (SrvResourceRecord srv in client.lookup<SrvResourceRecord>(
         ResourceRecordQuery.service(ptr.domainName))) {
       if (srv != null) {
-        add(srv);
+        services.add(srv);
+        yield services;
       }
     }
   }
   client.stop();
+  print("done");
 }
 
-class AvailableHubsPage extends StatefulWidget {
-  @override
-  _AvailableHubsPageState createState() => _AvailableHubsPageState();
-}
-
-class _AvailableHubsPageState extends State<AvailableHubsPage> {
-  List<SrvResourceRecord> services = [];
-
+class AvailableHubsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    find((service) {
-      setState(() {
-        services.add(service);
-      });
-    });
     return SafeArea(
       child: Scaffold(
         body: CustomScrollView(
@@ -59,17 +50,38 @@ class _AvailableHubsPageState extends State<AvailableHubsPage> {
                 ),
               ),
             ),
-            SliverList(
-              delegate: SliverChildBuilderDelegate(
-                (BuildContext context, int index) {
-                  return ListItem(
-                    services.elementAt(index).name,
-                    AddHubPage(),
+            StreamBuilder(
+              builder:
+                  (context, AsyncSnapshot<List<SrvResourceRecord>> snapshot) {
+                if (snapshot.hasData) {
+                  return SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                      (BuildContext context, int index) {
+                        return ListItem(
+                          snapshot.data.elementAt(index).target,
+                          AddHubPage(
+                            host: snapshot.data.elementAt(index).target,
+                          ),
+                        );
+                      },
+                      childCount: snapshot.data.length,
+                    ),
                   );
-                },
-                childCount: services.length,
-              ),
-            )
+                } else {
+                  return SliverFillRemaining(
+                    hasScrollBody: false,
+                    child: Center(
+                      child: CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                          Colors.red[700],
+                        ),
+                      ),
+                    ),
+                  );
+                }
+              },
+              stream: find(),
+            ),
           ],
         ),
       ),

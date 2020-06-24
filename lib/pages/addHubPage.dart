@@ -6,6 +6,9 @@ import 'package:home/components/routes.dart';
 import 'package:home/pages/homePage.dart';
 
 class AddHubPage extends StatelessWidget {
+  final String host;
+
+  AddHubPage({Key key, @required this.host}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return SafeArea(
