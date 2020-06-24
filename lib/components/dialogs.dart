@@ -1,14 +1,13 @@
-
 import 'package:flutter/material.dart';
 
-void showRemoveDialog(context) {
+void showRemoveDialog(context, type) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: Text("Remove Group"),
+        title: Text("Remove " + type),
         content: Text(
-          "Are you sure you want to remove this group",
+          "Are you sure you want to remove this " + type,
         ),
         actions: <Widget>[
           FlatButton(

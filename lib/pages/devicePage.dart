@@ -27,7 +27,7 @@ class DevicePage extends StatelessWidget {
                   TopIcon(
                     Icons.remove_circle_outline,
                     () {
-                      showRemoveDialog(context);
+                      showRemoveDialog(context, "Device");
                     },
                   ),
                 ],
