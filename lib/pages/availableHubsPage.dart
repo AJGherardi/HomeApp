@@ -5,13 +5,13 @@ import 'package:home/components/items.dart';
 import 'package:home/pages/addHubPage.dart';
 import 'package:multicast_dns/multicast_dns.dart';
 
-Stream<List<SrvResourceRecord>> find() async* {
+Stream<List<String>> find() async* {
   var factory =
       (dynamic host, int port, {bool reuseAddress, bool reusePort, int ttl}) {
     return RawDatagramSocket.bind(host, port,
         reuseAddress: true, reusePort: false, ttl: 1);
   };
-  List<SrvResourceRecord> services = [];
+  List<String> addresses = [];
   const String name = '_alexandergherardi._tcp.local';
   var client = MDnsClient(rawDatagramSocketFactory: factory);
   await client.start();
@@ -20,8 +20,13 @@ Stream<List<SrvResourceRecord>> find() async* {
     await for (SrvResourceRecord srv in client.lookup<SrvResourceRecord>(
         ResourceRecordQuery.service(ptr.domainName))) {
       if (srv != null) {
-        services.add(srv);
-        yield services;
+        await for (IPAddressResourceRecord record
+            in client.lookup<IPAddressResourceRecord>(
+                ResourceRecordQuery.addressIPv4(srv.target))) {
+          print('Found address (${record.address}).');
+          addresses.add(record.address.address);
+          yield addresses;
+        }
       }
     }
   }
@@ -52,15 +57,15 @@ class AvailableHubsPage extends StatelessWidget {
             ),
             StreamBuilder(
               builder:
-                  (context, AsyncSnapshot<List<SrvResourceRecord>> snapshot) {
+                  (context, AsyncSnapshot<List<String>> snapshot) {
                 if (snapshot.hasData) {
                   return SliverList(
                     delegate: SliverChildBuilderDelegate(
                       (BuildContext context, int index) {
                         return ListItem(
-                          snapshot.data.elementAt(index).target,
+                          snapshot.data.elementAt(index),
                           AddHubPage(
-                            host: snapshot.data.elementAt(index).target,
+                            host: snapshot.data.elementAt(index),
                           ),
                         );
                       },
