@@ -5,6 +5,16 @@ import 'package:home/components/buttons.dart';
 import 'package:home/components/routes.dart';
 import 'package:home/pages/homePage.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:home/services/store.dart';
+
+ValueNotifier<GraphQLClient> makeClient(String host) {
+  return ValueNotifier(
+    GraphQLClient(
+      cache: InMemoryCache(),
+      link: HttpLink(uri: "http://" + host + ":8080/graphql"),
+    ),
+  );
+}
 
 String configHub = """
   mutation ConfigHub {
@@ -12,26 +22,14 @@ String configHub = """
   }
 """;
 
-
-
 class AddHubPage extends StatelessWidget {
   final String host;
-
-  ValueNotifier<GraphQLClient> makeClient() {
-    print("http://" + this.host + ":8080/graphql");
-    return ValueNotifier(
-      GraphQLClient(
-        cache: InMemoryCache(),
-        link: HttpLink(uri: "http://" + "192.168.1.204" + ":8080/graphql"),
-      ),
-    );
-  }
 
   AddHubPage({Key key, @required this.host}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return GraphQLProvider(
-      client: makeClient(),
+      client: makeClient(this.host),
       child: SafeArea(
         child: Scaffold(
           body: Column(
@@ -85,7 +83,15 @@ class AddHubPage extends StatelessWidget {
                 options: MutationOptions(
                   documentNode: gql(configHub),
                   onCompleted: (dynamic resultData) {
-                    print(resultData);
+                    var data = resultData as Map<String, Object>;
+                    print(data["configHub"]);
+                    saveConnectionData(host, data["configHub"]);
+                    Navigator.push(
+                      context,
+                      FadeRoute(
+                        builder: (context) => HomePage(),
+                      ),
+                    );
                   },
                   onError: (OperationException error) {
                     print(error);
@@ -102,12 +108,6 @@ class AddHubPage extends StatelessWidget {
                     "Add",
                     () {
                       runMutation({});
-                      // Navigator.push(
-                      //   context,
-                      //   FadeRoute(
-                      //     builder: (context) => HomePage(),
-                      //   ),
-                      // );
                     },
                   );
                 },
