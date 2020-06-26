@@ -21,6 +21,7 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
+  connectivity: ^0.4.8+6
   flutter_secure_storage: ^3.3.3
   graphql_flutter: ^3.0.1
   multicast_dns: ^0.2.2

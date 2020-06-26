@@ -1,6 +1,6 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-void saveConnectionData(
+Future<void> saveConnectionData(
   String address,
   String webKey,
 ) async {
