@@ -70,7 +70,6 @@ class AddHubPage extends StatelessWidget {
               ),
             ),
             MutationWithoutWebKey(
-              host: this.host,
               onCompleted: (resultData) {
                 // Get webKey from result
                 var data = resultData as Map<String, Object>;

@@ -2,8 +2,11 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:home/components/items.dart';
+import 'package:home/components/routes.dart';
 import 'package:home/pages/addHubPage.dart';
+import 'package:home/services/graphql.dart';
 import 'package:multicast_dns/multicast_dns.dart';
+import 'package:provider/provider.dart';
 
 Stream<List<String>> find() async* {
   var factory =
@@ -56,18 +59,23 @@ class AvailableHubsPage extends StatelessWidget {
               ),
             ),
             StreamBuilder(
-              builder:
-                  (context, AsyncSnapshot<List<String>> snapshot) {
+              builder: (context, AsyncSnapshot<List<String>> snapshot) {
                 if (snapshot.hasData) {
                   return SliverList(
                     delegate: SliverChildBuilderDelegate(
                       (BuildContext context, int index) {
-                        return ListItem(
-                          snapshot.data.elementAt(index),
-                          AddHubPage(
-                            host: snapshot.data.elementAt(index),
-                          ),
-                        );
+                        return ListItem(snapshot.data.elementAt(index), () {
+                          Provider.of<ClientModel>(context, listen: false)
+                              .setHost(snapshot.data.elementAt(index));
+                          Navigator.push(
+                            context,
+                            FadeRoute(
+                              builder: (context) => AddHubPage(
+                                host: snapshot.data.elementAt(index),
+                              ),
+                            ),
+                          );
+                        });
                       },
                       childCount: snapshot.data.length,
                     ),

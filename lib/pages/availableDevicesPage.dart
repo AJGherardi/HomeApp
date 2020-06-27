@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:home/components/items.dart';
+import 'package:home/components/routes.dart';
 import 'package:home/pages/addDevicePage.dart';
 
 class AvailableDevicesPage extends StatelessWidget {
@@ -27,7 +28,17 @@ class AvailableDevicesPage extends StatelessWidget {
             SliverList(
               delegate: SliverChildBuilderDelegate(
                 (BuildContext context, int index) {
-                  return ListItem("Device", AddDevicePage());
+                  return ListItem(
+                    "Device",
+                    () {
+                      Navigator.push(
+                        context,
+                        FadeRoute(
+                          builder: (context) => AddDevicePage(),
+                        ),
+                      );
+                    },
+                  );
                 },
                 childCount: 22,
               ),

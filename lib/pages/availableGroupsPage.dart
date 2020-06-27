@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:home/components/items.dart';
+import 'package:home/components/routes.dart';
+import 'package:home/pages/addHubPage.dart';
 import 'package:home/pages/availableDevicesPage.dart';
 
 class AvailableGroupsPage extends StatelessWidget {
@@ -27,7 +29,17 @@ class AvailableGroupsPage extends StatelessWidget {
             SliverList(
               delegate: SliverChildBuilderDelegate(
                 (BuildContext context, int index) {
-                  return ListItem("Group", AvailableDevicesPage());
+                  return ListItem(
+                    "Group",
+                    () {
+                      Navigator.push(
+                        context,
+                        FadeRoute(
+                          builder: (context) => AvailableDevicesPage(),
+                        ),
+                      );
+                    },
+                  );
                 },
                 childCount: 22,
               ),

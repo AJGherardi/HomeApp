@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:home/components/items.dart';
+import 'package:home/components/routes.dart';
 import 'package:home/pages/addDeviceSplash.dart';
 import 'package:home/pages/addGroupSplash.dart';
 
@@ -24,11 +25,36 @@ class ManagePage extends StatelessWidget {
               ),
             ),
           ),
-          ListItem("Add Device", AddDeviceSplash()),
-          ListItem("Add Group", AddGroupSplash()),
-          ListItem("Remove Deivce", AddGroupSplash()),
-          ListItem("Remove Group", AddGroupSplash()),
-          ListItem("Reset", AddGroupSplash()),
+          ListItem("Add Device", () {
+            Navigator.push(
+              context,
+              FadeRoute(builder: (context) => AddDeviceSplash()),
+            );
+          }),
+          ListItem("Add Group", () {
+            Navigator.push(
+              context,
+              FadeRoute(builder: (context) => AddGroupSplash()),
+            );
+          }),
+          ListItem("Remove Deivce", () {
+            Navigator.push(
+              context,
+              FadeRoute(builder: (context) => AddDeviceSplash()),
+            );
+          }),
+          ListItem("Remove Group", () {
+            Navigator.push(
+              context,
+              FadeRoute(builder: (context) => AddDeviceSplash()),
+            );
+          }),
+          ListItem("Reset", () {
+            Navigator.push(
+              context,
+              FadeRoute(builder: (context) => AddDeviceSplash()),
+            );
+          }),
         ],
       ),
     );

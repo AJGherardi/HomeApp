@@ -100,9 +100,9 @@ class ControlItem extends StatelessWidget {
 }
 
 class ListItem extends StatelessWidget {
-  ListItem(this.text, this.page);
+  ListItem(this.text, this.onTap);
   final String text;
-  final Widget page;
+  final Function onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -117,12 +117,7 @@ class ListItem extends StatelessWidget {
           ),
           child: InkWell(
             borderRadius: BorderRadius.circular(4),
-            onTap: () {
-              Navigator.push(
-                context,
-                FadeRoute(builder: (context) => page),
-              );
-            },
+            onTap: onTap,
             child: Container(
               margin: EdgeInsets.all(8),
               child: Column(
