@@ -2,6 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
+Future<void> deleteConnectionData() async {
+  final storage = new FlutterSecureStorage();
+  // Remove values
+  await storage.deleteAll();
+}
+
 Future<void> saveConnectionData(
   String address,
   String webKey,

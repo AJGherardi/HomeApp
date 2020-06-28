@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:home/components/dialogs.dart';
 import 'package:home/components/items.dart';
 import 'package:home/components/routes.dart';
 import 'package:home/pages/addDeviceSplash.dart';
@@ -50,10 +51,7 @@ class ManagePage extends StatelessWidget {
             );
           }),
           ListItem("Reset", () {
-            Navigator.push(
-              context,
-              FadeRoute(builder: (context) => AddDeviceSplash()),
-            );
+            showResetDialog(context);
           }),
         ],
       ),

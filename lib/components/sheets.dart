@@ -9,7 +9,7 @@ import 'package:home/services/store.dart';
 import 'package:provider/provider.dart';
 
 String addGroup = """
-  mutation AddGroupMutation(\$name: String!) {
+  mutation AddGroup(\$name: String!) {
     addGroup(name: \$name) {
       name
       addr
