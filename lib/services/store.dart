@@ -10,30 +10,25 @@ Future<void> saveConnectionData(
   // Remove old values
   await storage.deleteAll();
   // Save values
+  print(address);
+  print(webKey);
   await storage.write(key: "address", value: address);
   await storage.write(key: "webKey", value: webKey);
 }
 
-class ConnectionData {
-  ConnectionData(String address, String webkey) {
-    this.address = address;
-    this.webKey = webKey;
-  }
-  String address, webKey;
-}
-
 Future<ClientModel> getClientModel() async {
   final storage = new FlutterSecureStorage();
-  await storage.deleteAll();
   String address = await storage.read(key: "address");
   String webKey = await storage.read(key: "webKey");
-  return ClientModel(address, webKey);
+  // Make model and set webKey
+  var model = ClientModel(address);
+  model.webKey = webKey;
+  return model;
 }
 
 class ClientModel {
-  ClientModel(String address, String webkey) {
+  ClientModel(String address) {
     setHost(address);
-    this.webKey = webKey;
   }
   String webKey;
   ValueNotifier<GraphQLClient> client = ValueNotifier(null);

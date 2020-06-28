@@ -71,15 +71,15 @@ class AddHubPage extends StatelessWidget {
               ),
             ),
             MutationWithBuilder(
-              onCompleted: (resultData) {
+              onCompleted: (resultData) async {
                 // Get webKey from result
-                var data = resultData as Map<String, Object>;
-                print(data["configHub"]);
+                final data = resultData as Map<String, Object>;
+                final webKey = data["configHub"];
                 // Set webKey in provider
                 Provider.of<ClientModel>(context, listen: false).webKey =
-                    data["configHub"];
+                    webKey;
                 // Save data for future use
-                saveConnectionData(host, data["configHub"]);
+                await saveConnectionData(host, webKey);
                 // Navagate to HomePage
                 Navigator.push(
                   context,
