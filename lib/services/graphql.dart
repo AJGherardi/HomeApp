@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
-class MutationWithoutWebKey extends StatelessWidget {
-  MutationWithoutWebKey({
+class MutationWithBuilder extends StatelessWidget {
+  MutationWithBuilder({
     @required this.onCompleted,
     @required this.query,
     @required this.builder,
@@ -25,21 +25,6 @@ class MutationWithoutWebKey extends StatelessWidget {
         },
       ),
       builder: builder,
-    );
-  }
-}
-
-class ClientModel {
-  ValueNotifier<GraphQLClient> client = ValueNotifier(
-    GraphQLClient(
-      cache: InMemoryCache(),
-      link: HttpLink(uri: "sss"),
-    ),
-  );
-  void setHost(String host) {
-    client.value = GraphQLClient(
-      cache: InMemoryCache(),
-      link: HttpLink(uri: "http://" + host + ":8080/graphql"),
     );
   }
 }

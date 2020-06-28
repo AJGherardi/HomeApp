@@ -1,9 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:home/components/items.dart';
 import 'package:home/components/routes.dart';
-import 'package:home/pages/addHubPage.dart';
 import 'package:home/pages/availableDevicesPage.dart';
+import 'package:home/services/store.dart';
+import 'package:provider/provider.dart';
+
+String listGroups = """
+  query ListGroupsQuery {
+    listGroups {
+      name
+      addr
+    }
+  }
+""";
 
 class AvailableGroupsPage extends StatelessWidget {
   @override
@@ -26,24 +37,49 @@ class AvailableGroupsPage extends StatelessWidget {
                 ),
               ),
             ),
-            SliverList(
-              delegate: SliverChildBuilderDelegate(
-                (BuildContext context, int index) {
-                  return ListItem(
-                    "Group",
-                    () {
-                      Navigator.push(
-                        context,
-                        FadeRoute(
-                          builder: (context) => AvailableDevicesPage(),
+            Query(
+              options: QueryOptions(
+                documentNode: gql(listGroups),
+                variables: {
+                  'webKey': Provider.of<ClientModel>(context).webKey,
+                },
+              ),
+              builder: (QueryResult result,
+                  {VoidCallback refetch, FetchMore fetchMore}) {
+                if (result.loading) {
+                  return SliverFillRemaining(
+                    hasScrollBody: false,
+                    child: Center(
+                      child: CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                          Colors.red[700],
                         ),
+                      ),
+                    ),
+                  );
+                }
+                List groups = result.data["listGroups"];
+                print(Provider.of<ClientModel>(context).webKey);
+                return SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    (BuildContext context, int index) {
+                      return ListItem(
+                        groups[index]["name"],
+                        () {
+                          Navigator.push(
+                            context,
+                            FadeRoute(
+                              builder: (context) => AvailableDevicesPage(),
+                            ),
+                          );
+                        },
                       );
                     },
-                  );
-                },
-                childCount: 22,
-              ),
-            )
+                    childCount: groups.length,
+                  ),
+                );
+              },
+            ),
           ],
         ),
       ),

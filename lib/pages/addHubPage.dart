@@ -7,6 +7,7 @@ import 'package:home/pages/homePage.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:home/services/graphql.dart';
 import 'package:home/services/store.dart';
+import 'package:provider/provider.dart';
 
 String configHub = """
   mutation ConfigHub {
@@ -69,11 +70,14 @@ class AddHubPage extends StatelessWidget {
                 ],
               ),
             ),
-            MutationWithoutWebKey(
+            MutationWithBuilder(
               onCompleted: (resultData) {
                 // Get webKey from result
                 var data = resultData as Map<String, Object>;
                 print(data["configHub"]);
+                // Set webKey in provider
+                Provider.of<ClientModel>(context, listen: false).webKey =
+                    data["configHub"];
                 // Save data for future use
                 saveConnectionData(host, data["configHub"]);
                 // Navagate to HomePage

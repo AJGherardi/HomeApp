@@ -59,7 +59,7 @@ class AddDevicePage extends StatelessWidget {
             NextButton(
               "Add",
               () {
-                showSetNameSheet(context);
+                showAddGroupSheet(context);
               },
             ),
           ],

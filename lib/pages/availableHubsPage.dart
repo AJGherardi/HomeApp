@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:home/components/items.dart';
 import 'package:home/components/routes.dart';
 import 'package:home/pages/addHubPage.dart';
-import 'package:home/services/graphql.dart';
+import 'package:home/services/store.dart';
 import 'package:multicast_dns/multicast_dns.dart';
 import 'package:provider/provider.dart';
 

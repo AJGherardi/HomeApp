@@ -59,7 +59,7 @@ class AddGroupPage extends StatelessWidget {
             NextButton(
               "Add",
               () {
-                showSetNameSheet(context);
+                showAddGroupSheet(context);
               },
             ),
           ],

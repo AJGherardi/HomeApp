@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 
 Future<void> saveConnectionData(
   String address,
@@ -13,16 +14,35 @@ Future<void> saveConnectionData(
   await storage.write(key: "webKey", value: webKey);
 }
 
-Future<String> getAddress() async {
-  final storage = new FlutterSecureStorage();
-  // Read value
-  String address = await storage.read(key: "address");
-  return address;
+class ConnectionData {
+  ConnectionData(String address, String webkey) {
+    this.address = address;
+    this.webKey = webKey;
+  }
+  String address, webKey;
 }
 
-Future<String> getWebKey() async {
+Future<ClientModel> getClientModel() async {
   final storage = new FlutterSecureStorage();
-  // Read value
+  await storage.deleteAll();
+  String address = await storage.read(key: "address");
   String webKey = await storage.read(key: "webKey");
-  return webKey;
+  return ClientModel(address, webKey);
+}
+
+class ClientModel {
+  ClientModel(String address, String webkey) {
+    setHost(address);
+    this.webKey = webKey;
+  }
+  String webKey;
+  ValueNotifier<GraphQLClient> client = ValueNotifier(null);
+  void setHost(String host) {
+    if (host != null) {
+      client.value = GraphQLClient(
+        cache: InMemoryCache(),
+        link: HttpLink(uri: "http://" + host + ":8080/graphql"),
+      );
+    }
+  }
 }
