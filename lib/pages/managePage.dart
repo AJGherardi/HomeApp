@@ -38,18 +38,6 @@ class ManagePage extends StatelessWidget {
               FadeRoute(builder: (context) => AddGroupSplash()),
             );
           }),
-          ListItem("Remove Deivce", () {
-            Navigator.push(
-              context,
-              FadeRoute(builder: (context) => AddDeviceSplash()),
-            );
-          }),
-          ListItem("Remove Group", () {
-            Navigator.push(
-              context,
-              FadeRoute(builder: (context) => AddDeviceSplash()),
-            );
-          }),
           ListItem("Reset", () {
             showResetDialog(context);
           }),

@@ -5,6 +5,11 @@ import 'package:home/components/buttons.dart';
 import 'package:home/components/sheets.dart';
 
 class AddDevicePage extends StatelessWidget {
+  final String groupAddr;
+  final String deviceAddr;
+
+  AddDevicePage({Key key, @required this.groupAddr, @required this.deviceAddr})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -59,7 +64,11 @@ class AddDevicePage extends StatelessWidget {
             NextButton(
               "Add",
               () {
-                showAddGroupSheet(context);
+                showAddDeviceSheet(
+                  context,
+                  groupAddr,
+                  deviceAddr
+                );
               },
             ),
           ],

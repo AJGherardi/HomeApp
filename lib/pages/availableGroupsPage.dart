@@ -8,7 +8,7 @@ import 'package:home/services/store.dart';
 import 'package:provider/provider.dart';
 
 String listGroups = """
-  query ListGroupsQuery {
+  query ListGroups {
     listGroups {
       name
       addr
@@ -52,7 +52,7 @@ class AvailableGroupsPage extends StatelessWidget {
                     child: Center(
                       child: CircularProgressIndicator(
                         valueColor: AlwaysStoppedAnimation<Color>(
-                          Colors.red[700],
+                          Color(0xFFEF323D),
                         ),
                       ),
                     ),
@@ -69,7 +69,9 @@ class AvailableGroupsPage extends StatelessWidget {
                           Navigator.push(
                             context,
                             FadeRoute(
-                              builder: (context) => AvailableDevicesPage(),
+                              builder: (context) => AvailableDevicesPage(
+                                groupAddr: groups[index]["addr"],
+                              ),
                             ),
                           );
                         },

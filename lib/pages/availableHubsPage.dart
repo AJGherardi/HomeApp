@@ -86,7 +86,7 @@ class AvailableHubsPage extends StatelessWidget {
                     child: Center(
                       child: CircularProgressIndicator(
                         valueColor: AlwaysStoppedAnimation<Color>(
-                          Colors.red[700],
+                          Color(0xFFEF323D),
                         ),
                       ),
                     ),
