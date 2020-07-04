@@ -6,6 +6,17 @@ import 'package:home/components/dialogs.dart';
 import 'package:home/components/items.dart';
 
 class DevicePage extends StatelessWidget {
+  final String name;
+  final String groupName;
+  final String addr;
+
+  DevicePage(
+      {Key key,
+      @required this.name,
+      @required this.groupName,
+      @required this.addr})
+      : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -46,7 +57,7 @@ class DevicePage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: <Widget>[
                       Text(
-                        "Left outlet",
+                        name,
                         style: GoogleFonts.roboto(
                           fontWeight: FontWeight.w900,
                           fontSize: 32,
@@ -54,7 +65,7 @@ class DevicePage extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        "Living room",
+                        groupName,
                         style: GoogleFonts.roboto(
                           fontWeight: FontWeight.w900,
                           fontSize: 24,

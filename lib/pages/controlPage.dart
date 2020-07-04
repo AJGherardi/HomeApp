@@ -67,7 +67,6 @@ class ControlPage extends StatelessWidget {
                 result.data["listControl"] as Map<String, Object>;
             List groups = listControl["groups"];
             List devices = listControl["devices"];
-            print(listControl);
             return SliverList(
               delegate: SliverChildBuilderDelegate(
                 (BuildContext context, int index) {
@@ -102,7 +101,11 @@ class ControlPage extends StatelessWidget {
                         itemBuilder: (BuildContext context, int index) {
                           return Item(
                             groupDevices[index]["name"],
-                            DevicePage(),
+                            DevicePage(
+                              name: groupDevices[index]["name"],
+                              groupName: groups[index]["name"],
+                              addr: groupDevices[index]["addr"],
+                            ),
                           );
                         },
                       ),
