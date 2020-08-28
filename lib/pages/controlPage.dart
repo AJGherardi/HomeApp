@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:home/components/items.dart';
-import 'package:home/pages/availableGroupsPage.dart';
 import 'package:home/pages/devicePage.dart';
 import 'package:home/services/store.dart';
 import 'package:provider/provider.dart';

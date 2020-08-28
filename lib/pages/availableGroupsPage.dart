@@ -9,9 +9,11 @@ import 'package:provider/provider.dart';
 
 String listGroups = """
   query ListGroups {
-    listGroups {
-      name
-      addr
+    listControl {
+      groups {
+        name
+        addr
+      }
     }
   }
 """;
@@ -58,7 +60,7 @@ class AvailableGroupsPage extends StatelessWidget {
                     ),
                   );
                 }
-                List groups = result.data["listGroups"];
+                List groups = result.data["listControl"]["groups"];
                 print(Provider.of<ClientModel>(context).webKey);
                 return SliverList(
                   delegate: SliverChildBuilderDelegate(

@@ -104,15 +104,15 @@ void showAddGroupSheet(context) {
 }
 
 String addDevice = """
-  mutation AddDevice(\$name: String!, \$devAddr: String!, \$addr: String!) {
-    addDevice(name: \$name, devAddr: \$devAddr, addr: \$addr) {
+  mutation AddDevice(\$name: String!, \$devUUID: String!, \$addr: String!) {
+    addDevice(name: \$name, devUUID: \$devUUID, addr: \$addr) {
       name
       addr
     }
   }
 """;
 
-void showAddDeviceSheet(context, String groupAddr, String deviceAddr) {
+void showAddDeviceSheet(context, String groupAddr, String devUUID) {
   var nameText = "";
   showModalBottomSheet(
     shape: RoundedRectangleBorder(
@@ -186,7 +186,7 @@ void showAddDeviceSheet(context, String groupAddr, String deviceAddr) {
                           .webKey,
                       'name': nameText,
                       'addr': groupAddr,
-                      'devAddr': deviceAddr,
+                      'devUUID': devUUID,
                     });
                   },
                 );

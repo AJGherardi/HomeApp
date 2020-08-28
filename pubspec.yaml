@@ -28,7 +28,8 @@ dependencies:
   multicast_dns: ^0.2.2
   animations: ^1.1.1
   google_fonts: ^1.1.0
-  flutter_svg: ^0.17.0
+  flutter_svg: ^0.18.1
+
   flutter:
     sdk: flutter
 
