@@ -42,7 +42,7 @@ class ClientModel {
     if (host != null) {
       client.value = GraphQLClient(
         cache: InMemoryCache(),
-        link: HttpLink(uri: "http://" + host + ":8080/graphql"),
+        link: WebSocketLink(url: "ws://" + host + ":8080/graphql"),
       );
     }
   }

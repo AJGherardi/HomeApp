@@ -1,6 +1,3 @@
-<svg width="78" height="78" viewBox="0 0 78 78" fill="none" xmlns="http://www.w3.org/2000/svg">
-<rect x="0.5" y="0.5" width="77" height="77" rx="3.5" stroke="black"/>
-<rect x="0.5" y="0.5" width="77" height="77" rx="3.5" stroke="black"/>
-<rect x="20.0571" y="24.5143" width="7.8" height="28.9714" rx="3.9" fill="#EF323D"/>
-<rect x="50.1428" y="24.5143" width="7.8" height="28.9714" rx="3.9" fill="#EF323D"/>
+<svg width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M0 4C0 1.79086 1.79086 0 4 0H31C33.2091 0 35 1.79086 35 4V31C35 33.2091 33.2091 35 31 35H4C1.79086 35 0 33.2091 0 31V4ZM8.99999 12.75C8.99999 11.7835 9.78349 11 10.75 11C11.7165 11 12.5 11.7835 12.5 12.75V22.25C12.5 23.2165 11.7165 24 10.75 24C9.78349 24 8.99999 23.2165 8.99999 22.25V12.75ZM24.25 11C23.2835 11 22.5 11.7835 22.5 12.75V22.25C22.5 23.2165 23.2835 24 24.25 24C25.2165 24 26 23.2165 26 22.25V12.75C26 11.7835 25.2165 11 24.25 11Z" fill="#EF323D"/>
 </svg>

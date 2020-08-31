@@ -2,16 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:home/components/items.dart';
-import 'package:home/pages/devicePage.dart';
 import 'package:home/services/store.dart';
 import 'package:provider/provider.dart';
 
 String listControl = """
-  query ListControl {
+  subscription ListControl {
     listControl {
       devices {
         name
         addr
+        elements{ 
+          state { state }
+        }
       }
       groups {
         name
@@ -41,16 +43,18 @@ class ControlPage extends StatelessWidget {
             ),
           ),
         ),
-        Query(
-          options: QueryOptions(
-            documentNode: gql(listControl),
-            variables: {
-              'webKey': Provider.of<ClientModel>(context).webKey,
-            },
-          ),
-          builder: (QueryResult result,
-              {VoidCallback refetch, FetchMore fetchMore}) {
-            if (result.loading) {
+        Subscription(
+          "ListControl",
+          listControl,
+          variables: {
+            'webKey': Provider.of<ClientModel>(context).webKey,
+          },
+          builder: ({
+            bool loading,
+            dynamic payload,
+            dynamic error,
+          }) {
+            if (loading) {
               return SliverFillRemaining(
                 hasScrollBody: false,
                 child: Center(
@@ -63,7 +67,7 @@ class ControlPage extends StatelessWidget {
               );
             }
             Map<String, Object> listControl =
-                result.data["listControl"] as Map<String, Object>;
+                payload["listControl"] as Map<String, Object>;
             List groups = listControl["groups"];
             List devices = listControl["devices"];
             return SliverList(
@@ -95,16 +99,23 @@ class ControlPage extends StatelessWidget {
                           crossAxisCount: 2,
                           crossAxisSpacing: 24,
                           mainAxisSpacing: 24,
+                          childAspectRatio: 1.3,
                         ),
                         itemCount: groupDevices.length,
                         itemBuilder: (BuildContext context, int index) {
+                          // Check state
+                          String state = groupDevices[index]["elements"][0]
+                              ["state"]["state"];
+                          bool isOn;
+                          if (state == "AA==") {
+                            isOn = false;
+                          } else {
+                            isOn = true;
+                          }
                           return Item(
                             groupDevices[index]["name"],
-                            DevicePage(
-                              name: groupDevices[index]["name"],
-                              groupName: groups[index]["name"],
-                              addr: groupDevices[index]["addr"],
-                            ),
+                            groupDevices[index]["addr"],
+                            isOn,
                           );
                         },
                       ),
