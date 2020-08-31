@@ -9,9 +9,10 @@ String listControl = """
   subscription ListControl {
     listControl {
       devices {
-        name
         addr
         elements{ 
+          name
+          addr
           state { state }
         }
       }
@@ -82,6 +83,11 @@ class ControlPage extends StatelessWidget {
                         .indexWhere((element) => element["addr"] == devAddr);
                     groupDevices.add(devices[index]);
                   }
+                  // Get list of elements
+                  List groupElements = new List();
+                  for (var device in groupDevices) {
+                    groupElements.addAll(device["elements"]);
+                  }
                   return Column(
                     children: <Widget>[
                       Text(
@@ -101,11 +107,10 @@ class ControlPage extends StatelessWidget {
                           mainAxisSpacing: 24,
                           childAspectRatio: 1.3,
                         ),
-                        itemCount: groupDevices.length,
+                        itemCount: groupElements.length,
                         itemBuilder: (BuildContext context, int index) {
                           // Check state
-                          String state = groupDevices[index]["elements"][0]
-                              ["state"]["state"];
+                          String state = groupElements[index]["state"]["state"];
                           bool isOn;
                           if (state == "AA==") {
                             isOn = false;
@@ -113,8 +118,8 @@ class ControlPage extends StatelessWidget {
                             isOn = true;
                           }
                           return Item(
-                            groupDevices[index]["name"],
-                            groupDevices[index]["addr"],
+                            groupElements[index]["name"],
+                            groupElements[index]["addr"],
                             isOn,
                           );
                         },

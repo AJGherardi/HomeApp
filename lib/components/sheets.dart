@@ -106,7 +106,6 @@ void showAddGroupSheet(context) {
 String addDevice = """
   mutation AddDevice(\$name: String!, \$devUUID: String!, \$addr: String!) {
     addDevice(name: \$name, devUUID: \$devUUID, addr: \$addr) {
-      name
       addr
     }
   }
