@@ -13,7 +13,7 @@ String listControl = """
         elements{ 
           name
           addr
-          state { state }
+          state
         }
       }
       groups {
@@ -110,7 +110,7 @@ class ControlPage extends StatelessWidget {
                         itemCount: groupElements.length,
                         itemBuilder: (BuildContext context, int index) {
                           // Check state
-                          String state = groupElements[index]["state"]["state"];
+                          String state = groupElements[index]["state"];
                           bool isOn;
                           if (state == "AA==") {
                             isOn = false;

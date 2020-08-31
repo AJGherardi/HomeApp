@@ -17,7 +17,7 @@ String getState = """
 
 String setState = """
   mutation SetState(\$addr: String!, \$value: String!) {
-    setState(addr: \$addr, value: \$value) {state}
+    setState(addr: \$addr, value: \$value)
   }
 """;
 
