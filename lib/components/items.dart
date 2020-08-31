@@ -16,8 +16,8 @@ String getState = """
 """;
 
 String setState = """
-  mutation SetState(\$devAddr: String!, \$elemNumber: Int!, \$value: String!) {
-    setState(devAddr: \$devAddr, elemNumber: \$elemNumber, value: \$value) {state}
+  mutation SetState(\$addr: String!, \$value: String!) {
+    setState(addr: \$addr, value: \$value) {state}
   }
 """;
 
@@ -49,8 +49,7 @@ class Item extends StatelessWidget {
                 runMutation({
                   'webKey':
                       Provider.of<ClientModel>(context, listen: false).webKey,
-                  'devAddr': addr,
-                  'elemNumber': 0,
+                  'addr': addr,
                   'value': isOn ? "AA==" : "AQ==",
                 });
               },
