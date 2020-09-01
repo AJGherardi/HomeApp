@@ -61,6 +61,7 @@ class Item extends StatelessWidget {
                   children: <Widget>[
                     SvgPicture.asset(
                       "assets/plug.svg",
+                      color: Theme.of(context).primaryColor,
                       width: 35,
                     ),
                     SizedBox(

@@ -37,8 +37,32 @@ class App extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
+          // brightness: Brightness.dark,
+          buttonTheme: ButtonThemeData(
+            buttonColor: Colors.black
+          ),
+          primaryColor: Color(0xFFEF323D),
+          tabBarTheme: TabBarTheme(
+            indicator: BoxDecoration(),
+            labelColor: Color(0xFFEF323D),
+            unselectedLabelColor: Colors.black,
+            labelStyle: TextStyle(
+              fontFamily: "Rubik",
+              fontSize: 18,
+              fontWeight: FontWeight.w400,
+            ),
+            unselectedLabelStyle: TextStyle(
+              fontFamily: "Rubik",
+              fontSize: 18,
+              fontWeight: FontWeight.w400,
+            ),
+          ),
+          bottomNavigationBarTheme: BottomNavigationBarThemeData(
+            backgroundColor: Color(0xFFEF323D),
+            unselectedItemColor: Color(0xBFFFFFFF),
+            selectedItemColor: Colors.white,
+          ),
           backgroundColor: Colors.grey[50],
-          // backgroundColor: Colors.white,
           textTheme: TextTheme(
             headline1: TextStyle(
               color: Colors.black,

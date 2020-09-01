@@ -48,7 +48,7 @@ class AvailableDevicesPage extends StatelessWidget {
                     child: Center(
                       child: CircularProgressIndicator(
                         valueColor: AlwaysStoppedAnimation<Color>(
-                          Color(0xFFEF323D),
+                          Theme.of(context).primaryColor,
                         ),
                       ),
                     ),

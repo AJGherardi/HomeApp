@@ -25,7 +25,7 @@ void showRemoveDialog(context, type) {
             },
           ),
           FlatButton(
-            textColor: Color(0xFFEF323D),
+            // textColor: Color(0xFFEF323D),
             child: Text("Remove"),
             onPressed: () {
               Navigator.pop(context);
@@ -78,7 +78,7 @@ void showResetDialog(context) {
               QueryResult result,
             ) {
               return FlatButton(
-                textColor: Color(0xFFEF323D),
+                // textColor: Color(0xFFEF323D),
                 child: Text("Reset"),
                 onPressed: () {
                   runMutation({

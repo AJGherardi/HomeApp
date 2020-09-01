@@ -48,12 +48,14 @@ void showAddGroupSheet(context) {
                 nameText = text;
               },
               style: Theme.of(context).textTheme.caption,
-              cursorColor: Color(0xFFEF323D),
+              // cursorColor: Color(0xFFEF323D),
               decoration: InputDecoration(
                 focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Color(0xFFEF323D), width: 3),
+                  borderSide: BorderSide(
+                    // color: Color(0xFFEF323D),
+                    width: 3,
+                  ),
                 ),
-                
                 hintText: "Type name hear",
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(6.0),
@@ -139,10 +141,13 @@ void showAddDeviceSheet(context, String groupAddr, String devUUID) {
               onChanged: (text) {
                 nameText = text;
               },
-              cursorColor: Color(0xFFEF323D),
+              // cursorColor: Color(0xFFEF323D),
               decoration: InputDecoration(
                 focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Color(0xFFEF323D), width: 3),
+                  borderSide: BorderSide(
+                    // color: Color(0xFFEF323D),
+                    width: 3,
+                  ),
                 ),
                 hintText: "Type name hear",
                 border: OutlineInputBorder(

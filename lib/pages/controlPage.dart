@@ -42,7 +42,7 @@ class ControlPage extends StatelessWidget {
           return Center(
             child: CircularProgressIndicator(
               valueColor: AlwaysStoppedAnimation<Color>(
-                Color(0xFFEF323D),
+                Theme.of(context).primaryColor,
               ),
             ),
           );
@@ -69,12 +69,9 @@ class ControlPage extends StatelessWidget {
                       style: Theme.of(context).textTheme.headline1,
                     ),
                     pinned: true,
-                    expandedHeight: 100.0,
                     forceElevated: innerBoxIsScrolled,
                     bottom: TabBar(
                       isScrollable: true,
-                      indicatorColor: Colors.black,
-                      labelColor: Colors.black,
                       tabs: [
                         for (var group in groups) Tab(text: group["name"])
                       ],
