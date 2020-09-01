@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:home/components/buttons.dart';
 import 'package:home/components/sheets.dart';
 
@@ -19,11 +18,7 @@ class AddDevicePage extends StatelessWidget {
           children: <Widget>[
             Text(
               "Add Device",
-              style: GoogleFonts.roboto(
-                fontWeight: FontWeight.w900,
-                fontSize: 48,
-                color: Colors.black,
-              ),
+              style: Theme.of(context).textTheme.headline1,
             ),
             Container(
               margin: EdgeInsets.all(24),
@@ -51,11 +46,7 @@ class AddDevicePage extends StatelessWidget {
                   Text(
                     "This may take a minute",
                     textAlign: TextAlign.center,
-                    style: GoogleFonts.roboto(
-                      fontWeight: FontWeight.w900,
-                      fontSize: 36,
-                      color: Colors.black,
-                    ),
+                    style: Theme.of(context).textTheme.headline1,
                   ),
                   SizedBox(height: 24)
                 ],
@@ -64,11 +55,7 @@ class AddDevicePage extends StatelessWidget {
             NextButton(
               "Add",
               () {
-                showAddDeviceSheet(
-                  context,
-                  groupAddr,
-                  deviceAddr
-                );
+                showAddDeviceSheet(context, groupAddr, deviceAddr);
               },
             ),
           ],

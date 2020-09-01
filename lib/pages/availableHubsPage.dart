@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:home/components/items.dart';
 import 'package:home/components/routes.dart';
 import 'package:home/pages/addHubPage.dart';
@@ -50,10 +49,7 @@ class AvailableHubsPage extends StatelessWidget {
                   margin: EdgeInsets.all(36),
                   child: Text(
                     "Available Hubs",
-                    style: GoogleFonts.roboto(
-                      fontWeight: FontWeight.w900,
-                      fontSize: 34,
-                    ),
+                    style: Theme.of(context).textTheme.headline1,
                   ),
                 ),
               ),

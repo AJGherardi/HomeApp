@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class TopBar extends StatelessWidget {
   TopBar(this.text, this.rightIcon, this.onPress);
@@ -17,7 +16,7 @@ class TopBar extends StatelessWidget {
         }),
         Text(
           text,
-          style: GoogleFonts.oleoScript(
+          style: TextStyle(
             fontSize: 52,
             color: Colors.black,
           ),

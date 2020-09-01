@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:home/components/buttons.dart';
 import 'package:home/components/sheets.dart';
 
@@ -14,16 +13,12 @@ class AddGroupPage extends StatelessWidget {
           children: <Widget>[
             Text(
               "Add Group",
-              style: GoogleFonts.roboto(
-                fontWeight: FontWeight.w900,
-                fontSize: 48,
-                color: Colors.black,
-              ),
+              style: Theme.of(context).textTheme.headline1,
             ),
             Container(
-              margin: EdgeInsets.all(24),
+              margin: EdgeInsets.fromLTRB(24, 0, 24, 0),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(4),
+                borderRadius: BorderRadius.circular(6),
                 border: Border.all(color: Colors.black),
               ),
               child: Column(
@@ -46,11 +41,7 @@ class AddGroupPage extends StatelessWidget {
                   Text(
                     "A group is a collection of devices",
                     textAlign: TextAlign.center,
-                    style: GoogleFonts.roboto(
-                      fontWeight: FontWeight.w900,
-                      fontSize: 36,
-                      color: Colors.black,
-                    ),
+                    style: Theme.of(context).textTheme.subtitle1,
                   ),
                   SizedBox(height: 24)
                 ],

@@ -27,7 +27,6 @@ dependencies:
   graphql_flutter: ^3.0.1
   multicast_dns: ^0.2.2
   animations: ^1.1.1
-  google_fonts: ^1.1.0
   flutter_svg: ^0.18.1
 
   flutter:
@@ -47,6 +46,12 @@ dev_dependencies:
 
 # The following section is specific to Flutter.
 flutter:
+  fonts:
+    - family: Rubik
+      fonts:
+        - asset: fonts/Rubik-Bold.ttf
+        - asset: fonts/Rubik-Medium.ttf
+        - asset: fonts/Rubik-Regular.ttf
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
@@ -54,7 +59,6 @@ flutter:
   uses-material-design: true
   assets:
     - assets/
-    - google_fonts/
 
   # To add assets to your application, add an assets section, like this:
   # assets:

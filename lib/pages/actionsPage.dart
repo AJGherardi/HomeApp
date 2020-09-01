@@ -1,23 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:home/components/items.dart';
 
 class ActionsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
+      physics: BouncingScrollPhysics(),
       slivers: <Widget>[
-        SliverToBoxAdapter(
-          child: Center(
-            child: Container(
-              margin: EdgeInsets.all(36),
-              child: Text(
-                "Actions",
-                style: GoogleFonts.roboto(
-                  fontWeight: FontWeight.w900,
-                  fontSize: 34,
-                ),
-              ),
+        SliverAppBar(
+          pinned: true,
+          expandedHeight: 100.0,
+          backgroundColor: Colors.grey[50],
+          flexibleSpace: FlexibleSpaceBar(
+            centerTitle: true,
+            title: Text(
+              'Actions',
+              style: Theme.of(context).textTheme.headline2,
             ),
           ),
         ),

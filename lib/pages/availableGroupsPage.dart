@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:home/components/items.dart';
 import 'package:home/components/routes.dart';
@@ -29,10 +28,7 @@ class AvailableGroupsPage extends StatelessWidget {
                   margin: EdgeInsets.all(36),
                   child: Text(
                     "Available Groups",
-                    style: GoogleFonts.roboto(
-                      fontWeight: FontWeight.w900,
-                      fontSize: 34,
-                    ),
+                    style: Theme.of(context).textTheme.headline1,
                   ),
                 ),
               ),

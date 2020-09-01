@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:home/components/buttons.dart';
 import 'package:home/components/routes.dart';
 import 'package:home/pages/homePage.dart';
@@ -28,11 +27,7 @@ class AddHubPage extends StatelessWidget {
           children: <Widget>[
             Text(
               "Add Hub",
-              style: GoogleFonts.roboto(
-                fontWeight: FontWeight.w900,
-                fontSize: 48,
-                color: Colors.black,
-              ),
+              style: Theme.of(context).textTheme.headline1,
             ),
             Container(
               margin: EdgeInsets.all(24),
@@ -60,11 +55,7 @@ class AddHubPage extends StatelessWidget {
                   Text(
                     "A hub is required",
                     textAlign: TextAlign.center,
-                    style: GoogleFonts.roboto(
-                      fontWeight: FontWeight.w900,
-                      fontSize: 36,
-                      color: Colors.black,
-                    ),
+                    style: Theme.of(context).textTheme.headline1,
                   ),
                   SizedBox(height: 24)
                 ],

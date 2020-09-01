@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:home/components/buttons.dart';
 import 'package:home/components/routes.dart';
@@ -41,22 +40,20 @@ void showAddGroupSheet(context) {
             Text(
               "Set Name",
               textAlign: TextAlign.center,
-              style: GoogleFonts.roboto(
-                fontWeight: FontWeight.w900,
-                fontSize: 36,
-                color: Colors.black,
-              ),
+              style: Theme.of(context).textTheme.headline1,
             ),
             SizedBox(height: 24),
             TextField(
               onChanged: (text) {
                 nameText = text;
               },
+              style: Theme.of(context).textTheme.caption,
               cursorColor: Color(0xFFEF323D),
               decoration: InputDecoration(
                 focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(color: Color(0xFFEF323D), width: 3),
                 ),
+                
                 hintText: "Type name hear",
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(6.0),
@@ -135,11 +132,7 @@ void showAddDeviceSheet(context, String groupAddr, String devUUID) {
             Text(
               "Set Name",
               textAlign: TextAlign.center,
-              style: GoogleFonts.roboto(
-                fontWeight: FontWeight.w900,
-                fontSize: 36,
-                color: Colors.black,
-              ),
+              style: Theme.of(context).textTheme.headline1,
             ),
             SizedBox(height: 24),
             TextField(
@@ -161,10 +154,7 @@ void showAddDeviceSheet(context, String groupAddr, String devUUID) {
             MutationWithBuilder(
               onCompleted: (resultData) {
                 // Get name and addr from result
-                var data = resultData as Map<String, Object>;
-                var addDeviceResult = data["addDevice"] as Map<String, Object>;
-                print(addDeviceResult["name"]);
-                print(addDeviceResult["addr"]);
+                var data = resultData["addDevice"] as Map<String, Object>;
                 Navigator.push(
                   context,
                   FadeRoute(

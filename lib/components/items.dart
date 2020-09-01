@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:home/services/graphql.dart';
 import 'package:home/services/store.dart';
@@ -57,26 +56,23 @@ class Item extends StatelessWidget {
               child: Container(
                 margin: EdgeInsets.all(12),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     SvgPicture.asset(
                       "assets/plug.svg",
-                      width: 40,
+                      width: 35,
+                    ),
+                    SizedBox(
+                      height: 12,
                     ),
                     Text(
                       name,
-                      style: GoogleFonts.roboto(
-                        fontWeight: FontWeight.w900,
-                        fontSize: 26,
-                      ),
+                      style: Theme.of(context).textTheme.bodyText1,
                     ),
                     Text(
                       isOn ? "On" : "Off",
-                      style: GoogleFonts.roboto(
-                          fontWeight: FontWeight.w900,
-                          fontSize: 26,
-                          color: Color(0xFF757575)),
+                      style: Theme.of(context).textTheme.bodyText2,
                     ),
                   ],
                 ),
@@ -109,17 +105,14 @@ class ListItem extends StatelessWidget {
             borderRadius: BorderRadius.circular(6),
             onTap: onTap,
             child: Container(
-              margin: EdgeInsets.all(8),
+              margin: EdgeInsets.all(10),
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
                   Text(
                     text,
-                    style: GoogleFonts.roboto(
-                      fontWeight: FontWeight.w900,
-                      fontSize: 24,
-                    ),
+                    style: Theme.of(context).textTheme.bodyText1,
                   ),
                 ],
               ),

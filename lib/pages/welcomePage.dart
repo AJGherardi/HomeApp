@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:home/components/buttons.dart';
 import 'package:home/components/routes.dart';
 import 'package:home/pages/addHubSplash.dart';
@@ -18,7 +17,7 @@ class WelcomePage extends StatelessWidget {
                   children: <Widget>[
                     Text(
                       "Home",
-                      style: GoogleFonts.roboto(
+                      style: TextStyle(
                         fontWeight: FontWeight.w900,
                         fontSize: 64,
                         color: Colors.black,
@@ -26,7 +25,7 @@ class WelcomePage extends StatelessWidget {
                     ),
                     Text(
                       "By",
-                      style: GoogleFonts.roboto(
+                      style: TextStyle(
                         fontWeight: FontWeight.w400,
                         fontSize: 30,
                         color: Colors.black,
@@ -34,7 +33,7 @@ class WelcomePage extends StatelessWidget {
                     ),
                     Text(
                       "Alexander Gherardi",
-                      style: GoogleFonts.oleoScript(
+                      style: TextStyle(
                         fontWeight: FontWeight.w400,
                         fontSize: 30,
                         color: Colors.black,
