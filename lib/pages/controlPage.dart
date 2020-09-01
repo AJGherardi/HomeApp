@@ -51,78 +51,117 @@ class ControlPage extends StatelessWidget {
             payload["listControl"] as Map<String, Object>;
         List groups = listControl["groups"];
         List devices = listControl["devices"];
-        return PageView.builder(
-          itemCount: groups.length,
-          itemBuilder: (BuildContext context, int index) {
-            // Get DevAddrs
-            List devAddrs = groups[index]["devAddrs"];
-            // Get list of devices
-            List groupDevices = new List();
-            for (var devAddr in devAddrs) {
-              var index =
-                  devices.indexWhere((element) => element["addr"] == devAddr);
-              groupDevices.add(devices[index]);
-            }
-            // Get list of elements
-            List groupElements = new List();
-            for (var device in groupDevices) {
-              groupElements.addAll(device["elements"]);
-            }
-            return CustomScrollView(
-              physics: BouncingScrollPhysics(),
-              slivers: <Widget>[
-                SliverAppBar(
-                  pinned: true,
-                  expandedHeight: 100.0,
-                  backgroundColor: Colors.grey[50],
-                  flexibleSpace: FlexibleSpaceBar(
+        return DefaultTabController(
+          length: groups.length,
+          child: NestedScrollView(
+            physics: BouncingScrollPhysics(),
+            headerSliverBuilder:
+                (BuildContext context, bool innerBoxIsScrolled) {
+              return [
+                SliverOverlapAbsorber(
+                  handle:
+                      NestedScrollView.sliverOverlapAbsorberHandleFor(context),
+                  sliver: SliverAppBar(
                     centerTitle: true,
+                    backgroundColor: Colors.grey[50],
                     title: Text(
-                      groups[index]["name"],
-                      style: Theme.of(context).textTheme.headline2,
+                      'Control',
+                      style: Theme.of(context).textTheme.headline1,
+                    ),
+                    pinned: true,
+                    expandedHeight: 100.0,
+                    forceElevated: innerBoxIsScrolled,
+                    bottom: TabBar(
+                      isScrollable: true,
+                      indicatorColor: Colors.black,
+                      labelColor: Colors.black,
+                      tabs: [
+                        for (var group in groups) Tab(text: group["name"])
+                      ],
                     ),
                   ),
                 ),
-                SliverToBoxAdapter(
-                  child: Center(
-                    child: Text(
-                      "Devices",
-                      style: Theme.of(context).textTheme.subtitle1,
-                    ),
-                  ),
-                ),
-                SliverPadding(
-                  padding: EdgeInsets.fromLTRB(12,16,12, 0),
-                  sliver: SliverGrid(
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 12,
-                      mainAxisSpacing: 12,
-                      childAspectRatio: 1.4,
-                    ),
-                    delegate: SliverChildBuilderDelegate(
-                      (BuildContext context, int index) {
-                        // Check state
-                        String state = groupElements[index]["state"];
-                        bool isOn;
-                        if (state == "AA==") {
-                          isOn = false;
-                        } else {
-                          isOn = true;
+              ];
+            },
+            body: TabBarView(
+              children: [
+                for (var group in groups)
+                  SafeArea(
+                    top: false,
+                    bottom: false,
+                    child: Builder(
+                      builder: (BuildContext context) {
+                        // Get DevAddrs
+                        List devAddrs = group["devAddrs"];
+                        // Get list of devices
+                        List groupDevices = new List();
+                        for (var devAddr in devAddrs) {
+                          var index = devices.indexWhere(
+                              (element) => element["addr"] == devAddr);
+                          groupDevices.add(devices[index]);
                         }
-                        return Item(
-                          groupElements[index]["name"],
-                          groupElements[index]["addr"],
-                          isOn,
+                        // Get list of elements
+                        List groupElements = new List();
+                        for (var device in groupDevices) {
+                          groupElements.addAll(device["elements"]);
+                        }
+                        return CustomScrollView(
+                          slivers: [
+                            SliverOverlapInjector(
+                              handle: NestedScrollView
+                                  .sliverOverlapAbsorberHandleFor(context),
+                            ),
+                            SliverPadding(
+                              padding: EdgeInsets.all(16),
+                              sliver: SliverToBoxAdapter(
+                                child: Center(
+                                  child: Text(
+                                    "Devices",
+                                    style:
+                                        Theme.of(context).textTheme.subtitle1,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SliverPadding(
+                              padding: EdgeInsets.all(12),
+                              sliver: SliverGrid(
+                                gridDelegate:
+                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  crossAxisSpacing: 12,
+                                  mainAxisSpacing: 12,
+                                  childAspectRatio: 1.4,
+                                ),
+                                delegate: SliverChildBuilderDelegate(
+                                  (BuildContext context, int index) {
+                                    // Check state
+                                    String state =
+                                        groupElements[index]["state"];
+                                    bool isOn;
+                                    if (state == "AA==") {
+                                      isOn = false;
+                                    } else {
+                                      isOn = true;
+                                    }
+                                    return Item(
+                                      groupElements[index]["name"],
+                                      groupElements[index]["addr"],
+                                      isOn,
+                                    );
+                                  },
+                                  childCount: groupElements.length,
+                                ),
+                              ),
+                            ),
+                          ],
                         );
                       },
-                      childCount: groupElements.length,
                     ),
-                  ),
-                )
+                  )
               ],
-            );
-          },
+            ),
+          ),
         );
       },
     );
