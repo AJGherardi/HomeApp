@@ -41,6 +41,7 @@ class AddHubPage extends StatelessWidget {
                   SizedBox(height: 36),
                   SvgPicture.asset(
                     "assets/range.svg",
+                    color: Theme.of(context).primaryColor,
                     width: 250,
                   ),
                   SizedBox(height: 36),

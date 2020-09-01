@@ -19,6 +19,7 @@ class AddGroupSplash extends StatelessWidget {
               ),
               SvgPicture.asset(
                 "assets/devices.svg",
+                color: Theme.of(context).primaryColor,
                 width: 260,
               ),
               NextButton(

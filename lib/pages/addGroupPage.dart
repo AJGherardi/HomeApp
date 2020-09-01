@@ -18,6 +18,7 @@ class AddGroupPage extends StatelessWidget {
             Container(
               margin: EdgeInsets.fromLTRB(24, 0, 24, 0),
               decoration: BoxDecoration(
+                color: Theme.of(context).cardColor,
                 borderRadius: BorderRadius.circular(6),
                 border: Border.all(color: Colors.black),
               ),
@@ -27,6 +28,7 @@ class AddGroupPage extends StatelessWidget {
                   SizedBox(height: 36),
                   SvgPicture.asset(
                     "assets/range.svg",
+                    color: Theme.of(context).primaryColor,
                     width: 250,
                   ),
                   SizedBox(height: 36),

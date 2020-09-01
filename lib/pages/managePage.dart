@@ -14,13 +14,17 @@ class ManagePage extends StatelessWidget {
         SliverAppBar(
           pinned: true,
           expandedHeight: 100.0,
-          backgroundColor: Colors.grey[50],
           flexibleSpace: FlexibleSpaceBar(
             centerTitle: true,
             title: Text(
               'Manage',
               style: Theme.of(context).textTheme.headline2,
             ),
+          ),
+        ),
+        SliverToBoxAdapter(
+          child: SizedBox(
+            height: 12,
           ),
         ),
         SliverToBoxAdapter(

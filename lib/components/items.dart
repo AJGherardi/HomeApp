@@ -36,6 +36,7 @@ class Item extends StatelessWidget {
         QueryResult result,
       ) {
         return Material(
+          color: Theme.of(context).cardColor,
           borderRadius: BorderRadius.circular(6),
           child: Ink(
             decoration: BoxDecoration(
@@ -96,6 +97,7 @@ class ListItem extends StatelessWidget {
     return Container(
       margin: EdgeInsets.all(8),
       child: Material(
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(6),
         child: Ink(
           decoration: BoxDecoration(

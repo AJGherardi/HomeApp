@@ -10,7 +10,6 @@ class ActionsPage extends StatelessWidget {
         SliverAppBar(
           pinned: true,
           expandedHeight: 100.0,
-          backgroundColor: Colors.grey[50],
           flexibleSpace: FlexibleSpaceBar(
             centerTitle: true,
             title: Text(
@@ -19,12 +18,15 @@ class ActionsPage extends StatelessWidget {
             ),
           ),
         ),
-        SliverList(
-          delegate: SliverChildBuilderDelegate(
-            (BuildContext context, int index) {
-              return ListItem("Action", null);
-            },
-            childCount: 22,
+        SliverPadding(
+          padding: EdgeInsets.only(top: 12),
+          sliver: SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (BuildContext context, int index) {
+                return ListItem("Action", null);
+              },
+              childCount: 22,
+            ),
           ),
         )
       ],

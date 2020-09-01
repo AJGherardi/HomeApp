@@ -63,7 +63,7 @@ class ControlPage extends StatelessWidget {
                       NestedScrollView.sliverOverlapAbsorberHandleFor(context),
                   sliver: SliverAppBar(
                     centerTitle: true,
-                    backgroundColor: Colors.grey[50],
+                    // backgroundColor: Colors.grey[50],
                     title: Text(
                       'Control',
                       style: Theme.of(context).textTheme.headline1,

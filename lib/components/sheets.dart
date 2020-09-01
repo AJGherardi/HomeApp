@@ -48,11 +48,11 @@ void showAddGroupSheet(context) {
                 nameText = text;
               },
               style: Theme.of(context).textTheme.caption,
-              // cursorColor: Color(0xFFEF323D),
+              cursorColor: Theme.of(context).primaryColor,
               decoration: InputDecoration(
                 focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(
-                    // color: Color(0xFFEF323D),
+                    color: Theme.of(context).primaryColor,
                     width: 3,
                   ),
                 ),
@@ -141,11 +141,11 @@ void showAddDeviceSheet(context, String groupAddr, String devUUID) {
               onChanged: (text) {
                 nameText = text;
               },
-              // cursorColor: Color(0xFFEF323D),
+              cursorColor: Theme.of(context).primaryColor,
               decoration: InputDecoration(
                 focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(
-                    // color: Color(0xFFEF323D),
+                    color: Theme.of(context).primaryColor,
                     width: 3,
                   ),
                 ),
