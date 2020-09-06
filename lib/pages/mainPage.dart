@@ -4,12 +4,12 @@ import 'package:home/pages/actionsPage.dart';
 import 'package:home/pages/controlPage.dart';
 import 'package:home/pages/managePage.dart';
 
-class HomePage extends StatefulWidget {
+class MainPage extends StatefulWidget {
   @override
-  _HomePageState createState() => _HomePageState();
+  _MainPageState createState() => _MainPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _MainPageState extends State<MainPage> {
   int _currentIndex = 0;
   final List<Widget> _children = [
     ControlPage(),
@@ -42,7 +42,7 @@ class _HomePageState extends State<HomePage> {
           currentIndex: _currentIndex,
           items: [
             BottomNavigationBarItem(
-              icon: Icon(Icons.power_settings_new),
+              icon: Icon(Icons.power),
               title: Text(''),
             ),
             BottomNavigationBarItem(

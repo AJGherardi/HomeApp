@@ -9,13 +9,10 @@ class ActionsPage extends StatelessWidget {
       slivers: <Widget>[
         SliverAppBar(
           pinned: true,
-          expandedHeight: 100.0,
-          flexibleSpace: FlexibleSpaceBar(
-            centerTitle: true,
-            title: Text(
-              'Actions',
-              style: Theme.of(context).textTheme.headline2,
-            ),
+          centerTitle: true,
+          title: Text(
+            'Actions',
+            style: Theme.of(context).textTheme.headline1,
           ),
         ),
         SliverPadding(

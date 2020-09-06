@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:home/components/buttons.dart';
 import 'package:home/components/routes.dart';
-import 'package:home/pages/homePage.dart';
+import 'package:home/pages/mainPage.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:home/services/graphql.dart';
 import 'package:home/services/store.dart';
@@ -76,7 +76,7 @@ class AddHubPage extends StatelessWidget {
                 Navigator.push(
                   context,
                   FadeRoute(
-                    builder: (context) => HomePage(),
+                    builder: (context) => MainPage(),
                   ),
                 );
               },

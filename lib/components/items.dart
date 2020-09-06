@@ -4,6 +4,7 @@ import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:home/services/graphql.dart';
 import 'package:home/services/store.dart';
 import 'package:provider/provider.dart';
+import 'package:home/components/sheets.dart';
 
 String getState = """
   query GetState(\$devAddr: String!, \$elemNumber: Int!) {
@@ -53,7 +54,9 @@ class Item extends StatelessWidget {
                   'value': isOn ? "AA==" : "AQ==",
                 });
               },
-              onLongPress: () {},
+              onLongPress: () {
+                showDeviceSheet(context, name);
+              },
               child: Container(
                 margin: EdgeInsets.all(12),
                 child: Column(

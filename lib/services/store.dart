@@ -1,31 +1,33 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> deleteConnectionData() async {
-  final storage = new FlutterSecureStorage();
-  // Remove values
-  await storage.deleteAll();
+  SharedPreferences storage = await SharedPreferences.getInstance();
+  // Remove old values
+  await storage.remove("address");
+  await storage.remove("webKey");
 }
 
 Future<void> saveConnectionData(
   String address,
   String webKey,
 ) async {
-  final storage = new FlutterSecureStorage();
+  SharedPreferences storage = await SharedPreferences.getInstance();
   // Remove old values
-  await storage.deleteAll();
+  await storage.remove("address");
+  await storage.remove("webKey");
   // Save values
   print(address);
   print(webKey);
-  await storage.write(key: "address", value: address);
-  await storage.write(key: "webKey", value: webKey);
+  await storage.setString("address", address);
+  await storage.setString("webKey", webKey);
 }
 
 Future<ClientModel> getClientModel() async {
-  final storage = new FlutterSecureStorage();
-  String address = await storage.read(key: "address");
-  String webKey = await storage.read(key: "webKey");
+  SharedPreferences storage = await SharedPreferences.getInstance();
+  String address = storage.getString("address");
+  String webKey = storage.getString("webKey");
   // Make model and set webKey
   var model = ClientModel(address);
   model.webKey = webKey;

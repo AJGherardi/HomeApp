@@ -21,14 +21,13 @@ class AddDevicePage extends StatelessWidget {
               style: Theme.of(context).textTheme.headline1,
             ),
             Container(
-              color: Theme.of(context).cardColor,
               margin: EdgeInsets.all(24),
               decoration: BoxDecoration(
+                color: Theme.of(context).cardColor,
                 borderRadius: BorderRadius.circular(4),
                 border: Border.all(color: Colors.black),
               ),
               child: Column(
-                
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   SizedBox(height: 36),
