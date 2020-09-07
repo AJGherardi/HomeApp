@@ -37,15 +37,21 @@ Future<ClientModel> getClientModel() async {
 class ClientModel {
   ClientModel(String address) {
     setHost(address);
+    host = address;
   }
   String webKey;
-  ValueNotifier<GraphQLClient> client = ValueNotifier(null);
-  void setHost(String host) {
-    if (host != null) {
+  String host = "";
+  ValueNotifier<GraphQLClient> client = ValueNotifier(GraphQLClient(
+    cache: InMemoryCache(),
+    link: WebSocketLink(url: ""),
+  ));
+  void setHost(String address) {
+    if (address != null) {
       client.value = GraphQLClient(
         cache: InMemoryCache(),
-        link: WebSocketLink(url: "ws://" + host + ":8080/graphql"),
+        link: WebSocketLink(url: "ws://" + address + ":8080/graphql"),
       );
+      host = address;
     }
   }
 }

@@ -1,8 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:home/components/items.dart';
-import 'package:home/components/routes.dart';
-import 'package:home/pages/addHubPage.dart';
 import 'package:home/services/store.dart';
 import 'package:multicast_dns/multicast_dns.dart';
 import 'package:provider/provider.dart';
@@ -46,7 +44,7 @@ class AvailableHubsPage extends StatelessWidget {
             SliverToBoxAdapter(
               child: Center(
                 child: Container(
-                  margin: EdgeInsets.all(36),
+                  margin: EdgeInsets.all(15),
                   child: Text(
                     "Available Hubs",
                     style: Theme.of(context).textTheme.headline1,
@@ -63,14 +61,6 @@ class AvailableHubsPage extends StatelessWidget {
                         return ListItem(snapshot.data.elementAt(index), () {
                           Provider.of<ClientModel>(context, listen: false)
                               .setHost(snapshot.data.elementAt(index));
-                          Navigator.push(
-                            context,
-                            FadeRoute(
-                              builder: (context) => AddHubPage(
-                                host: snapshot.data.elementAt(index),
-                              ),
-                            ),
-                          );
                         });
                       },
                       childCount: snapshot.data.length,

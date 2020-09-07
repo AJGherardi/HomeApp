@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:home/components/bars.dart';
 import 'package:home/components/items.dart';
 import 'package:home/components/routes.dart';
 import 'package:home/services/store.dart';
@@ -12,7 +13,6 @@ String listGroup = """
         elements{ 
           name
           addr
-          state
         }
     }
   }
@@ -49,7 +49,6 @@ class GroupPage extends StatelessWidget {
 
   final Map<String, Object> group;
   final GlobalKey<NavigatorState> navigatorKey;
-
   @override
   Widget build(BuildContext context) {
     return Subscription(
@@ -81,25 +80,16 @@ class GroupPage extends StatelessWidget {
         }
         return CustomScrollView(
           slivers: [
-            SliverAppBar(
-              centerTitle: true,
-              title: Text(
-                group["name"],
-                style: Theme.of(context).textTheme.headline1,
-              ),
-              leading: IconButton(
-                icon: Icon(
-                  Icons.chevron_left,
-                  color: Colors.black,
-                  size: 32,
+            SliverToBoxAdapter(
+              child: Center(
+                child: TopBar(
+                  "text",
+                  Icons.arrow_back,
                 ),
-                onPressed: () {
-                  navigatorKey.currentState.pop();
-                },
               ),
             ),
             SliverPadding(
-              padding: EdgeInsets.all(15),
+              padding: EdgeInsets.only(bottom: 15),
               sliver: SliverToBoxAdapter(
                 child: Center(
                   child: Text(
@@ -120,18 +110,9 @@ class GroupPage extends StatelessWidget {
                 ),
                 delegate: SliverChildBuilderDelegate(
                   (BuildContext context, int index) {
-                    // Check state
-                    String state = groupElements[index]["state"];
-                    bool isOn;
-                    if (state == "AA==") {
-                      isOn = false;
-                    } else {
-                      isOn = true;
-                    }
                     return Item(
                       groupElements[index]["name"],
                       groupElements[index]["addr"],
-                      isOn,
                     );
                   },
                   childCount: groupElements.length,
@@ -146,10 +127,9 @@ class GroupPage extends StatelessWidget {
 }
 
 class HomePage extends StatelessWidget {
-  HomePage(this.navigatorKey) : assert(navigatorKey != null);
+  HomePage(this.navigatorKey);
 
   final GlobalKey<NavigatorState> navigatorKey;
-
   @override
   Widget build(BuildContext context) {
     return Query(
@@ -174,15 +154,19 @@ class HomePage extends StatelessWidget {
         return CustomScrollView(
           physics: BouncingScrollPhysics(),
           slivers: [
-            SliverAppBar(
-              centerTitle: true,
-              title: Text(
-                "Home",
-                style: Theme.of(context).textTheme.headline1,
+            SliverToBoxAdapter(
+              child: Center(
+                child: Padding(
+                  padding: EdgeInsets.all(15),
+                  child: Text(
+                    "Home",
+                    style: Theme.of(context).textTheme.headline1,
+                  ),
+                ),
               ),
             ),
             SliverPadding(
-              padding: EdgeInsets.all(15),
+              padding: EdgeInsets.only(bottom: 15),
               sliver: SliverToBoxAdapter(
                 child: Center(
                   child: Text(

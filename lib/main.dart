@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:home/pages/mainPage.dart';
+import 'package:home/pages/onboardingPage.dart';
 import 'package:home/pages/welcomePage.dart';
 import 'package:home/services/store.dart';
 import 'package:provider/provider.dart';
@@ -21,8 +22,8 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
-          statusBarColor: Colors.grey[50],
-          statusBarIconBrightness: Brightness.dark),
+          statusBarColor: Color(0xFF2E2E2E),
+          statusBarIconBrightness: Brightness.light),
     );
     // Check if model is returned
     if (Provider.of<ClientModel>(context) == null) {
@@ -36,7 +37,7 @@ class App extends StatelessWidget {
       client: Provider.of<ClientModel>(context).client,
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        themeMode: ThemeMode.light,
+        themeMode: ThemeMode.dark,
         theme: ThemeData(
           backgroundColor: Colors.grey[50],
           canvasColor: Colors.grey[50],
@@ -167,13 +168,19 @@ class App extends StatelessWidget {
               fontSize: 18,
               fontWeight: FontWeight.w400,
             ),
+            button: TextStyle(
+              color: Colors.white,
+              fontFamily: "Rubik",
+              fontSize: 18,
+              fontWeight: FontWeight.w400,
+            ),
           ),
         ),
         home: Builder(
           builder: (context) {
             // Return welcome page if not set up
             if (Provider.of<ClientModel>(context).webKey == null) {
-              return WelcomePage();
+              return OnboardingPage();
             }
             // Else return the home page
             return MainPage();

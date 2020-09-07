@@ -7,11 +7,8 @@ import 'package:provider/provider.dart';
 import 'package:home/components/sheets.dart';
 
 String getState = """
-  query GetState(\$devAddr: String!, \$elemNumber: Int!) {
-    getState(devAddr: \$devAddr, elemNumber: \$elemNumber) {
-      state
-      stateType
-    }
+  subscription GetState(\$addr: String!) {
+    getState(addr: \$addr)
   }
 """;
 
@@ -21,11 +18,17 @@ String setState = """
   }
 """;
 
-class Item extends StatelessWidget {
-  Item(this.name, this.addr, this.isOn);
+class Item extends StatefulWidget {
+  Item(this.name, this.addr);
   final String name;
   final String addr;
-  final bool isOn;
+
+  @override
+  _ItemState createState() => _ItemState();
+}
+
+class _ItemState extends State<Item> {
+  String state = "AA==";
 
   @override
   Widget build(BuildContext context) {
@@ -47,15 +50,21 @@ class Item extends StatelessWidget {
             child: InkWell(
               borderRadius: BorderRadius.circular(6),
               onTap: () {
+                String newState;
+                if (state == "AA==") {
+                  newState = "AQ==";
+                } else {
+                  newState = "AA==";
+                }
                 runMutation({
                   'webKey':
                       Provider.of<ClientModel>(context, listen: false).webKey,
-                  'addr': addr,
-                  'value': isOn ? "AA==" : "AQ==",
+                  'addr': widget.addr,
+                  'value': newState
                 });
               },
               onLongPress: () {
-                showDeviceSheet(context, name);
+                showDeviceSheet(context, widget.name);
               },
               child: Container(
                 margin: EdgeInsets.all(12),
@@ -72,13 +81,36 @@ class Item extends StatelessWidget {
                       height: 12,
                     ),
                     Text(
-                      name,
+                      widget.name,
                       style: Theme.of(context).textTheme.bodyText1,
                     ),
-                    Text(
-                      isOn ? "On" : "Off",
-                      style: Theme.of(context).textTheme.bodyText2,
-                    ),
+                    Subscription("GetState", getState, variables: {
+                      'webKey': Provider.of<ClientModel>(context).webKey,
+                      'addr': widget.addr,
+                    }, builder: ({
+                      bool loading,
+                      dynamic payload,
+                      dynamic error,
+                    }) {
+                      if (loading) {
+                        return Text(
+                          "-",
+                          style: Theme.of(context).textTheme.bodyText2,
+                        );
+                      }
+                      state = payload["getState"];
+                      if (state == "AA==") {
+                        return Text(
+                          "Off",
+                          style: Theme.of(context).textTheme.bodyText2,
+                        );
+                      } else {
+                        return Text(
+                          "On",
+                          style: Theme.of(context).textTheme.bodyText2,
+                        );
+                      }
+                    }),
                   ],
                 ),
               ),

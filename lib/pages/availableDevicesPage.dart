@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:home/components/items.dart';
-import 'package:home/components/routes.dart';
 import 'package:home/pages/addDevicePage.dart';
 import 'package:home/services/store.dart';
 import 'package:provider/provider.dart';
@@ -13,19 +12,17 @@ String availableDevices = """
 """;
 
 class AvailableDevicesPage extends StatelessWidget {
-  final String groupAddr;
-
-  AvailableDevicesPage({Key key, @required this.groupAddr}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         body: CustomScrollView(
+          physics: BouncingScrollPhysics(),
           slivers: <Widget>[
             SliverToBoxAdapter(
               child: Center(
                 child: Container(
-                  margin: EdgeInsets.all(36),
+                  margin: EdgeInsets.all(15),
                   child: Text(
                     "Available Devices",
                     style: Theme.of(context).textTheme.headline1,
@@ -62,15 +59,8 @@ class AvailableDevicesPage extends StatelessWidget {
                       return ListItem(
                         devices[index],
                         () {
-                          Navigator.push(
-                            context,
-                            FadeRoute(
-                              builder: (context) => AddDevicePage(
-                                groupAddr: groupAddr,
-                                deviceAddr: devices[index],
-                              ),
-                            ),
-                          );
+                          Provider.of<AddDeviceModel>(context, listen: false).devUUID =
+                              devices[index];
                         },
                       );
                     },

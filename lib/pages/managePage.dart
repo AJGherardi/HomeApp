@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:home/components/dialogs.dart';
 import 'package:home/components/items.dart';
 import 'package:home/components/routes.dart';
-import 'package:home/pages/addDeviceSplash.dart';
-import 'package:home/pages/addGroupSplash.dart';
+import 'package:home/components/sheets.dart';
+import 'package:home/pages/addDevicePage.dart';
 
 class ManagePage extends StatelessWidget {
   @override
@@ -11,33 +11,28 @@ class ManagePage extends StatelessWidget {
     return CustomScrollView(
       physics: BouncingScrollPhysics(),
       slivers: <Widget>[
-        SliverAppBar(
-          pinned: true,
-          centerTitle: true,
-          title: Text(
-            'Manage',
-            style: Theme.of(context).textTheme.headline1,
-          ),
-        ),
         SliverToBoxAdapter(
-          child: SizedBox(
-            height: 12,
+          child: Center(
+            child: Padding(
+              padding: EdgeInsets.all(15),
+              child: Text(
+                "Manage",
+                style: Theme.of(context).textTheme.headline1,
+              ),
+            ),
           ),
         ),
         SliverToBoxAdapter(
           child: ListItem("Add Device", () {
             Navigator.push(
               context,
-              FadeRoute(builder: (context) => AddDeviceSplash()),
+              FadeRoute(builder: (context) => AddDevicePage()),
             );
           }),
         ),
         SliverToBoxAdapter(
           child: ListItem("Add Group", () {
-            Navigator.push(
-              context,
-              FadeRoute(builder: (context) => AddGroupSplash()),
-            );
+            showAddGroupSheet(context);
           }),
         ),
         SliverToBoxAdapter(

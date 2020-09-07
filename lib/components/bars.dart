@@ -1,28 +1,31 @@
 import 'package:flutter/material.dart';
 
 class TopBar extends StatelessWidget {
-  TopBar(this.text, this.rightIcon, this.onPress);
+  TopBar(
+    this.text,
+    this.rightIcon,
+  );
   final String text;
   final IconData rightIcon;
-  final Function onPress;
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        TopIcon(Icons.chevron_left, () {
-          Navigator.pop(context);
-        }),
-        Text(
-          text,
-          style: TextStyle(
-            fontSize: 52,
-            color: Colors.black,
+    return Padding(
+      padding: const EdgeInsets.all(15.0),
+      child: Stack(
+        children: <Widget>[
+          Align(
+            alignment: Alignment.topLeft,
+            child: TopIcon(Icons.chevron_left, () {
+              Navigator.pop(context);
+            }),
           ),
-        ),
-        TopIcon(rightIcon, onPress)
-      ],
+          Align(
+            alignment: Alignment.topCenter,
+            child: Text(text, style: Theme.of(context).textTheme.headline1),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -36,8 +39,8 @@ class TopIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return IconButton(
       icon: Icon(icon),
-      iconSize: 36,
-      color: Colors.black,
+      iconSize: 32,
+      color: Theme.of(context).textTheme.headline1.color,
       onPressed: onPressed,
     );
   }

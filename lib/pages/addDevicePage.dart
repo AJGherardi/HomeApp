@@ -1,68 +1,184 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:home/components/buttons.dart';
-import 'package:home/components/sheets.dart';
+import 'package:home/pages/nameDevicePage.dart';
+import 'package:home/pages/availableDevicesPage.dart';
+import 'package:home/pages/availableGroupsPage.dart';
+import 'package:home/services/graphql.dart';
+import 'package:home/services/store.dart';
+import 'package:provider/provider.dart';
 
-class AddDevicePage extends StatelessWidget {
-  final String groupAddr;
-  final String deviceAddr;
+String addDevice = """
+  mutation AddDevice(\$name: String!, \$devUUID: String!, \$addr: String!) {
+    addDevice(name: \$name, devUUID: \$devUUID, addr: \$addr) {
+      addr
+    }
+  }
+""";
 
-  AddDevicePage({Key key, @required this.groupAddr, @required this.deviceAddr})
-      : super(key: key);
+class AddDeviceModel {
+  String groupAddr;
+  String devUUID;
+  String name;
+}
+
+class AddDevicePage extends StatefulWidget {
+  @override
+  _AddDevicePageState createState() => _AddDevicePageState();
+}
+
+class _AddDevicePageState extends State<AddDevicePage> {
+  int _currentPage = 0;
+
+  final List<Widget> _children = [
+    AvailableGroupsPage(),
+    AvailableDevicesPage(),
+    NameDevicePage()
+  ];
+
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[
-            Text(
-              "Add Device",
-              style: Theme.of(context).textTheme.headline1,
-            ),
-            Container(
-              margin: EdgeInsets.all(24),
-              decoration: BoxDecoration(
-                color: Theme.of(context).cardColor,
-                borderRadius: BorderRadius.circular(4),
-                border: Border.all(color: Colors.black),
+    return Provider<AddDeviceModel>(
+      create: (_) {
+        var model = AddDeviceModel();
+        model.groupAddr = "";
+        model.devUUID = "";
+        model.name = "";
+        return model;
+      },
+      builder: (context, _) {
+        return Scaffold(
+          body: PageTransitionSwitcher(
+            transitionBuilder: (
+              Widget child,
+              Animation<double> animation,
+              Animation<double> secondaryAnimation,
+            ) {
+              return SharedAxisTransition(
+                transitionType: SharedAxisTransitionType.horizontal,
+                animation: animation,
+                secondaryAnimation: secondaryAnimation,
+                child: child,
+              );
+            },
+            child: _children[_currentPage],
+          ),
+          bottomNavigationBar: Container(
+            padding: EdgeInsets.only(left: 10, right: 10),
+            height: 65,
+            decoration: BoxDecoration(
+              border: Border(
+                top: BorderSide(width: 2),
               ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  SizedBox(height: 36),
-                  SvgPicture.asset(
-                    "assets/range.svg",
-                    color: Theme.of(context).primaryColor,
-                    width: 250,
-                  ),
-                  SizedBox(height: 36),
-                  Container(
-                    margin: EdgeInsets.only(left: 18, right: 18),
-                    child: Divider(
-                      thickness: 2,
-                      color: Colors.black,
+              color: Theme.of(context).cardColor,
+            ),
+            child: Stack(
+              children: [
+                AnimatedOpacity(
+                  opacity: (_currentPage != 0) ? 1.0 : 0.0,
+                  duration: Duration(milliseconds: 150),
+                  child: Container(
+                    alignment: Alignment.centerLeft,
+                    child: FlatButton(
+                      onPressed: (_currentPage != 0)
+                          ? () {
+                              setState(() {
+                                _currentPage--;
+                              });
+                            }
+                          : () {},
+                      child: Container(
+                        margin: EdgeInsets.all(12),
+                        child: Text(
+                          "Back",
+                          style: Theme.of(context).textTheme.button,
+                        ),
+                      ),
                     ),
                   ),
-                  SizedBox(height: 24),
-                  Text(
-                    "This may take a minute",
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.headline1,
+                ),
+                Container(
+                  alignment: Alignment.center,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      for (int i = 0; i < 3; i++)
+                        if (i == _currentPage) Dot(true) else Dot(false)
+                    ],
                   ),
-                  SizedBox(height: 24)
-                ],
-              ),
+                ),
+                (_currentPage != 2)
+                    ? Container(
+                        alignment: Alignment.centerRight,
+                        child: FlatButton(
+                          onPressed: () {
+                            if (Provider.of<AddDeviceModel>(context,
+                                        listen: false)
+                                    .groupAddr !=
+                                "") {
+                              setState(() {
+                                _currentPage++;
+                              });
+                            }
+                          },
+                          child: Container(
+                            margin: EdgeInsets.all(12),
+                            child: Text(
+                              "Next",
+                              style: Theme.of(context).textTheme.button,
+                            ),
+                          ),
+                        ),
+                      )
+                    : MutationWithBuilder(
+                        onCompleted: (resultData) {
+                          // Get name and addr from result
+                          var data =
+                              resultData["addDevice"] as Map<String, Object>;
+                        },
+                        query: addDevice,
+                        builder: (
+                          RunMutation runMutation,
+                          QueryResult result,
+                        ) {
+                          return Container(
+                            alignment: Alignment.centerRight,
+                            child: FlatButton(
+                              onPressed: () {
+                                runMutation({
+                                  'webKey': Provider.of<ClientModel>(context,
+                                          listen: false)
+                                      .webKey,
+                                  'name': Provider.of<AddDeviceModel>(context,
+                                          listen: false)
+                                      .name,
+                                  'devUUID': Provider.of<AddDeviceModel>(
+                                          context,
+                                          listen: false)
+                                      .devUUID,
+                                  'addr': Provider.of<AddDeviceModel>(context,
+                                          listen: false)
+                                      .groupAddr,
+                                });
+                                Navigator.of(context).pop();
+                              },
+                              child: Container(
+                                margin: EdgeInsets.all(12),
+                                child: Text(
+                                  "Done",
+                                  style: Theme.of(context).textTheme.button,
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+              ],
             ),
-            NextButton(
-              "Add",
-              () {
-                showAddDeviceSheet(context, groupAddr, deviceAddr);
-              },
-            ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }

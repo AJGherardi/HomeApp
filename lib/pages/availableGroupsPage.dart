@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:home/components/items.dart';
-import 'package:home/components/routes.dart';
-import 'package:home/pages/availableDevicesPage.dart';
+import 'package:home/pages/addDevicePage.dart';
 import 'package:home/services/store.dart';
 import 'package:provider/provider.dart';
 
@@ -21,11 +20,12 @@ class AvailableGroupsPage extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         body: CustomScrollView(
+          physics: BouncingScrollPhysics(),
           slivers: <Widget>[
             SliverToBoxAdapter(
               child: Center(
                 child: Container(
-                  margin: EdgeInsets.all(36),
+                  margin: EdgeInsets.all(15),
                   child: Text(
                     "Available Groups",
                     style: Theme.of(context).textTheme.headline1,
@@ -55,21 +55,14 @@ class AvailableGroupsPage extends StatelessWidget {
                   );
                 }
                 List groups = result.data["availableGroups"];
-                print(Provider.of<ClientModel>(context).webKey);
                 return SliverList(
                   delegate: SliverChildBuilderDelegate(
                     (BuildContext context, int index) {
                       return ListItem(
                         groups[index]["name"],
                         () {
-                          Navigator.push(
-                            context,
-                            FadeRoute(
-                              builder: (context) => AvailableDevicesPage(
-                                groupAddr: groups[index]["addr"],
-                              ),
-                            ),
-                          );
+                          Provider.of<AddDeviceModel>(context, listen: false)
+                              .groupAddr = groups[index]["addr"];
                         },
                       );
                     },

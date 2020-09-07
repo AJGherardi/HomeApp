@@ -21,3 +21,22 @@ class NextButton extends StatelessWidget {
     );
   }
 }
+
+class Dot extends StatelessWidget {
+  Dot(this.isActive);
+
+  final bool isActive;
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedContainer(
+      duration: Duration(milliseconds: 150),
+      margin: const EdgeInsets.symmetric(horizontal: 3.3),
+      height: 10,
+      width: 10,
+      decoration: BoxDecoration(
+        color: isActive ? Theme.of(context).primaryColor : Colors.grey,
+        borderRadius: BorderRadius.all(Radius.circular(12)),
+      ),
+    );
+  }
+}

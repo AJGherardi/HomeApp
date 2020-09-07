@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:home/components/buttons.dart';
-import 'package:home/components/routes.dart';
-import 'package:home/pages/addHubSplash.dart';
 
 class WelcomePage extends StatelessWidget {
   @override
@@ -9,55 +6,18 @@ class WelcomePage extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         body: Center(
-          child: Stack(
-            children: <Widget>[
-              Center(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    Text(
-                      "Home",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w900,
-                        fontSize: 64,
-                        color: Colors.black,
-                      ),
-                    ),
-                    Text(
-                      "By",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w400,
-                        fontSize: 30,
-                        color: Colors.black,
-                      ),
-                    ),
-                    Text(
-                      "Alexander Gherardi",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w400,
-                        fontSize: 30,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ],
-                ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "Welcome ",
+                style: Theme.of(context).textTheme.headline1,
               ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Container(
-                  margin: EdgeInsets.all(24),
-                  child: NextButton(
-                    "Next",
-                    () {
-                      Navigator.push(
-                        context,
-                        FadeRoute(
-                          builder: (context) => AddHubSplash(),
-                        ),
-                      );
-                    },
-                  ),
-                ),
+              Text(
+                "Home",
+                style: Theme.of(context).textTheme.headline1.copyWith(
+                      color: Theme.of(context).primaryColor,
+                    ),
               ),
             ],
           ),
