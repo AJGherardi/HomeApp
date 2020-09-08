@@ -34,7 +34,14 @@ Stream<List<String>> find() async* {
   print("done");
 }
 
-class AvailableHubsPage extends StatelessWidget {
+class AvailableHubsPage extends StatefulWidget {
+  @override
+  _AvailableHubsPageState createState() => _AvailableHubsPageState();
+}
+
+class _AvailableHubsPageState extends State<AvailableHubsPage> {
+  int _selectedIndex;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -58,10 +65,14 @@ class AvailableHubsPage extends StatelessWidget {
                   return SliverList(
                     delegate: SliverChildBuilderDelegate(
                       (BuildContext context, int index) {
-                        return ListItem(snapshot.data.elementAt(index), () {
+                        return SelectableListItem(
+                            snapshot.data.elementAt(index), () {
+                          setState(() {
+                            _selectedIndex = index;
+                          });
                           Provider.of<ClientModel>(context, listen: false)
                               .setHost(snapshot.data.elementAt(index));
-                        });
+                        }, (_selectedIndex == index) ? true : false);
                       },
                       childCount: snapshot.data.length,
                     ),

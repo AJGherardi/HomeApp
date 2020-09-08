@@ -6,13 +6,13 @@ import 'package:home/services/store.dart';
 import 'package:provider/provider.dart';
 import 'package:home/components/sheets.dart';
 
-String getState = """
+String _getState = """
   subscription GetState(\$addr: String!) {
     getState(addr: \$addr)
   }
 """;
 
-String setState = """
+String _setState = """
   mutation SetState(\$addr: String!, \$value: String!) {
     setState(addr: \$addr, value: \$value)
   }
@@ -34,7 +34,7 @@ class _ItemState extends State<Item> {
   Widget build(BuildContext context) {
     return MutationWithBuilder(
       onCompleted: (resultData) {},
-      query: setState,
+      query: _setState,
       builder: (
         RunMutation runMutation,
         QueryResult result,
@@ -45,7 +45,9 @@ class _ItemState extends State<Item> {
           child: Ink(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(6),
-              border: Border.all(color: Colors.black),
+              border: (Theme.of(context).brightness != Brightness.dark)
+                  ? Border.all(color: Colors.black)
+                  : Border.all(width: 0),
             ),
             child: InkWell(
               borderRadius: BorderRadius.circular(6),
@@ -84,7 +86,7 @@ class _ItemState extends State<Item> {
                       widget.name,
                       style: Theme.of(context).textTheme.bodyText1,
                     ),
-                    Subscription("GetState", getState, variables: {
+                    Subscription("GetState", _getState, variables: {
                       'webKey': Provider.of<ClientModel>(context).webKey,
                       'addr': widget.addr,
                     }, builder: ({
@@ -136,7 +138,9 @@ class ListItem extends StatelessWidget {
         borderRadius: BorderRadius.circular(6),
         child: Ink(
           decoration: BoxDecoration(
-            border: Border.all(color: Colors.black),
+            border: (Theme.of(context).brightness != Brightness.dark)
+                ? Border.all(color: Colors.black)
+                : Border.all(width: 0),
             borderRadius: BorderRadius.circular(6),
           ),
           child: InkWell(
@@ -151,6 +155,68 @@ class ListItem extends StatelessWidget {
                   Text(
                     text,
                     style: Theme.of(context).textTheme.bodyText1,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class SelectableListItem extends StatelessWidget {
+  SelectableListItem(this.text, this.onTap, this.selected);
+  final String text;
+  final bool selected;
+  final Function onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.all(8),
+      child: Material(
+        color: Theme.of(context).cardColor,
+        borderRadius: BorderRadius.circular(6),
+        child: Ink(
+          decoration: BoxDecoration(
+            border: (Theme.of(context).brightness != Brightness.dark)
+                ? Border.all(color: Colors.black)
+                : Border.all(width: 0),
+            borderRadius: BorderRadius.circular(6),
+          ),
+          child: InkWell(
+            borderRadius: BorderRadius.circular(6),
+            onTap: onTap,
+            child: Container(
+              margin: EdgeInsets.all(10),
+              child: Stack(
+                children: [
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    margin: EdgeInsets.only(left: 24),
+                    child: AnimatedCrossFade(
+                      firstChild: Icon(
+                        Icons.check,
+                        size: 28,
+                      ),
+                      secondChild: Icon(
+                        Icons.check,
+                        color: Colors.transparent,
+                      ),
+                      crossFadeState: (selected)
+                          ? CrossFadeState.showFirst
+                          : CrossFadeState.showSecond,
+                      duration: Duration(milliseconds: 150),
+                    ),
+                  ),
+                  Container(
+                    alignment: Alignment.center,
+                    child: Text(
+                      text,
+                      style: Theme.of(context).textTheme.bodyText1,
+                    ),
                   ),
                 ],
               ),

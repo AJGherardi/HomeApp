@@ -11,7 +11,14 @@ String availableDevices = """
   }
 """;
 
-class AvailableDevicesPage extends StatelessWidget {
+class AvailableDevicesPage extends StatefulWidget {
+  @override
+  _AvailableDevicesPageState createState() => _AvailableDevicesPageState();
+}
+
+class _AvailableDevicesPageState extends State<AvailableDevicesPage> {
+  int _selectedIndex;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -56,13 +63,13 @@ class AvailableDevicesPage extends StatelessWidget {
                 return SliverList(
                   delegate: SliverChildBuilderDelegate(
                     (BuildContext context, int index) {
-                      return ListItem(
-                        devices[index],
-                        () {
-                          Provider.of<AddDeviceModel>(context, listen: false).devUUID =
-                              devices[index];
-                        },
-                      );
+                      return SelectableListItem(devices[index], () {
+                        setState(() {
+                          _selectedIndex = index;
+                        });
+                        Provider.of<AddDeviceModel>(context, listen: false)
+                            .devUUID = devices[index];
+                      }, (_selectedIndex == index) ? true : false);
                     },
                     childCount: devices.length,
                   ),

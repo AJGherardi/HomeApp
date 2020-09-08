@@ -14,7 +14,14 @@ String listGroups = """
   }
 """;
 
-class AvailableGroupsPage extends StatelessWidget {
+class AvailableGroupsPage extends StatefulWidget {
+  @override
+  _AvailableGroupsPageState createState() => _AvailableGroupsPageState();
+}
+
+class _AvailableGroupsPageState extends State<AvailableGroupsPage> {
+  int _selectedIndex;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -58,13 +65,13 @@ class AvailableGroupsPage extends StatelessWidget {
                 return SliverList(
                   delegate: SliverChildBuilderDelegate(
                     (BuildContext context, int index) {
-                      return ListItem(
-                        groups[index]["name"],
-                        () {
-                          Provider.of<AddDeviceModel>(context, listen: false)
-                              .groupAddr = groups[index]["addr"];
-                        },
-                      );
+                      return SelectableListItem(groups[index]["name"], () {
+                        setState(() {
+                          _selectedIndex = index;
+                        });
+                        Provider.of<AddDeviceModel>(context, listen: false)
+                            .groupAddr = groups[index]["addr"];
+                      }, (_selectedIndex == index) ? true : false);
                     },
                     childCount: groups.length,
                   ),

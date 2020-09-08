@@ -4,7 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:home/pages/mainPage.dart';
 import 'package:home/pages/onboardingPage.dart';
-import 'package:home/pages/welcomePage.dart';
 import 'package:home/services/store.dart';
 import 'package:provider/provider.dart';
 

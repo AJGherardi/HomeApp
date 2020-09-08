@@ -69,7 +69,9 @@ class _AddDevicePageState extends State<AddDevicePage> {
             height: 65,
             decoration: BoxDecoration(
               border: Border(
-                top: BorderSide(width: 2),
+                top: (Theme.of(context).brightness != Brightness.dark)
+                    ? BorderSide(width: 2)
+                    : BorderSide.none,
               ),
               color: Theme.of(context).cardColor,
             ),
