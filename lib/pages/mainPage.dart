@@ -19,9 +19,10 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: PageTransitionSwitcher(
+    return Scaffold(
+      resizeToAvoidBottomPadding: false,
+      body: Container(
+        child: PageTransitionSwitcher(
           transitionBuilder: (
             Widget child,
             Animation<double> animation,
@@ -35,26 +36,26 @@ class _MainPageState extends State<MainPage> {
           },
           child: _children[_currentIndex],
         ),
-        bottomNavigationBar: BottomNavigationBar(
-          showSelectedLabels: false,
-          showUnselectedLabels: false,
-          onTap: onTabTapped,
-          currentIndex: _currentIndex,
-          items: [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.power),
-              title: Text(''),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.done_outline),
-              title: Text(''),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.settings),
-              title: Text(''),
-            ),
-          ],
-        ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        onTap: onTabTapped,
+        currentIndex: _currentIndex,
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.power),
+            title: Text(''),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.done_outline),
+            title: Text(''),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            title: Text(''),
+          ),
+        ],
       ),
     );
   }

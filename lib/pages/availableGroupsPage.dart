@@ -20,66 +20,70 @@ class AvailableGroupsPage extends StatefulWidget {
 }
 
 class _AvailableGroupsPageState extends State<AvailableGroupsPage> {
-  int _selectedIndex;
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: CustomScrollView(
-          physics: BouncingScrollPhysics(),
-          slivers: <Widget>[
-            SliverToBoxAdapter(
-              child: Center(
-                child: Container(
-                  margin: EdgeInsets.all(15),
-                  child: Text(
-                    "Available Groups",
-                    style: Theme.of(context).textTheme.headline1,
-                  ),
+    return Scaffold(
+      body: CustomScrollView(
+        physics: BouncingScrollPhysics(),
+        slivers: <Widget>[
+          SliverToBoxAdapter(
+            child: Center(
+              child: Container(
+                margin: EdgeInsets.fromLTRB(
+                  15,
+                  MediaQuery.of(context).padding.top + 15,
+                  15,
+                  15,
+                ),
+                child: Text(
+                  "Available Groups",
+                  style: Theme.of(context).textTheme.headline1,
                 ),
               ),
             ),
-            Query(
-              options: QueryOptions(
-                documentNode: gql(listGroups),
-                variables: {
-                  'webKey': Provider.of<ClientModel>(context).webKey,
-                },
-              ),
-              builder: (QueryResult result,
-                  {VoidCallback refetch, FetchMore fetchMore}) {
-                if (result.loading) {
-                  return SliverFillRemaining(
-                    hasScrollBody: false,
-                    child: Center(
-                      child: CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(
-                          Theme.of(context).primaryColor,
-                        ),
-                      ),
-                    ),
-                  );
-                }
-                List groups = result.data["availableGroups"];
-                return SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                    (BuildContext context, int index) {
-                      return SelectableListItem(groups[index]["name"], () {
-                        setState(() {
-                          _selectedIndex = index;
-                        });
-                        Provider.of<AddDeviceModel>(context, listen: false)
-                            .groupAddr = groups[index]["addr"];
-                      }, (_selectedIndex == index) ? true : false);
-                    },
-                    childCount: groups.length,
-                  ),
-                );
+          ),
+          Query(
+            options: QueryOptions(
+              documentNode: gql(listGroups),
+              variables: {
+                'webKey': Provider.of<ClientModel>(context).webKey,
               },
             ),
-          ],
-        ),
+            builder: (QueryResult result,
+                {VoidCallback refetch, FetchMore fetchMore}) {
+              if (result.loading) {
+                return SliverFillRemaining(
+                  hasScrollBody: false,
+                  child: Center(
+                    child: CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                        Theme.of(context).primaryColor,
+                      ),
+                    ),
+                  ),
+                );
+              }
+              List groups = result.data["availableGroups"];
+              return SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  (BuildContext context, int index) {
+                    return SelectableListItem(groups[index]["name"], () {
+                      Provider.of<AddDeviceModel>(context, listen: false)
+                          .groupAddr = groups[index]["addr"];
+                    },
+                        (Provider.of<AddDeviceModel>(context, listen: false)
+                                    .groupAddr ==
+                                groups[index]["addr"])
+                            ? true
+                            : false);
+                  },
+                  childCount: groups.length,
+                ),
+              );
+            },
+          ),
+        ],
       ),
     );
   }

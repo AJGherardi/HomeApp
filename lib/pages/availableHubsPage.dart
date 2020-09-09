@@ -44,56 +44,59 @@ class _AvailableHubsPageState extends State<AvailableHubsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: CustomScrollView(
-          slivers: <Widget>[
-            SliverToBoxAdapter(
-              child: Center(
-                child: Container(
-                  margin: EdgeInsets.all(15),
-                  child: Text(
-                    "Available Hubs",
-                    style: Theme.of(context).textTheme.headline1,
-                  ),
+    return Scaffold(
+      body: CustomScrollView(
+        slivers: <Widget>[
+          SliverToBoxAdapter(
+            child: Center(
+              child: Container(
+                margin: EdgeInsets.fromLTRB(
+                  15,
+                  MediaQuery.of(context).padding.top + 15,
+                  15,
+                  15,
+                ),
+                child: Text(
+                  "Available Hubs",
+                  style: Theme.of(context).textTheme.headline1,
                 ),
               ),
             ),
-            StreamBuilder(
-              builder: (context, AsyncSnapshot<List<String>> snapshot) {
-                if (snapshot.hasData) {
-                  return SliverList(
-                    delegate: SliverChildBuilderDelegate(
-                      (BuildContext context, int index) {
-                        return SelectableListItem(
-                            snapshot.data.elementAt(index), () {
-                          setState(() {
-                            _selectedIndex = index;
-                          });
-                          Provider.of<ClientModel>(context, listen: false)
-                              .setHost(snapshot.data.elementAt(index));
-                        }, (_selectedIndex == index) ? true : false);
-                      },
-                      childCount: snapshot.data.length,
-                    ),
-                  );
-                } else {
-                  return SliverFillRemaining(
-                    hasScrollBody: false,
-                    child: Center(
-                      child: CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(
-                          Theme.of(context).primaryColor,
-                        ),
+          ),
+          StreamBuilder(
+            builder: (context, AsyncSnapshot<List<String>> snapshot) {
+              if (snapshot.hasData) {
+                return SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    (BuildContext context, int index) {
+                      return SelectableListItem(snapshot.data.elementAt(index),
+                          () {
+                        setState(() {
+                          _selectedIndex = index;
+                        });
+                        Provider.of<ClientModel>(context, listen: false)
+                            .setHost(snapshot.data.elementAt(index));
+                      }, (_selectedIndex == index) ? true : false);
+                    },
+                    childCount: snapshot.data.length,
+                  ),
+                );
+              } else {
+                return SliverFillRemaining(
+                  hasScrollBody: false,
+                  child: Center(
+                    child: CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                        Theme.of(context).primaryColor,
                       ),
                     ),
-                  );
-                }
-              },
-              stream: find(),
-            ),
-          ],
-        ),
+                  ),
+                );
+              }
+            },
+            stream: find(),
+          ),
+        ],
       ),
     );
   }

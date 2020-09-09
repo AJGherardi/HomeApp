@@ -14,7 +14,12 @@ class ManagePage extends StatelessWidget {
         SliverToBoxAdapter(
           child: Center(
             child: Padding(
-              padding: EdgeInsets.all(15),
+              padding: EdgeInsets.fromLTRB(
+                15,
+                MediaQuery.of(context).padding.top + 15,
+                15,
+                15,
+              ),
               child: Text(
                 "Manage",
                 style: Theme.of(context).textTheme.headline1,

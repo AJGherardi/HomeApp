@@ -82,9 +82,14 @@ class GroupPage extends StatelessWidget {
           slivers: [
             SliverToBoxAdapter(
               child: Center(
-                child: TopBar(
-                  "text",
-                  Icons.arrow_back,
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    top: MediaQuery.of(context).padding.top,
+                  ),
+                  child: TopBar(
+                    "text",
+                    Icons.arrow_back,
+                  ),
                 ),
               ),
             ),
@@ -157,7 +162,12 @@ class HomePage extends StatelessWidget {
             SliverToBoxAdapter(
               child: Center(
                 child: Padding(
-                  padding: EdgeInsets.all(15),
+                  padding: EdgeInsets.fromLTRB(
+                    15,
+                    MediaQuery.of(context).padding.top + 15,
+                    15,
+                    15,
+                  ),
                   child: Text(
                     "Home",
                     style: Theme.of(context).textTheme.headline1,

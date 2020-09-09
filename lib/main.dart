@@ -21,8 +21,9 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
-          statusBarColor: Color(0xFF2E2E2E),
-          statusBarIconBrightness: Brightness.light),
+        statusBarColor: Colors.transparent,
+        statusBarIconBrightness: Brightness.light,
+      ),
     );
     // Check if model is returned
     if (Provider.of<ClientModel>(context) == null) {
