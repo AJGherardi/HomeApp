@@ -25,7 +25,6 @@ class _AvailableGroupsPageState extends State<AvailableGroupsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: CustomScrollView(
-        physics: BouncingScrollPhysics(),
         slivers: <Widget>[
           SliverToBoxAdapter(
             child: Center(

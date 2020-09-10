@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
-import 'package:home/components/buttons.dart';
 import 'package:home/components/routes.dart';
 import 'package:home/pages/welcomePage.dart';
 import 'package:home/services/graphql.dart';

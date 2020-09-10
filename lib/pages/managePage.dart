@@ -4,12 +4,12 @@ import 'package:home/components/items.dart';
 import 'package:home/components/routes.dart';
 import 'package:home/components/sheets.dart';
 import 'package:home/pages/addDevicePage.dart';
+import 'package:home/pages/addScenePage.dart';
 
 class ManagePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
-      physics: BouncingScrollPhysics(),
       slivers: <Widget>[
         SliverToBoxAdapter(
           child: Center(
@@ -38,6 +38,14 @@ class ManagePage extends StatelessWidget {
         SliverToBoxAdapter(
           child: ListItem("Add Group", () {
             showAddGroupSheet(context);
+          }),
+        ),
+        SliverToBoxAdapter(
+          child: ListItem("Add Scene", () {
+            Navigator.push(
+              context,
+              FadeRoute(builder: (context) => AddScenePage()),
+            );
           }),
         ),
         SliverToBoxAdapter(

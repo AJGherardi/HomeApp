@@ -1,22 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:home/components/items.dart';
-import 'package:home/pages/addDevicePage.dart';
+import 'package:home/pages/addScenePage.dart';
+import 'package:home/pages/availableGroupsPage.dart';
 import 'package:home/services/store.dart';
 import 'package:provider/provider.dart';
 
-String availableDevices = """
-  query AvailableDevices {
-    availableDevices
-  }
-""";
-
-class AvailableDevicesPage extends StatefulWidget {
+class SelectGroupPage extends StatefulWidget {
   @override
-  _AvailableDevicesPageState createState() => _AvailableDevicesPageState();
+  _SelectGroupPageState createState() => _SelectGroupPageState();
 }
 
-class _AvailableDevicesPageState extends State<AvailableDevicesPage> {
+class _SelectGroupPageState extends State<SelectGroupPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,7 +27,7 @@ class _AvailableDevicesPageState extends State<AvailableDevicesPage> {
                   15,
                 ),
                 child: Text(
-                  "Available Devices",
+                  "Available Groups",
                   style: Theme.of(context).textTheme.headline1,
                 ),
               ),
@@ -40,7 +35,7 @@ class _AvailableDevicesPageState extends State<AvailableDevicesPage> {
           ),
           Query(
             options: QueryOptions(
-              documentNode: gql(availableDevices),
+              documentNode: gql(listGroups),
               variables: {
                 'webKey': Provider.of<ClientModel>(context).webKey,
               },
@@ -59,22 +54,22 @@ class _AvailableDevicesPageState extends State<AvailableDevicesPage> {
                   ),
                 );
               }
-              List devices = result.data["availableDevices"];
-              print(Provider.of<ClientModel>(context).webKey);
+              List groups = result.data["availableGroups"];
               return SliverList(
                 delegate: SliverChildBuilderDelegate(
                   (BuildContext context, int index) {
-                    return SelectableListItem(devices[index], () {
-                      Provider.of<AddDeviceModel>(context, listen: false)
-                          .devUUID = devices[index];
+                    return SelectableListItem(groups[index]["name"], () {
+                      Provider.of<AddSceneModel>(context, listen: false)
+                          .groupAddr = groups[index]["addr"];
+                      setState(() {});
                     },
-                        (Provider.of<AddDeviceModel>(context, listen: false)
-                                    .devUUID ==
-                                devices[index])
+                        (Provider.of<AddSceneModel>(context, listen: false)
+                                    .groupAddr ==
+                                groups[index]["addr"])
                             ? true
                             : false);
                   },
-                  childCount: devices.length,
+                  childCount: groups.length,
                 ),
               );
             },

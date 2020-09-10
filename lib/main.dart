@@ -45,6 +45,7 @@ class App extends StatelessWidget {
           appBarTheme: AppBarTheme(color: Colors.grey[50]),
           buttonTheme: ButtonThemeData(buttonColor: Colors.black),
           primaryColor: Color(0xFFEF323D),
+          accentColor: Color(0xFFEF323D),
           tabBarTheme: TabBarTheme(
             indicator: BoxDecoration(),
             labelColor: Color(0xFFEF323D),
@@ -110,6 +111,7 @@ class App extends StatelessWidget {
           appBarTheme: AppBarTheme(color: Color(0xFF121212)),
           buttonTheme: ButtonThemeData(buttonColor: Colors.black),
           primaryColor: Color(0xFFFF6C68),
+          accentColor: Color(0xFFFF6C68),
           tabBarTheme: TabBarTheme(
             indicator: BoxDecoration(),
             labelColor: Color(0xFFFF6C68),

@@ -9,11 +9,17 @@ import 'package:provider/provider.dart';
 String listGroup = """
   subscription ListGroup(\$addr: String!) {
     listGroup(addr: \$addr) {
+      devices {
         addr
         elements{ 
           name
           addr
         }
+      }
+      scenes {
+        name
+        number
+      }
     }
   }
 """;
@@ -72,7 +78,9 @@ class GroupPage extends StatelessWidget {
             ),
           );
         }
-        List devices = payload["listGroup"];
+        List devices = payload["listGroup"]["devices"];
+        List scenes = payload["listGroup"]["scenes"];
+        print(scenes);
         // Get list of elements
         List groupElements = new List();
         for (var device in devices) {
@@ -87,9 +95,41 @@ class GroupPage extends StatelessWidget {
                     top: MediaQuery.of(context).padding.top,
                   ),
                   child: TopBar(
-                    "text",
+                    group["name"],
                     Icons.arrow_back,
                   ),
+                ),
+              ),
+            ),
+            SliverPadding(
+              padding: EdgeInsets.only(bottom: 15),
+              sliver: SliverToBoxAdapter(
+                child: Center(
+                  child: Text(
+                    "Scenes",
+                    style: Theme.of(context).textTheme.subtitle1,
+                  ),
+                ),
+              ),
+            ),
+            SliverPadding(
+              padding: EdgeInsets.only(left: 15, right: 15, bottom: 15),
+              sliver: SliverGrid(
+                gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                  maxCrossAxisExtent: 200,
+                  crossAxisSpacing: 15,
+                  mainAxisSpacing: 15,
+                  childAspectRatio: 1.4,
+                ),
+                delegate: SliverChildBuilderDelegate(
+                  (BuildContext context, int index) {
+                    return SceneItem(
+                      scenes[index]["name"],
+                      scenes[index]["number"],
+                      group["addr"],
+                    );
+                  },
+                  childCount: scenes.length,
                 ),
               ),
             ),
@@ -105,17 +145,17 @@ class GroupPage extends StatelessWidget {
               ),
             ),
             SliverPadding(
-              padding: EdgeInsets.only(left: 15, right: 15),
+              padding: EdgeInsets.only(left: 15, right: 15, bottom: 15),
               sliver: SliverGrid(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
+                gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                  maxCrossAxisExtent: 200,
                   crossAxisSpacing: 15,
                   mainAxisSpacing: 15,
                   childAspectRatio: 1.4,
                 ),
                 delegate: SliverChildBuilderDelegate(
                   (BuildContext context, int index) {
-                    return Item(
+                    return DeviceItem(
                       groupElements[index]["name"],
                       groupElements[index]["addr"],
                     );
@@ -157,7 +197,6 @@ class HomePage extends StatelessWidget {
         }
         List groups = result.data["availableGroups"];
         return CustomScrollView(
-          physics: BouncingScrollPhysics(),
           slivers: [
             SliverToBoxAdapter(
               child: Center(

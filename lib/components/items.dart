@@ -18,16 +18,140 @@ String _setState = """
   }
 """;
 
-class Item extends StatefulWidget {
-  Item(this.name, this.addr);
+String _sceneRecall = """
+  mutation SceneRecall(\$addr: String!, \$sceneNumber: String!) {
+    sceneRecall(addr: \$addr, sceneNumber: \$sceneNumber) 
+  }
+""";
+
+class SceneItem extends StatefulWidget {
+  SceneItem(
+    this.name,
+    this.number,
+    this.addr,
+  );
+  final String name;
+  final String number;
+  final String addr;
+
+  @override
+  _SceneItemState createState() => _SceneItemState();
+}
+
+class _SceneItemState extends State<SceneItem> {
+  @override
+  Widget build(BuildContext context) {
+    return MutationWithBuilder(
+      onCompleted: (resultData) {},
+      query: _sceneRecall,
+      builder: (
+        RunMutation runMutation,
+        QueryResult result,
+      ) {
+        return Material(
+          color: Theme.of(context).cardColor,
+          borderRadius: BorderRadius.circular(6),
+          child: Ink(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(6),
+              border: (Theme.of(context).brightness != Brightness.dark)
+                  ? Border.all(color: Colors.black)
+                  : Border.all(width: 0),
+            ),
+            child: InkWell(
+              borderRadius: BorderRadius.circular(6),
+              onTap: () {
+                runMutation({
+                  'webKey':
+                      Provider.of<ClientModel>(context, listen: false).webKey,
+                  'sceneNumber': widget.number,
+                  'addr': widget.addr
+                });
+              },
+              onLongPress: () {
+                showDeviceSheet(context, widget.name);
+              },
+              child: Container(
+                margin: EdgeInsets.all(12),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    SvgPicture.asset(
+                      "assets/plug.svg",
+                      color: Theme.of(context).primaryColor,
+                      width: 35,
+                    ),
+                    SizedBox(
+                      height: 12,
+                    ),
+                    Text(
+                      widget.name,
+                      style: Theme.of(context).textTheme.bodyText1,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
+class ListItem extends StatelessWidget {
+  ListItem(this.text, this.onTap);
+  final String text;
+  final Function onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.all(8),
+      child: Material(
+        color: Theme.of(context).cardColor,
+        borderRadius: BorderRadius.circular(6),
+        child: Ink(
+          decoration: BoxDecoration(
+            border: (Theme.of(context).brightness != Brightness.dark)
+                ? Border.all(color: Colors.black)
+                : Border.all(width: 0),
+            borderRadius: BorderRadius.circular(6),
+          ),
+          child: InkWell(
+            borderRadius: BorderRadius.circular(6),
+            onTap: onTap,
+            child: Container(
+              margin: EdgeInsets.all(10),
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  Text(
+                    text,
+                    style: Theme.of(context).textTheme.bodyText1,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class DeviceItem extends StatefulWidget {
+  DeviceItem(this.name, this.addr);
   final String name;
   final String addr;
 
   @override
-  _ItemState createState() => _ItemState();
+  _DeviceItemState createState() => _DeviceItemState();
 }
 
-class _ItemState extends State<Item> {
+class _DeviceItemState extends State<DeviceItem> {
   String state = "AA==";
 
   @override
@@ -120,48 +244,6 @@ class _ItemState extends State<Item> {
           ),
         );
       },
-    );
-  }
-}
-
-class ListItem extends StatelessWidget {
-  ListItem(this.text, this.onTap);
-  final String text;
-  final Function onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.all(8),
-      child: Material(
-        color: Theme.of(context).cardColor,
-        borderRadius: BorderRadius.circular(6),
-        child: Ink(
-          decoration: BoxDecoration(
-            border: (Theme.of(context).brightness != Brightness.dark)
-                ? Border.all(color: Colors.black)
-                : Border.all(width: 0),
-            borderRadius: BorderRadius.circular(6),
-          ),
-          child: InkWell(
-            borderRadius: BorderRadius.circular(6),
-            onTap: onTap,
-            child: Container(
-              margin: EdgeInsets.all(10),
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
-                  Text(
-                    text,
-                    style: Theme.of(context).textTheme.bodyText1,
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
     );
   }
 }

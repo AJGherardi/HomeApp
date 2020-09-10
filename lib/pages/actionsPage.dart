@@ -5,7 +5,6 @@ class ActionsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
-      physics: BouncingScrollPhysics(),
       slivers: <Widget>[
         SliverToBoxAdapter(
           child: Center(

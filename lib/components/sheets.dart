@@ -29,7 +29,7 @@ void showAddGroupSheet(context) {
     builder: (BuildContext bc) {
       return Padding(
         padding: EdgeInsets.only(
-          bottom: MediaQuery.of(context).viewInsets.bottom,
+          bottom: 200,
           right: 24,
           left: 24,
         ),
