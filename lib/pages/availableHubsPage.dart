@@ -40,8 +40,6 @@ class AvailableHubsPage extends StatefulWidget {
 }
 
 class _AvailableHubsPageState extends State<AvailableHubsPage> {
-  int _selectedIndex;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,20 +64,8 @@ class _AvailableHubsPageState extends State<AvailableHubsPage> {
           StreamBuilder(
             builder: (context, AsyncSnapshot<List<String>> snapshot) {
               if (snapshot.hasData) {
-                return SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                    (BuildContext context, int index) {
-                      return SelectableListItem(snapshot.data.elementAt(index),
-                          () {
-                        setState(() {
-                          _selectedIndex = index;
-                        });
-                        Provider.of<ClientModel>(context, listen: false)
-                            .setHost(snapshot.data.elementAt(index));
-                      }, (_selectedIndex == index) ? true : false);
-                    },
-                    childCount: snapshot.data.length,
-                  ),
+                return HubList(
+                  snapshot: snapshot,
                 );
               } else {
                 return SliverFillRemaining(
@@ -97,6 +83,37 @@ class _AvailableHubsPageState extends State<AvailableHubsPage> {
             stream: find(),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class HubList extends StatefulWidget {
+  final AsyncSnapshot<List<String>> snapshot;
+
+  const HubList({Key key, this.snapshot}) : super(key: key);
+
+  @override
+  _HubListState createState() => _HubListState();
+}
+
+class _HubListState extends State<HubList> {
+  int _selectedIndex;
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverList(
+      delegate: SliverChildBuilderDelegate(
+        (BuildContext context, int index) {
+          return SelectableListItem(widget.snapshot.data.elementAt(index), () {
+            setState(() {
+              _selectedIndex = index;
+            });
+            Provider.of<ClientModel>(context, listen: false)
+                .setHost(widget.snapshot.data.elementAt(index));
+          }, (_selectedIndex == index) ? true : false);
+        },
+        childCount: widget.snapshot.data.length,
       ),
     );
   }

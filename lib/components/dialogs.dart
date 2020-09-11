@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:home/components/routes.dart';
-import 'package:home/pages/welcomePage.dart';
+import 'package:home/pages/onboardingPage.dart';
 import 'package:home/services/graphql.dart';
 import 'package:home/services/store.dart';
 import 'package:provider/provider.dart';
@@ -53,7 +53,6 @@ void showResetDialog(context) {
         ),
         actions: <Widget>[
           FlatButton(
-            textColor: Colors.black,
             child: Text("Close"),
             onPressed: () {
               Navigator.pop(context);
@@ -67,7 +66,7 @@ void showResetDialog(context) {
               Navigator.push(
                 context,
                 FadeRoute(
-                  builder: (context) => WelcomePage(),
+                  builder: (context) => OnboardingPage(),
                 ),
               );
             },
@@ -77,7 +76,7 @@ void showResetDialog(context) {
               QueryResult result,
             ) {
               return FlatButton(
-                // textColor: Color(0xFFEF323D),
+                textColor: Theme.of(context).primaryColor,
                 child: Text("Reset"),
                 onPressed: () {
                   runMutation({
