@@ -36,9 +36,7 @@ class _SelectGroupPageState extends State<SelectGroupPage> {
           Query(
             options: QueryOptions(
               documentNode: gql(listGroups),
-              variables: {
-                'webKey': Provider.of<ClientModel>(context).webKey,
-              },
+              variables: {},
             ),
             builder: (QueryResult result,
                 {VoidCallback refetch, FetchMore fetchMore}) {

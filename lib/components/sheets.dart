@@ -86,8 +86,6 @@ void showAddGroupSheet(context) {
                   "Add",
                   () {
                     runMutation({
-                      'webKey': Provider.of<ClientModel>(context, listen: false)
-                          .webKey,
                       'name': nameText,
                     });
                   },

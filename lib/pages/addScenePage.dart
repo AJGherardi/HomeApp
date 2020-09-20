@@ -137,9 +137,6 @@ class _AddScenePageState extends State<AddScenePage> {
                           child: FlatButton(
                             onPressed: () {
                               runMutation({
-                                'webKey': Provider.of<ClientModel>(context,
-                                        listen: false)
-                                    .webKey,
                                 'name': Provider.of<AddSceneModel>(context,
                                         listen: false)
                                     .name,
