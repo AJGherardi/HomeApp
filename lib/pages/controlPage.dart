@@ -61,7 +61,6 @@ class GroupPage extends StatelessWidget {
       "ListGroup",
       listGroup,
       variables: {
-        'webKey': Provider.of<ClientModel>(context).webKey,
         'addr': group["addr"],
       },
       builder: ({
@@ -180,9 +179,7 @@ class HomePage extends StatelessWidget {
     return Query(
       options: QueryOptions(
         documentNode: gql(listGroups),
-        variables: {
-          'webKey': Provider.of<ClientModel>(context).webKey,
-        },
+        variables: {},
       ),
       builder: (QueryResult result,
           {VoidCallback refetch, FetchMore fetchMore}) {

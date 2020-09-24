@@ -61,12 +61,9 @@ class _SceneItemState extends State<SceneItem> {
             child: InkWell(
               borderRadius: BorderRadius.circular(6),
               onTap: () {
-                runMutation({
-                  'webKey':
-                      Provider.of<ClientModel>(context, listen: false).webKey,
-                  'sceneNumber': widget.number,
-                  'addr': widget.addr
-                });
+                runMutation(
+                  {'sceneNumber': widget.number, 'addr': widget.addr},
+                );
               },
               onLongPress: () {
                 showDeviceSheet(context, widget.name);
@@ -182,12 +179,7 @@ class _DeviceItemState extends State<DeviceItem> {
                 } else {
                   newState = "AA==";
                 }
-                runMutation({
-                  'webKey':
-                      Provider.of<ClientModel>(context, listen: false).webKey,
-                  'addr': widget.addr,
-                  'value': newState
-                });
+                runMutation({'addr': widget.addr, 'value': newState});
               },
               onLongPress: () {
                 showDeviceSheet(context, widget.name);
@@ -211,7 +203,6 @@ class _DeviceItemState extends State<DeviceItem> {
                       style: Theme.of(context).textTheme.bodyText1,
                     ),
                     Subscription("GetState", _getState, variables: {
-                      'webKey': Provider.of<ClientModel>(context).webKey,
                       'addr': widget.addr,
                     }, builder: ({
                       bool loading,

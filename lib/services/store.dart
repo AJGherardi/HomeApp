@@ -19,7 +19,6 @@ Future<void> saveConnectionData(
   await storage.remove("webKey");
   // Save values
   print(address);
-  print(webKey);
   await storage.setString("address", address);
   await storage.setString("webKey", webKey);
 }
@@ -49,7 +48,14 @@ class ClientModel {
     if (address != null) {
       client.value = GraphQLClient(
         cache: InMemoryCache(),
-        link: WebSocketLink(url: "ws://" + address + ":8080/graphql"),
+        link: WebSocketLink(
+          url: "ws://" + address + ":8080/graphql",
+          config: SocketClientConfig(
+            initPayload: () => {
+              'webKey': webKey,
+            },
+          ),
+        ),
       );
       host = address;
     }

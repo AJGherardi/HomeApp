@@ -79,10 +79,7 @@ void showResetDialog(context) {
                 textColor: Theme.of(context).primaryColor,
                 child: Text("Reset"),
                 onPressed: () {
-                  runMutation({
-                    'webKey':
-                        Provider.of<ClientModel>(context, listen: false).webKey,
-                  });
+                  runMutation({});
                 },
               );
             },

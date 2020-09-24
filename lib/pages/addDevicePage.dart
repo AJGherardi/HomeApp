@@ -149,9 +149,6 @@ class _AddDevicePageState extends State<AddDevicePage> {
                             child: FlatButton(
                               onPressed: () {
                                 runMutation({
-                                  'webKey': Provider.of<ClientModel>(context,
-                                          listen: false)
-                                      .webKey,
                                   'name': Provider.of<AddDeviceModel>(context,
                                           listen: false)
                                       .name,

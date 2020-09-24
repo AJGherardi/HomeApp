@@ -41,9 +41,7 @@ class _AvailableDevicesPageState extends State<AvailableDevicesPage> {
           Query(
             options: QueryOptions(
               documentNode: gql(availableDevices),
-              variables: {
-                'webKey': Provider.of<ClientModel>(context).webKey,
-              },
+              variables: {},
             ),
             builder: (QueryResult result,
                 {VoidCallback refetch, FetchMore fetchMore}) {
@@ -60,7 +58,6 @@ class _AvailableDevicesPageState extends State<AvailableDevicesPage> {
                 );
               }
               List devices = result.data["availableDevices"];
-              print(Provider.of<ClientModel>(context).webKey);
               return SliverList(
                 delegate: SliverChildBuilderDelegate(
                   (BuildContext context, int index) {
