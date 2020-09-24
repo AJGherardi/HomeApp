@@ -20,7 +20,6 @@ class AvailableGroupsPage extends StatefulWidget {
 }
 
 class _AvailableGroupsPageState extends State<AvailableGroupsPage> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,6 +69,7 @@ class _AvailableGroupsPageState extends State<AvailableGroupsPage> {
                     return SelectableListItem(groups[index]["name"], () {
                       Provider.of<AddDeviceModel>(context, listen: false)
                           .groupAddr = groups[index]["addr"];
+                      setState(() {});
                     },
                         (Provider.of<AddDeviceModel>(context, listen: false)
                                     .groupAddr ==

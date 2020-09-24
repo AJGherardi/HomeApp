@@ -67,6 +67,7 @@ class _AvailableDevicesPageState extends State<AvailableDevicesPage> {
                     return SelectableListItem(devices[index], () {
                       Provider.of<AddDeviceModel>(context, listen: false)
                           .devUUID = devices[index];
+                      setState(() {});
                     },
                         (Provider.of<AddDeviceModel>(context, listen: false)
                                     .devUUID ==

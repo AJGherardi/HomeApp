@@ -23,7 +23,7 @@ Stream<List<String>> find() async* {
         await for (IPAddressResourceRecord record
             in client.lookup<IPAddressResourceRecord>(
                 ResourceRecordQuery.addressIPv4(srv.target))) {
-          print('Found address (${record.address}).');
+          print(srv);
           addresses.add(record.address.address);
           yield addresses;
         }
