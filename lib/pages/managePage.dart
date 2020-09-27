@@ -49,6 +49,11 @@ class ManagePage extends StatelessWidget {
           }),
         ),
         SliverToBoxAdapter(
+          child: ListItem("Add User", () {
+            showAddUserSheet(context);
+          }),
+        ),
+        SliverToBoxAdapter(
           child: ListItem("Reset", () {
             showResetDialog(context);
           }),

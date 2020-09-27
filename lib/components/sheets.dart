@@ -16,6 +16,76 @@ String addGroup = """
   }
 """;
 
+String getUserPin = """
+  query getUserPin {
+    getUserPin
+  }
+""";
+
+void showAddUserSheet(context) {
+  showModalBottomSheet(
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(14),
+        topRight: Radius.circular(14),
+      ),
+    ),
+    context: context,
+    builder: (BuildContext bc) {
+      return Padding(
+        padding: EdgeInsets.only(
+          bottom: 180,
+          right: 24,
+          left: 24,
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            SizedBox(height: 24),
+            Text(
+              "Add User",
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.headline1,
+            ),
+            SizedBox(height: 24),
+            Text(
+              "Give this pin to the user you wish to add",
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.bodyText1,
+            ),
+            SizedBox(height: 48),
+            Query(
+              options: QueryOptions(
+                documentNode: gql(getUserPin),
+                variables: {},
+              ),
+              builder: (QueryResult result,
+                  {VoidCallback refetch, FetchMore fetchMore}) {
+                if (result.loading) {
+                  return Center(
+                    child: CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                        Theme.of(context).primaryColor,
+                      ),
+                    ),
+                  );
+                }
+                final pin = result.data["getUserPin"];
+                return Text(
+                  pin.toString(),
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.headline1,
+                );
+              },
+            ),
+            SizedBox(height: 48),
+          ],
+        ),
+      );
+    },
+  );
+}
+
 void showAddGroupSheet(context) {
   var nameText = "";
   showModalBottomSheet(

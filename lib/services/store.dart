@@ -44,6 +44,24 @@ class ClientModel {
     cache: InMemoryCache(),
     link: WebSocketLink(url: ""),
   ));
+
+  void setPin(int pin) {
+    if (host != null) {
+      client.value = GraphQLClient(
+        cache: InMemoryCache(),
+        link: WebSocketLink(
+          url: "ws://" + host + ":8080/graphql",
+          config: SocketClientConfig(
+            initPayload: () => {
+              'webKey': webKey,
+              'pin': pin,
+            },
+          ),
+        ),
+      );
+    }
+  }
+
   void setHost(String address) {
     if (address != null) {
       client.value = GraphQLClient(
