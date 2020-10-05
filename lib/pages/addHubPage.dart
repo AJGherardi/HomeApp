@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:home/pages/addDevicePage.dart';
 import 'package:home/pages/onboardingPage.dart';
 import 'package:home/services/store.dart';
 import 'package:provider/provider.dart';

@@ -6,7 +6,6 @@ import 'package:home/pages/nameDevicePage.dart';
 import 'package:home/pages/availableDevicesPage.dart';
 import 'package:home/pages/availableGroupsPage.dart';
 import 'package:home/services/graphql.dart';
-import 'package:home/services/store.dart';
 import 'package:provider/provider.dart';
 
 String addDevice = """

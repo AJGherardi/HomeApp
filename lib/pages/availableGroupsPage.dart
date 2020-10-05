@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:home/components/items.dart';
 import 'package:home/pages/addDevicePage.dart';
-import 'package:home/services/store.dart';
 import 'package:provider/provider.dart';
 
 String listGroups = """

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:home/components/buttons.dart';
+import 'package:home/components/items.dart';
 import 'package:home/components/routes.dart';
+import 'package:home/pages/eventBindPage.dart';
 import 'package:home/pages/mainPage.dart';
 import 'package:home/services/graphql.dart';
-import 'package:home/services/store.dart';
-import 'package:provider/provider.dart';
 
 String addGroup = """
   mutation AddGroup(\$name: String!) {
@@ -170,7 +170,7 @@ void showAddGroupSheet(context) {
   );
 }
 
-void showDeviceSheet(context, name) {
+void showDeviceSheet(context, name, addr) {
   showModalBottomSheet(
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.only(
@@ -194,6 +194,186 @@ void showDeviceSheet(context, name) {
               name,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.headline1,
+            ),
+            SizedBox(height: 24),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "address:",
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.bodyText1,
+                ),
+                SizedBox(
+                  width: 12,
+                ),
+                Text(
+                  addr,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.bodyText2,
+                ),
+              ],
+            ),
+            SizedBox(height: 24),
+          ],
+        ),
+      );
+    },
+  );
+}
+
+void showEventSheet(context, name, addr, groupAddr) {
+  showModalBottomSheet(
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(14),
+        topRight: Radius.circular(14),
+      ),
+    ),
+    context: context,
+    builder: (BuildContext bc) {
+      return Padding(
+        padding: EdgeInsets.only(
+          bottom: MediaQuery.of(context).viewInsets.bottom,
+          right: 24,
+          left: 24,
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            SizedBox(height: 24),
+            Text(
+              name,
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.headline1,
+            ),
+            SizedBox(height: 24),
+            Query(
+              options: QueryOptions(
+                documentNode: gql(getState),
+                variables: {
+                  'addr': addr,
+                },
+              ),
+              builder: (QueryResult result,
+                  {VoidCallback refetch, FetchMore fetchMore}) {
+                if (result.loading) {
+                  return Center(
+                    child: CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                        Theme.of(context).primaryColor,
+                      ),
+                    ),
+                  );
+                }
+                final scene = result.data["getState"];
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "scene:",
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.bodyText1,
+                    ),
+                    ListItem(scene, () {
+                      Navigator.push(
+                        context,
+                        FadeRoute(
+                          builder: (context) => EventBindPage(groupAddr, addr),
+                        ),
+                      );
+                    }),
+                  ],
+                );
+              },
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "address:",
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.bodyText1,
+                ),
+                SizedBox(
+                  width: 12,
+                ),
+                Text(
+                  addr,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.bodyText2,
+                ),
+              ],
+            ),
+            SizedBox(height: 24),
+          ],
+        ),
+      );
+    },
+  );
+}
+
+void showSceneSheet(context, name, addr, number) {
+  showModalBottomSheet(
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(14),
+        topRight: Radius.circular(14),
+      ),
+    ),
+    context: context,
+    builder: (BuildContext bc) {
+      return Padding(
+        padding: EdgeInsets.only(
+          bottom: MediaQuery.of(context).viewInsets.bottom,
+          right: 24,
+          left: 24,
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            SizedBox(height: 24),
+            Text(
+              name,
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.headline1,
+            ),
+            SizedBox(height: 24),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "group address:",
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.bodyText1,
+                ),
+                SizedBox(
+                  width: 12,
+                ),
+                Text(
+                  addr,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.bodyText2,
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "scene number:",
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.bodyText1,
+                ),
+                SizedBox(
+                  width: 12,
+                ),
+                Text(
+                  number,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.bodyText2,
+                ),
+              ],
             ),
             SizedBox(height: 24),
           ],

@@ -4,7 +4,6 @@ import 'package:home/components/routes.dart';
 import 'package:home/pages/onboardingPage.dart';
 import 'package:home/services/graphql.dart';
 import 'package:home/services/store.dart';
-import 'package:provider/provider.dart';
 
 void showRemoveDialog(context, type) {
   showDialog(

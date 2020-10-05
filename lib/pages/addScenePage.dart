@@ -6,7 +6,6 @@ import 'package:home/components/buttons.dart';
 import 'package:home/pages/nameScenePage.dart';
 import 'package:home/pages/selectGroupPage.dart';
 import 'package:home/services/graphql.dart';
-import 'package:home/services/store.dart';
 import 'package:provider/provider.dart';
 
 String sceneStore = """

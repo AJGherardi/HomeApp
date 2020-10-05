@@ -3,8 +3,6 @@ import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:home/components/bars.dart';
 import 'package:home/components/items.dart';
 import 'package:home/components/routes.dart';
-import 'package:home/services/store.dart';
-import 'package:provider/provider.dart';
 
 String listGroup = """
   subscription ListGroup(\$addr: String!) {
@@ -14,6 +12,7 @@ String listGroup = """
         elements{ 
           name
           addr
+          stateType
         }
       }
       scenes {
@@ -154,10 +153,20 @@ class GroupPage extends StatelessWidget {
                 ),
                 delegate: SliverChildBuilderDelegate(
                   (BuildContext context, int index) {
-                    return DeviceItem(
-                      groupElements[index]["name"],
-                      groupElements[index]["addr"],
-                    );
+                    if (groupElements[index]["stateType"] == "onoff") {
+                      return OnoffItem(
+                        groupElements[index]["name"],
+                        groupElements[index]["addr"],
+                      );
+                    }
+                    if (groupElements[index]["stateType"] == "event") {
+                      return EventItem(
+                        groupElements[index]["name"],
+                        groupElements[index]["addr"],
+                        group["addr"],
+                      );
+                    }
+                    return Container();
                   },
                   childCount: groupElements.length,
                 ),

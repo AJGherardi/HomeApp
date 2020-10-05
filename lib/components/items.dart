@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:home/services/graphql.dart';
-import 'package:home/services/store.dart';
-import 'package:provider/provider.dart';
 import 'package:home/components/sheets.dart';
 
-String _getState = """
+String getState = """
   subscription GetState(\$addr: String!) {
     getState(addr: \$addr)
   }
@@ -23,6 +21,89 @@ String _sceneRecall = """
     sceneRecall(addr: \$addr, sceneNumber: \$sceneNumber) 
   }
 """;
+
+String _eventBind = """
+  mutation EventBindMutation(\$sceneNumber: String!, \$groupAddr: String!, \$elemAddr: String!) {
+    eventBind(sceneNumber: \$sceneNumber, groupAddr: \$groupAddr, elemAddr: \$elemAddr)
+  }
+""";
+
+class SelectSceneItem extends StatefulWidget {
+  SelectSceneItem(
+    this.name,
+    this.number,
+    this.groupAddr,
+    this.elemAddr,
+  );
+  final String name;
+  final String number;
+  final String groupAddr;
+  final String elemAddr;
+
+  @override
+  _SelectSceneItemState createState() => _SelectSceneItemState();
+}
+
+class _SelectSceneItemState extends State<SelectSceneItem> {
+  @override
+  Widget build(BuildContext context) {
+    return MutationWithBuilder(
+      onCompleted: (resultData) {},
+      query: _eventBind,
+      builder: (
+        RunMutation runMutation,
+        QueryResult result,
+      ) {
+        return Material(
+          color: Theme.of(context).cardColor,
+          borderRadius: BorderRadius.circular(6),
+          child: Ink(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(6),
+              border: (Theme.of(context).brightness != Brightness.dark)
+                  ? Border.all(color: Colors.black)
+                  : Border.all(width: 0),
+            ),
+            child: InkWell(
+              borderRadius: BorderRadius.circular(6),
+              onTap: () {
+                runMutation(
+                  {
+                    'sceneNumber': widget.number,
+                    'groupAddr': widget.groupAddr,
+                    'elemAddr': widget.elemAddr
+                  },
+                );
+                Navigator.pop(context);
+              },
+              child: Container(
+                margin: EdgeInsets.all(12),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    SvgPicture.asset(
+                      "assets/plug.svg",
+                      color: Theme.of(context).primaryColor,
+                      width: 35,
+                    ),
+                    SizedBox(
+                      height: 12,
+                    ),
+                    Text(
+                      widget.name,
+                      style: Theme.of(context).textTheme.bodyText1,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
 
 class SceneItem extends StatefulWidget {
   SceneItem(
@@ -66,7 +147,8 @@ class _SceneItemState extends State<SceneItem> {
                 );
               },
               onLongPress: () {
-                showDeviceSheet(context, widget.name);
+                showSceneSheet(
+                    context, widget.name, widget.addr, widget.number);
               },
               child: Container(
                 margin: EdgeInsets.all(12),
@@ -139,16 +221,71 @@ class ListItem extends StatelessWidget {
   }
 }
 
-class DeviceItem extends StatefulWidget {
-  DeviceItem(this.name, this.addr);
+class EventItem extends StatefulWidget {
+  EventItem(this.name, this.addr, this.groupAddr);
+  final String name;
+  final String addr;
+  final String groupAddr;
+
+  @override
+  _EventItemState createState() => _EventItemState();
+}
+
+class _EventItemState extends State<EventItem> {
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: Theme.of(context).cardColor,
+      borderRadius: BorderRadius.circular(6),
+      child: Ink(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(6),
+          border: (Theme.of(context).brightness != Brightness.dark)
+              ? Border.all(color: Colors.black)
+              : Border.all(width: 0),
+        ),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(6),
+          onTap: () {
+            showEventSheet(context, widget.name, widget.addr, widget.groupAddr);
+          },
+          child: Container(
+            margin: EdgeInsets.all(12),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                SvgPicture.asset(
+                  "assets/plug.svg",
+                  color: Theme.of(context).primaryColor,
+                  width: 35,
+                ),
+                SizedBox(
+                  height: 12,
+                ),
+                Text(
+                  widget.name,
+                  style: Theme.of(context).textTheme.bodyText1,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class OnoffItem extends StatefulWidget {
+  OnoffItem(this.name, this.addr);
   final String name;
   final String addr;
 
   @override
-  _DeviceItemState createState() => _DeviceItemState();
+  _OnoffItemState createState() => _OnoffItemState();
 }
 
-class _DeviceItemState extends State<DeviceItem> {
+class _OnoffItemState extends State<OnoffItem> {
   String state = "AA==";
 
   @override
@@ -182,7 +319,7 @@ class _DeviceItemState extends State<DeviceItem> {
                 runMutation({'addr': widget.addr, 'value': newState});
               },
               onLongPress: () {
-                showDeviceSheet(context, widget.name);
+                showDeviceSheet(context, widget.name, widget.addr);
               },
               child: Container(
                 margin: EdgeInsets.all(12),
@@ -202,7 +339,7 @@ class _DeviceItemState extends State<DeviceItem> {
                       widget.name,
                       style: Theme.of(context).textTheme.bodyText1,
                     ),
-                    Subscription("GetState", _getState, variables: {
+                    Subscription("GetState", getState, variables: {
                       'addr': widget.addr,
                     }, builder: ({
                       bool loading,

@@ -3,7 +3,6 @@ import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:home/components/items.dart';
 import 'package:home/pages/addScenePage.dart';
 import 'package:home/pages/availableGroupsPage.dart';
-import 'package:home/services/store.dart';
 import 'package:provider/provider.dart';
 
 class SelectGroupPage extends StatefulWidget {
