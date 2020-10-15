@@ -93,8 +93,8 @@ class GroupPage extends StatelessWidget {
                     top: MediaQuery.of(context).padding.top,
                   ),
                   child: TopBar(
-                    group["name"],
-                    Icons.arrow_back,
+                    text: group["name"],
+                    rightIcon: Icons.arrow_back,
                   ),
                 ),
               ),
@@ -122,9 +122,9 @@ class GroupPage extends StatelessWidget {
                 delegate: SliverChildBuilderDelegate(
                   (BuildContext context, int index) {
                     return SceneItem(
-                      scenes[index]["name"],
-                      scenes[index]["number"],
-                      group["addr"],
+                      name: scenes[index]["name"],
+                      number: scenes[index]["number"],
+                      addr: group["addr"],
                     );
                   },
                   childCount: scenes.length,
@@ -155,15 +155,15 @@ class GroupPage extends StatelessWidget {
                   (BuildContext context, int index) {
                     if (groupElements[index]["stateType"] == "onoff") {
                       return OnoffItem(
-                        groupElements[index]["name"],
-                        groupElements[index]["addr"],
+                        name: groupElements[index]["name"],
+                        addr: groupElements[index]["addr"],
                       );
                     }
                     if (groupElements[index]["stateType"] == "event") {
                       return EventItem(
-                        groupElements[index]["name"],
-                        groupElements[index]["addr"],
-                        group["addr"],
+                        name: groupElements[index]["name"],
+                        addr: groupElements[index]["addr"],
+                        groupAddr: group["addr"],
                       );
                     }
                     return Container();
@@ -234,15 +234,17 @@ class HomePage extends StatelessWidget {
             SliverList(
               delegate: SliverChildBuilderDelegate(
                 (BuildContext context, int index) {
-                  return ListItem(groups[index]["name"], () {
-                    print(groups[index]);
-                    navigatorKey.currentState.push(
-                      FadeRoute(
-                        builder: (context) =>
-                            GroupPage(groups[index], navigatorKey),
-                      ),
-                    );
-                  });
+                  return ListItem(
+                      text: groups[index]["name"],
+                      onTap: () {
+                        print(groups[index]);
+                        navigatorKey.currentState.push(
+                          FadeRoute(
+                            builder: (context) =>
+                                GroupPage(groups[index], navigatorKey),
+                          ),
+                        );
+                      });
                 },
                 childCount: groups.length,
               ),

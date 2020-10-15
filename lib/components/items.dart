@@ -29,7 +29,11 @@ String _eventBind = """
 """;
 
 class Card extends StatelessWidget {
-  Card(this.onTap, this.onLongPress, this.children);
+  Card({
+    this.onLongPress,
+    @required this.onTap,
+    @required this.children,
+  });
   final Function onTap;
   final Function onLongPress;
   final List<Widget> children;
@@ -63,12 +67,12 @@ class Card extends StatelessWidget {
 }
 
 class SelectSceneItem extends StatefulWidget {
-  SelectSceneItem(
-    this.name,
-    this.number,
-    this.groupAddr,
-    this.elemAddr,
-  );
+  SelectSceneItem({
+    @required this.name,
+    @required this.number,
+    @required this.groupAddr,
+    @required this.elemAddr,
+  });
   final String name;
   final String number;
   final String groupAddr;
@@ -89,7 +93,7 @@ class _SelectSceneItemState extends State<SelectSceneItem> {
         QueryResult result,
       ) {
         return Card(
-          () {
+          onTap: () {
             runMutation(
               {
                 'sceneNumber': widget.number,
@@ -99,8 +103,8 @@ class _SelectSceneItemState extends State<SelectSceneItem> {
             );
             Navigator.pop(context);
           },
-          () {},
-          <Widget>[
+          onLongPress: () {},
+          children: <Widget>[
             SvgPicture.asset(
               "assets/scene.svg",
               color: Theme.of(context).primaryColor,
@@ -121,11 +125,11 @@ class _SelectSceneItemState extends State<SelectSceneItem> {
 }
 
 class SceneItem extends StatefulWidget {
-  SceneItem(
-    this.name,
-    this.number,
-    this.addr,
-  );
+  SceneItem({
+    @required this.name,
+    @required this.number,
+    @required this.addr,
+  });
   final String name;
   final String number;
   final String addr;
@@ -145,15 +149,15 @@ class _SceneItemState extends State<SceneItem> {
         QueryResult result,
       ) {
         return Card(
-          () {
+          onTap: () {
             runMutation(
               {'sceneNumber': widget.number, 'addr': widget.addr},
             );
           },
-          () {
+          onLongPress: () {
             showSceneSheet(context, widget.name, widget.addr, widget.number);
           },
-          <Widget>[
+          children: <Widget>[
             SvgPicture.asset(
               "assets/scene.svg",
               color: Theme.of(context).primaryColor,
@@ -174,7 +178,10 @@ class _SceneItemState extends State<SceneItem> {
 }
 
 class ListItem extends StatelessWidget {
-  ListItem(this.text, this.onTap);
+  ListItem({
+    @required this.text,
+    @required this.onTap,
+  });
   final String text;
   final Function onTap;
 
@@ -216,7 +223,11 @@ class ListItem extends StatelessWidget {
 }
 
 class EventItem extends StatefulWidget {
-  EventItem(this.name, this.addr, this.groupAddr);
+  EventItem({
+    @required this.name,
+    @required this.addr,
+    @required this.groupAddr,
+  });
   final String name;
   final String addr;
   final String groupAddr;
@@ -229,11 +240,11 @@ class _EventItemState extends State<EventItem> {
   @override
   Widget build(BuildContext context) {
     return Card(
-      () {
+      onTap: () {
         showEventSheet(context, widget.name, widget.addr, widget.groupAddr);
       },
-      () {},
-      <Widget>[
+      onLongPress: () {},
+      children: <Widget>[
         SvgPicture.asset(
           "assets/button.svg",
           color: Theme.of(context).primaryColor,
@@ -252,7 +263,10 @@ class _EventItemState extends State<EventItem> {
 }
 
 class OnoffItem extends StatefulWidget {
-  OnoffItem(this.name, this.addr);
+  OnoffItem({
+    @required this.name,
+    @required this.addr,
+  });
   final String name;
   final String addr;
 
@@ -273,7 +287,7 @@ class _OnoffItemState extends State<OnoffItem> {
         QueryResult result,
       ) {
         return Card(
-          () {
+          onTap: () {
             String newState;
             if (state == "AA==") {
               newState = "AQ==";
@@ -282,8 +296,8 @@ class _OnoffItemState extends State<OnoffItem> {
             }
             runMutation({'addr': widget.addr, 'value': newState});
           },
-          () {},
-          <Widget>[
+          onLongPress: () {},
+          children: <Widget>[
             SvgPicture.asset(
               "assets/plug.svg",
               color: Theme.of(context).primaryColor,
@@ -328,7 +342,11 @@ class _OnoffItemState extends State<OnoffItem> {
 }
 
 class SelectableListItem extends StatelessWidget {
-  SelectableListItem(this.text, this.onTap, this.selected);
+  SelectableListItem({
+    @required this.text,
+    @required this.onTap,
+    @required this.selected,
+  });
   final String text;
   final bool selected;
   final Function onTap;

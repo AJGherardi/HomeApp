@@ -14,39 +14,54 @@ class ManagePage extends StatelessWidget {
       slivers: <Widget>[
         SliverToBoxAdapter(
           child: Center(
-            child: TitleText("Manage"),
+            child: TitleText(text: "Manage"),
           ),
         ),
         SliverToBoxAdapter(
-          child: ListItem("Add Device", () {
-            Navigator.push(
-              context,
-              FadeRoute(builder: (context) => AddDevicePage()),
-            );
-          }),
+          child: ListItem(
+            text: "Add Device",
+            onTap: () {
+              Navigator.push(
+                context,
+                FadeRoute(builder: (context) => AddDevicePage()),
+              );
+            },
+          ),
         ),
         SliverToBoxAdapter(
-          child: ListItem("Add Group", () {
-            showAddGroupSheet(context);
-          }),
+          child: ListItem(
+            text: "Add Group",
+            onTap: () {
+              showAddGroupSheet(context);
+            },
+          ),
         ),
         SliverToBoxAdapter(
-          child: ListItem("Add Scene", () {
-            Navigator.push(
-              context,
-              FadeRoute(builder: (context) => AddScenePage()),
-            );
-          }),
+          child: ListItem(
+            text: "Add Scene",
+            onTap: () {
+              Navigator.push(
+                context,
+                FadeRoute(builder: (context) => AddScenePage()),
+              );
+            },
+          ),
         ),
         SliverToBoxAdapter(
-          child: ListItem("Add User", () {
-            showAddUserSheet(context);
-          }),
+          child: ListItem(
+            text: "Add User",
+            onTap: () {
+              showAddUserSheet(context);
+            },
+          ),
         ),
         SliverToBoxAdapter(
-          child: ListItem("Reset", () {
-            showResetDialog(context);
-          }),
+          child: ListItem(
+            text: "Reset",
+            onTap: () {
+              showResetDialog(context);
+            },
+          ),
         )
       ],
     );

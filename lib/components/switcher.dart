@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:home/components/buttons.dart';
 
 class PageSwitcher extends StatefulWidget {
-  PageSwitcher(this.children, this.doneButton);
+  PageSwitcher({
+    @required this.children,
+    @required this.doneButton,
+  });
   final List<Widget> children;
   final Widget doneButton;
 

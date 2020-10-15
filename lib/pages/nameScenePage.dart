@@ -10,7 +10,7 @@ class NameScenePage extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          TitleText("Add Scene"),
+          TitleText(text: "Add Scene"),
           Text(
             "Set Name",
             textAlign: TextAlign.center,

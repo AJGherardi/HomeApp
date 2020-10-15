@@ -61,7 +61,7 @@ class _AvailableHubsPageState extends State<AvailableHubsPage> {
       body: CustomScrollView(
         slivers: <Widget>[
           SliverToBoxAdapter(
-            child: Center(child: TitleText("Available Hubs")),
+            child: Center(child: TitleText(text: "Available Hubs")),
           ),
           StreamBuilder(
             builder: (context, AsyncSnapshot<List<Record>> snapshot) {
@@ -108,15 +108,18 @@ class _HubListState extends State<HubList> {
       delegate: SliverChildBuilderDelegate(
         (BuildContext context, int index) {
           return SelectableListItem(
-              widget.snapshot.data.elementAt(index).address, () {
-            setState(() {
-              _selectedIndex = index;
-            });
-            Provider.of<OnboardingModel>(context, listen: false).provisioned =
-                widget.snapshot.data.elementAt(index).provisioned;
-            Provider.of<ClientModel>(context, listen: false)
-                .setHost(widget.snapshot.data.elementAt(index).address);
-          }, (_selectedIndex == index) ? true : false);
+              text: widget.snapshot.data.elementAt(index).address,
+              onTap: () {
+                setState(() {
+                  _selectedIndex = index;
+                });
+                Provider.of<OnboardingModel>(context, listen: false)
+                        .provisioned =
+                    widget.snapshot.data.elementAt(index).provisioned;
+                Provider.of<ClientModel>(context, listen: false)
+                    .setHost(widget.snapshot.data.elementAt(index).address);
+              },
+              selected: (_selectedIndex == index) ? true : false);
         },
         childCount: widget.snapshot.data.length,
       ),

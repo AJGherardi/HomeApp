@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class TitleText extends StatelessWidget {
-  TitleText(this.text);
+  TitleText({@required this.text});
   final String text;
   @override
   Widget build(BuildContext context) {

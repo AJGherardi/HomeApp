@@ -18,7 +18,6 @@ Future<void> saveConnectionData(
   await storage.remove("address");
   await storage.remove("webKey");
   // Save values
-  print(address);
   await storage.setString("address", address);
   await storage.setString("webKey", webKey);
 }

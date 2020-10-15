@@ -27,7 +27,7 @@ class _AvailableGroupsPageState extends State<AvailableGroupsPage> {
         slivers: <Widget>[
           SliverToBoxAdapter(
             child: Center(
-              child: TitleText("Available Groups"),
+              child: TitleText(text: "Available Groups"),
             ),
           ),
           Query(
@@ -53,16 +53,19 @@ class _AvailableGroupsPageState extends State<AvailableGroupsPage> {
               return SliverList(
                 delegate: SliverChildBuilderDelegate(
                   (BuildContext context, int index) {
-                    return SelectableListItem(groups[index]["name"], () {
-                      Provider.of<AddDeviceModel>(context, listen: false)
-                          .groupAddr = groups[index]["addr"];
-                      setState(() {});
-                    },
-                        (Provider.of<AddDeviceModel>(context, listen: false)
-                                    .groupAddr ==
-                                groups[index]["addr"])
-                            ? true
-                            : false);
+                    return SelectableListItem(
+                        text: groups[index]["name"],
+                        onTap: () {
+                          Provider.of<AddDeviceModel>(context, listen: false)
+                              .groupAddr = groups[index]["addr"];
+                          setState(() {});
+                        },
+                        selected:
+                            (Provider.of<AddDeviceModel>(context, listen: false)
+                                        .groupAddr ==
+                                    groups[index]["addr"])
+                                ? true
+                                : false);
                   },
                   childCount: groups.length,
                 ),

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class TopBar extends StatelessWidget {
-  TopBar(
-    this.text,
-    this.rightIcon,
-  );
+  TopBar({
+    @required this.text,
+    @required this.rightIcon,
+  });
   final String text;
   final IconData rightIcon;
 
@@ -16,9 +16,12 @@ class TopBar extends StatelessWidget {
         children: <Widget>[
           Align(
             alignment: Alignment.topLeft,
-            child: TopIcon(Icons.chevron_left, () {
-              Navigator.pop(context);
-            }),
+            child: TopIcon(
+              icon: Icons.chevron_left,
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
           ),
           Align(
             alignment: Alignment.topCenter,
@@ -31,7 +34,10 @@ class TopBar extends StatelessWidget {
 }
 
 class TopIcon extends StatelessWidget {
-  TopIcon(this.icon, this.onPressed);
+  TopIcon({
+    @required this.icon,
+    @required this.onPressed,
+  });
   final IconData icon;
   final Function onPressed;
 

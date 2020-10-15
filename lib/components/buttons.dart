@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
 class NextButton extends StatelessWidget {
-  NextButton(this.text, this.onPress);
+  NextButton({
+    @required this.text,
+    @required this.onPress,
+  });
   final String text;
   final Function onPress;
 

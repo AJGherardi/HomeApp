@@ -10,7 +10,7 @@ class NameDevicePage extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          TitleText("Add Device"),
+          TitleText(text: "Add Device"),
           Text(
             "Set Name",
             textAlign: TextAlign.center,

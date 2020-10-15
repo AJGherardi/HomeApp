@@ -12,7 +12,7 @@ class AddHubPage extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          TitleText("Add Hub"),
+          TitleText(text: "Add Hub"),
           (Provider.of<OnboardingModel>(context, listen: false).provisioned ==
                   true)
               ? Text(

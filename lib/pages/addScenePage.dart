@@ -40,8 +40,8 @@ class _AddScenePageState extends State<AddScenePage> {
       },
       builder: (context, _) {
         return PageSwitcher(
-          _children,
-          MutationWithBuilder(
+          children: _children,
+          doneButton: MutationWithBuilder(
             onCompleted: (resultData) {
               // Get name and addr from result
               var data = resultData["addDevice"] as Map<String, Object>;

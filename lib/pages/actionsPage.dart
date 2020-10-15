@@ -8,12 +8,12 @@ class ActionsPage extends StatelessWidget {
     return CustomScrollView(
       slivers: <Widget>[
         SliverToBoxAdapter(
-          child: Center(child: TitleText("Actions")),
+          child: Center(child: TitleText(text: "Actions")),
         ),
         SliverList(
           delegate: SliverChildBuilderDelegate(
             (BuildContext context, int index) {
-              return ListItem("Action", null);
+              return ListItem(text: "Action", onTap: null);
             },
             childCount: 22,
           ),

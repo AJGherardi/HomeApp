@@ -49,8 +49,8 @@ class EventBindPage extends StatelessWidget {
                     top: MediaQuery.of(context).padding.top,
                   ),
                   child: TopBar(
-                    "Select scene",
-                    Icons.arrow_back,
+                    text: "Select scene",
+                    rightIcon: Icons.arrow_back,
                   ),
                 ),
               ),
@@ -66,8 +66,12 @@ class EventBindPage extends StatelessWidget {
                 ),
                 delegate: SliverChildBuilderDelegate(
                   (BuildContext context, int index) {
-                    return SelectSceneItem(scenes[index]["name"],
-                        scenes[index]["number"], groupAddr, elemAddr);
+                    return SelectSceneItem(
+                      name: scenes[index]["name"],
+                      number: scenes[index]["number"],
+                      groupAddr: groupAddr,
+                      elemAddr: elemAddr,
+                    );
                   },
                   childCount: scenes.length,
                 ),

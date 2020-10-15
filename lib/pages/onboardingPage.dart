@@ -48,8 +48,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
       },
       builder: (context, _) {
         return PageSwitcher(
-          _children,
-          MutationWithBuilder(
+          children: _children,
+          doneButton: MutationWithBuilder(
             onCompleted: (resultData) async {
               // Get webKey from result
               final data = resultData as Map<String, Object>;

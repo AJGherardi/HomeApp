@@ -145,8 +145,8 @@ void showAddGroupSheet(context) {
           QueryResult result,
         ) {
           return NextButton(
-            "Add",
-            () {
+            text: "Add",
+            onPress: () {
               runMutation({
                 'name': nameText,
               });
@@ -231,14 +231,17 @@ void showEventSheet(context, name, addr, groupAddr) {
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.bodyText1,
               ),
-              ListItem(scene == "AA==" ? "Event" : scene, () {
-                Navigator.push(
-                  context,
-                  FadeRoute(
-                    builder: (context) => EventBindPage(groupAddr, addr),
-                  ),
-                );
-              }),
+              ListItem(
+                text: scene == "AA==" ? "Event" : scene,
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    FadeRoute(
+                      builder: (context) => EventBindPage(groupAddr, addr),
+                    ),
+                  );
+                },
+              ),
             ],
           );
         },

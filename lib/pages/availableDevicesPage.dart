@@ -24,7 +24,7 @@ class _AvailableDevicesPageState extends State<AvailableDevicesPage> {
         slivers: <Widget>[
           SliverToBoxAdapter(
             child: Center(
-              child: TitleText("Available Devices"),
+              child: TitleText(text: "Available Devices"),
             ),
           ),
           Query(
@@ -50,16 +50,19 @@ class _AvailableDevicesPageState extends State<AvailableDevicesPage> {
               return SliverList(
                 delegate: SliverChildBuilderDelegate(
                   (BuildContext context, int index) {
-                    return SelectableListItem(devices[index], () {
-                      Provider.of<AddDeviceModel>(context, listen: false)
-                          .devUUID = devices[index];
-                      setState(() {});
-                    },
-                        (Provider.of<AddDeviceModel>(context, listen: false)
-                                    .devUUID ==
-                                devices[index])
-                            ? true
-                            : false);
+                    return SelectableListItem(
+                        text: devices[index],
+                        onTap: () {
+                          Provider.of<AddDeviceModel>(context, listen: false)
+                              .devUUID = devices[index];
+                          setState(() {});
+                        },
+                        selected:
+                            (Provider.of<AddDeviceModel>(context, listen: false)
+                                        .devUUID ==
+                                    devices[index])
+                                ? true
+                                : false);
                   },
                   childCount: devices.length,
                 ),
