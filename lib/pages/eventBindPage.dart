@@ -33,7 +33,8 @@ class EventBindPage extends StatelessWidget {
         }
         List devices = payload["listGroup"]["devices"];
         List scenes = payload["listGroup"]["scenes"];
-        print(scenes);
+        Map<String, dynamic> eventScene = {"number": "AA==", "name": "Event"};
+        scenes.insert(0, eventScene);
         // Get list of elements
         List groupElements = new List();
         for (var device in devices) {

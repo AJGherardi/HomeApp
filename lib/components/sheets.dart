@@ -275,7 +275,7 @@ void showEventSheet(context, name, addr, groupAddr) {
                       textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.bodyText1,
                     ),
-                    ListItem(scene, () {
+                    ListItem(scene == "AA==" ? "Event" : scene, () {
                       Navigator.push(
                         context,
                         FadeRoute(

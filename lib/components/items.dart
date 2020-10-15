@@ -83,7 +83,7 @@ class _SelectSceneItemState extends State<SelectSceneItem> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     SvgPicture.asset(
-                      "assets/plug.svg",
+                      "assets/scene.svg",
                       color: Theme.of(context).primaryColor,
                       width: 35,
                     ),
@@ -157,7 +157,7 @@ class _SceneItemState extends State<SceneItem> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     SvgPicture.asset(
-                      "assets/plug.svg",
+                      "assets/scene.svg",
                       color: Theme.of(context).primaryColor,
                       width: 35,
                     ),
@@ -256,7 +256,7 @@ class _EventItemState extends State<EventItem> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 SvgPicture.asset(
-                  "assets/plug.svg",
+                  "assets/button.svg",
                   color: Theme.of(context).primaryColor,
                   width: 35,
                 ),
