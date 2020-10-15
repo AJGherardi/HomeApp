@@ -45,15 +45,15 @@ class _MainPageState extends State<MainPage> {
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.power),
-            title: Text(''),
+            label: '',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.done_outline),
-            title: Text(''),
+            label: "",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),
-            title: Text(''),
+            label: "",
           ),
         ],
       ),

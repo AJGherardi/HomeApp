@@ -23,7 +23,6 @@ void showRemoveDialog(context, type) {
             },
           ),
           FlatButton(
-            // textColor: Color(0xFFEF323D),
             child: Text("Remove"),
             onPressed: () {
               Navigator.pop(context);

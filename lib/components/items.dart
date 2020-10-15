@@ -28,6 +28,40 @@ String _eventBind = """
   }
 """;
 
+class Card extends StatelessWidget {
+  Card(this.onTap, this.onLongPress, this.children);
+  final Function onTap;
+  final Function onLongPress;
+  final List<Widget> children;
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: Theme.of(context).cardColor,
+      borderRadius: BorderRadius.circular(6),
+      child: Ink(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(6),
+          border: (Theme.of(context).brightness != Brightness.dark)
+              ? Border.all(color: Colors.black)
+              : Border.all(width: 0),
+        ),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(6),
+          onTap: onTap,
+          onLongPress: onLongPress,
+          child: Container(
+            margin: EdgeInsets.all(12),
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: children),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class SelectSceneItem extends StatefulWidget {
   SelectSceneItem(
     this.name,
@@ -54,51 +88,32 @@ class _SelectSceneItemState extends State<SelectSceneItem> {
         RunMutation runMutation,
         QueryResult result,
       ) {
-        return Material(
-          color: Theme.of(context).cardColor,
-          borderRadius: BorderRadius.circular(6),
-          child: Ink(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(6),
-              border: (Theme.of(context).brightness != Brightness.dark)
-                  ? Border.all(color: Colors.black)
-                  : Border.all(width: 0),
-            ),
-            child: InkWell(
-              borderRadius: BorderRadius.circular(6),
-              onTap: () {
-                runMutation(
-                  {
-                    'sceneNumber': widget.number,
-                    'groupAddr': widget.groupAddr,
-                    'elemAddr': widget.elemAddr
-                  },
-                );
-                Navigator.pop(context);
+        return Card(
+          () {
+            runMutation(
+              {
+                'sceneNumber': widget.number,
+                'groupAddr': widget.groupAddr,
+                'elemAddr': widget.elemAddr
               },
-              child: Container(
-                margin: EdgeInsets.all(12),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    SvgPicture.asset(
-                      "assets/scene.svg",
-                      color: Theme.of(context).primaryColor,
-                      width: 35,
-                    ),
-                    SizedBox(
-                      height: 12,
-                    ),
-                    Text(
-                      widget.name,
-                      style: Theme.of(context).textTheme.bodyText1,
-                    ),
-                  ],
-                ),
-              ),
+            );
+            Navigator.pop(context);
+          },
+          () {},
+          <Widget>[
+            SvgPicture.asset(
+              "assets/scene.svg",
+              color: Theme.of(context).primaryColor,
+              width: 35,
             ),
-          ),
+            SizedBox(
+              height: 12,
+            ),
+            Text(
+              widget.name,
+              style: Theme.of(context).textTheme.bodyText1,
+            ),
+          ],
         );
       },
     );
@@ -129,50 +144,29 @@ class _SceneItemState extends State<SceneItem> {
         RunMutation runMutation,
         QueryResult result,
       ) {
-        return Material(
-          color: Theme.of(context).cardColor,
-          borderRadius: BorderRadius.circular(6),
-          child: Ink(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(6),
-              border: (Theme.of(context).brightness != Brightness.dark)
-                  ? Border.all(color: Colors.black)
-                  : Border.all(width: 0),
+        return Card(
+          () {
+            runMutation(
+              {'sceneNumber': widget.number, 'addr': widget.addr},
+            );
+          },
+          () {
+            showSceneSheet(context, widget.name, widget.addr, widget.number);
+          },
+          <Widget>[
+            SvgPicture.asset(
+              "assets/scene.svg",
+              color: Theme.of(context).primaryColor,
+              width: 35,
             ),
-            child: InkWell(
-              borderRadius: BorderRadius.circular(6),
-              onTap: () {
-                runMutation(
-                  {'sceneNumber': widget.number, 'addr': widget.addr},
-                );
-              },
-              onLongPress: () {
-                showSceneSheet(
-                    context, widget.name, widget.addr, widget.number);
-              },
-              child: Container(
-                margin: EdgeInsets.all(12),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    SvgPicture.asset(
-                      "assets/scene.svg",
-                      color: Theme.of(context).primaryColor,
-                      width: 35,
-                    ),
-                    SizedBox(
-                      height: 12,
-                    ),
-                    Text(
-                      widget.name,
-                      style: Theme.of(context).textTheme.bodyText1,
-                    ),
-                  ],
-                ),
-              ),
+            SizedBox(
+              height: 12,
             ),
-          ),
+            Text(
+              widget.name,
+              style: Theme.of(context).textTheme.bodyText1,
+            ),
+          ],
         );
       },
     );
@@ -234,44 +228,25 @@ class EventItem extends StatefulWidget {
 class _EventItemState extends State<EventItem> {
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: Theme.of(context).cardColor,
-      borderRadius: BorderRadius.circular(6),
-      child: Ink(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(6),
-          border: (Theme.of(context).brightness != Brightness.dark)
-              ? Border.all(color: Colors.black)
-              : Border.all(width: 0),
+    return Card(
+      () {
+        showEventSheet(context, widget.name, widget.addr, widget.groupAddr);
+      },
+      () {},
+      <Widget>[
+        SvgPicture.asset(
+          "assets/button.svg",
+          color: Theme.of(context).primaryColor,
+          width: 35,
         ),
-        child: InkWell(
-          borderRadius: BorderRadius.circular(6),
-          onTap: () {
-            showEventSheet(context, widget.name, widget.addr, widget.groupAddr);
-          },
-          child: Container(
-            margin: EdgeInsets.all(12),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                SvgPicture.asset(
-                  "assets/button.svg",
-                  color: Theme.of(context).primaryColor,
-                  width: 35,
-                ),
-                SizedBox(
-                  height: 12,
-                ),
-                Text(
-                  widget.name,
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-              ],
-            ),
-          ),
+        SizedBox(
+          height: 12,
         ),
-      ),
+        Text(
+          widget.name,
+          style: Theme.of(context).textTheme.bodyText1,
+        ),
+      ],
     );
   }
 }
@@ -297,79 +272,55 @@ class _OnoffItemState extends State<OnoffItem> {
         RunMutation runMutation,
         QueryResult result,
       ) {
-        return Material(
-          color: Theme.of(context).cardColor,
-          borderRadius: BorderRadius.circular(6),
-          child: Ink(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(6),
-              border: (Theme.of(context).brightness != Brightness.dark)
-                  ? Border.all(color: Colors.black)
-                  : Border.all(width: 0),
+        return Card(
+          () {
+            String newState;
+            if (state == "AA==") {
+              newState = "AQ==";
+            } else {
+              newState = "AA==";
+            }
+            runMutation({'addr': widget.addr, 'value': newState});
+          },
+          () {},
+          <Widget>[
+            SvgPicture.asset(
+              "assets/plug.svg",
+              color: Theme.of(context).primaryColor,
+              width: 35,
             ),
-            child: InkWell(
-              borderRadius: BorderRadius.circular(6),
-              onTap: () {
-                String newState;
-                if (state == "AA==") {
-                  newState = "AQ==";
-                } else {
-                  newState = "AA==";
-                }
-                runMutation({'addr': widget.addr, 'value': newState});
-              },
-              onLongPress: () {
-                showDeviceSheet(context, widget.name, widget.addr);
-              },
-              child: Container(
-                margin: EdgeInsets.all(12),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    SvgPicture.asset(
-                      "assets/plug.svg",
-                      color: Theme.of(context).primaryColor,
-                      width: 35,
-                    ),
-                    SizedBox(
-                      height: 12,
-                    ),
-                    Text(
-                      widget.name,
-                      style: Theme.of(context).textTheme.bodyText1,
-                    ),
-                    Subscription("GetState", getState, variables: {
-                      'addr': widget.addr,
-                    }, builder: ({
-                      bool loading,
-                      dynamic payload,
-                      dynamic error,
-                    }) {
-                      if (loading) {
-                        return Text(
-                          "-",
-                          style: Theme.of(context).textTheme.bodyText2,
-                        );
-                      }
-                      state = payload["getState"];
-                      if (state == "AA==") {
-                        return Text(
-                          "Off",
-                          style: Theme.of(context).textTheme.bodyText2,
-                        );
-                      } else {
-                        return Text(
-                          "On",
-                          style: Theme.of(context).textTheme.bodyText2,
-                        );
-                      }
-                    }),
-                  ],
-                ),
-              ),
+            SizedBox(
+              height: 12,
             ),
-          ),
+            Text(
+              widget.name,
+              style: Theme.of(context).textTheme.bodyText1,
+            ),
+            Subscription("GetState", getState, variables: {
+              'addr': widget.addr,
+            }, builder: ({
+              bool loading,
+              dynamic payload,
+              dynamic error,
+            }) {
+              if (loading) {
+                return Text(
+                  "-",
+                  style: Theme.of(context).textTheme.bodyText2,
+                );
+              }
+              state = payload["getState"];
+              return state == "AA=="
+                  ? Text(
+                      "Off",
+                      style: Theme.of(context).textTheme.bodyText2,
+                    )
+                  : Text(
+                      "On",
+                      style: Theme.of(context).textTheme.bodyText2,
+                    );
+            }),
+          ],
         );
       },
     );
