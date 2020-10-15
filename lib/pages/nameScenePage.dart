@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:home/components/title.dart';
 import 'package:home/pages/addScenePage.dart';
 import 'package:provider/provider.dart';
 
@@ -9,18 +10,7 @@ class NameScenePage extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          Padding(
-            padding: EdgeInsets.fromLTRB(
-              15,
-              MediaQuery.of(context).padding.top + 15,
-              15,
-              15,
-            ),
-            child: Text(
-              "Add Scene",
-              style: Theme.of(context).textTheme.headline1,
-            ),
-          ),
+          TitleText("Add Scene"),
           Text(
             "Set Name",
             textAlign: TextAlign.center,

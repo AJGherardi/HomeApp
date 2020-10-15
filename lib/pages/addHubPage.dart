@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:home/components/title.dart';
 import 'package:home/pages/onboardingPage.dart';
 import 'package:home/services/store.dart';
 import 'package:provider/provider.dart';
@@ -11,18 +12,7 @@ class AddHubPage extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          Padding(
-            padding: EdgeInsets.fromLTRB(
-              15,
-              MediaQuery.of(context).padding.top + 15,
-              15,
-              15,
-            ),
-            child: Text(
-              "Add Hub",
-              style: Theme.of(context).textTheme.headline1,
-            ),
-          ),
+          TitleText("Add Hub"),
           (Provider.of<OnboardingModel>(context, listen: false).provisioned ==
                   true)
               ? Text(

@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:home/components/items.dart';
+import 'package:home/components/title.dart';
 import 'package:home/pages/onboardingPage.dart';
 import 'package:home/services/store.dart';
 import 'package:multicast_dns/multicast_dns.dart';
@@ -60,20 +61,7 @@ class _AvailableHubsPageState extends State<AvailableHubsPage> {
       body: CustomScrollView(
         slivers: <Widget>[
           SliverToBoxAdapter(
-            child: Center(
-              child: Container(
-                margin: EdgeInsets.fromLTRB(
-                  15,
-                  MediaQuery.of(context).padding.top + 15,
-                  15,
-                  15,
-                ),
-                child: Text(
-                  "Available Hubs",
-                  style: Theme.of(context).textTheme.headline1,
-                ),
-              ),
-            ),
+            child: Center(child: TitleText("Available Hubs")),
           ),
           StreamBuilder(
             builder: (context, AsyncSnapshot<List<Record>> snapshot) {

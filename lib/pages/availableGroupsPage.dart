@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:home/components/items.dart';
+import 'package:home/components/title.dart';
 import 'package:home/pages/addDevicePage.dart';
 import 'package:provider/provider.dart';
 
@@ -26,18 +27,7 @@ class _AvailableGroupsPageState extends State<AvailableGroupsPage> {
         slivers: <Widget>[
           SliverToBoxAdapter(
             child: Center(
-              child: Container(
-                margin: EdgeInsets.fromLTRB(
-                  15,
-                  MediaQuery.of(context).padding.top + 15,
-                  15,
-                  15,
-                ),
-                child: Text(
-                  "Available Groups",
-                  style: Theme.of(context).textTheme.headline1,
-                ),
-              ),
+              child: TitleText("Available Groups"),
             ),
           ),
           Query(

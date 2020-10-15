@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:home/components/items.dart';
+import 'package:home/components/title.dart';
 
 class ActionsPage extends StatelessWidget {
   @override
@@ -7,20 +8,7 @@ class ActionsPage extends StatelessWidget {
     return CustomScrollView(
       slivers: <Widget>[
         SliverToBoxAdapter(
-          child: Center(
-            child: Padding(
-              padding: EdgeInsets.fromLTRB(
-                15,
-                MediaQuery.of(context).padding.top + 15,
-                15,
-                15,
-              ),
-              child: Text(
-                "Actions",
-                style: Theme.of(context).textTheme.headline1,
-              ),
-            ),
-          ),
+          child: Center(child: TitleText("Actions")),
         ),
         SliverList(
           delegate: SliverChildBuilderDelegate(

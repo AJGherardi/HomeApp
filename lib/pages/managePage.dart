@@ -3,6 +3,7 @@ import 'package:home/components/dialogs.dart';
 import 'package:home/components/items.dart';
 import 'package:home/components/routes.dart';
 import 'package:home/components/sheets.dart';
+import 'package:home/components/title.dart';
 import 'package:home/pages/addDevicePage.dart';
 import 'package:home/pages/addScenePage.dart';
 
@@ -13,18 +14,7 @@ class ManagePage extends StatelessWidget {
       slivers: <Widget>[
         SliverToBoxAdapter(
           child: Center(
-            child: Padding(
-              padding: EdgeInsets.fromLTRB(
-                15,
-                MediaQuery.of(context).padding.top + 15,
-                15,
-                15,
-              ),
-              child: Text(
-                "Manage",
-                style: Theme.of(context).textTheme.headline1,
-              ),
-            ),
+            child: TitleText("Manage"),
           ),
         ),
         SliverToBoxAdapter(
