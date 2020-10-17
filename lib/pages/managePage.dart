@@ -7,6 +7,7 @@ import 'package:home/components/title.dart';
 import 'package:home/pages/addDevicePage.dart';
 import 'package:home/pages/addScenePage.dart';
 import 'package:home/pages/removeDevicePage.dart';
+import 'package:home/pages/removeGroupPage.dart';
 
 class ManagePage extends StatelessWidget {
   @override
@@ -63,6 +64,17 @@ class ManagePage extends StatelessWidget {
               Navigator.push(
                 context,
                 FadeRoute(builder: (context) => RemoveDevicePage()),
+              );
+            },
+          ),
+        ),
+        SliverToBoxAdapter(
+          child: ListItem(
+            text: "Remove Group",
+            onTap: () {
+              Navigator.push(
+                context,
+                FadeRoute(builder: (context) => RemoveGroupPage()),
               );
             },
           ),
