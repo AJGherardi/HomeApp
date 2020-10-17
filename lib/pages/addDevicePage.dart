@@ -28,7 +28,15 @@ class AddDevicePage extends StatefulWidget {
 
 class _AddDevicePageState extends State<AddDevicePage> {
   final List<Widget> _children = [
-    AvailableGroupsPage(),
+    AvailableGroupsPage(
+      onSelected: (context, addr) {
+        Provider.of<AddDeviceModel>(context, listen: false).groupAddr = addr;
+      },
+      checkSelected: (context, addr) {
+        return Provider.of<AddDeviceModel>(context, listen: false).groupAddr ==
+            addr;
+      },
+    ),
     AvailableDevicesPage(),
     NameDevicePage()
   ];

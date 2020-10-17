@@ -1,49 +1,53 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:home/components/switcher.dart';
+import 'package:home/pages/nameDevicePage.dart';
+import 'package:home/pages/availableDevicesPage.dart';
 import 'package:home/pages/availableGroupsPage.dart';
-import 'package:home/pages/nameScenePage.dart';
 import 'package:home/services/graphql.dart';
 import 'package:provider/provider.dart';
 
-String sceneStore = """
-  mutation SceneStore(\$addr: String!, \$name: String!) {
-    sceneStore(addr: \$addr, name: \$name) 
+String removeDevice = """
+  mutation RemoveDevice(\$addr: String!) {
+    removeDevice(addr: \$addr) {
+      addr
+    }
   }
 """;
 
-class AddSceneModel {
+class RemoveDeviceModel {
   String groupAddr;
-  String name;
+  String devAddr;
 }
 
-class AddScenePage extends StatefulWidget {
+class RemoveDevicePage extends StatefulWidget {
   @override
-  _AddScenePageState createState() => _AddScenePageState();
+  _RemoveDevicePageState createState() => _RemoveDevicePageState();
 }
 
-class _AddScenePageState extends State<AddScenePage> {
+class _RemoveDevicePageState extends State<RemoveDevicePage> {
   final List<Widget> _children = [
     AvailableGroupsPage(
       onSelected: (context, addr) {
-        Provider.of<AddSceneModel>(context, listen: false).groupAddr = addr;
+        Provider.of<RemoveDeviceModel>(context, listen: false).groupAddr = addr;
       },
       checkSelected: (context, addr) {
-        return Provider.of<AddSceneModel>(context, listen: false).groupAddr ==
+        return Provider.of<RemoveDeviceModel>(context, listen: false)
+                .groupAddr ==
             addr;
       },
     ),
-    NameScenePage(),
+    AvailableDevicesPage(),
+    NameDevicePage()
   ];
 
   @override
   Widget build(BuildContext context) {
-    return Provider<AddSceneModel>(
+    return Provider<RemoveDeviceModel>(
       create: (_) {
-        var model = AddSceneModel();
+        var model = RemoveDeviceModel();
         model.groupAddr = "";
-        model.name = "";
+        model.devAddr = "";
         return model;
       },
       builder: (context, _) {
@@ -52,9 +56,9 @@ class _AddScenePageState extends State<AddScenePage> {
           doneButton: MutationWithBuilder(
             onCompleted: (resultData) {
               // Get name and addr from result
-              var data = resultData["addDevice"] as Map<String, Object>;
+              var data = resultData["removeDevice"] as Map<String, Object>;
             },
-            query: sceneStore,
+            query: removeDevice,
             builder: (
               RunMutation runMutation,
               QueryResult result,
@@ -64,10 +68,9 @@ class _AddScenePageState extends State<AddScenePage> {
                 child: FlatButton(
                   onPressed: () {
                     runMutation({
-                      'name': Provider.of<AddSceneModel>(context, listen: false)
-                          .name,
-                      'addr': Provider.of<AddSceneModel>(context, listen: false)
-                          .groupAddr,
+                      'addr':
+                          Provider.of<RemoveDeviceModel>(context, listen: false)
+                              .devAddr,
                     });
                     Navigator.of(context).pop();
                   },

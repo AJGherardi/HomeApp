@@ -14,7 +14,17 @@ String listGroups = """
   }
 """;
 
+typedef bool CheckSelected(context, String addr);
+typedef void OnSelected(context, String addr);
+
 class AvailableGroupsPage extends StatefulWidget {
+  AvailableGroupsPage({
+    @required this.checkSelected,
+    @required this.onSelected,
+  });
+  final CheckSelected checkSelected;
+  final OnSelected onSelected;
+
   @override
   _AvailableGroupsPageState createState() => _AvailableGroupsPageState();
 }
@@ -54,18 +64,21 @@ class _AvailableGroupsPageState extends State<AvailableGroupsPage> {
                 delegate: SliverChildBuilderDelegate(
                   (BuildContext context, int index) {
                     return SelectableListItem(
-                        text: groups[index]["name"],
-                        onTap: () {
-                          Provider.of<AddDeviceModel>(context, listen: false)
-                              .groupAddr = groups[index]["addr"];
-                          setState(() {});
-                        },
-                        selected:
-                            (Provider.of<AddDeviceModel>(context, listen: false)
-                                        .groupAddr ==
-                                    groups[index]["addr"])
-                                ? true
-                                : false);
+                      text: groups[index]["name"],
+                      onTap: () {
+                        // Provider.of<AddDeviceModel>(context, listen: false)
+                        //     .groupAddr = groups[index]["addr"];
+                        widget.onSelected(context, groups[index]["addr"]);
+                        setState(() {});
+                      },
+                      selected:
+                          widget.checkSelected(context, groups[index]["addr"]),
+                    );
+                    // (Provider.of<AddDeviceModel>(context, listen: false)
+                    //             .groupAddr ==
+                    //         groups[index]["addr"])
+                    //     ? true
+                    //     : false);
                   },
                   childCount: groups.length,
                 ),

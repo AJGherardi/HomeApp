@@ -6,6 +6,7 @@ import 'package:home/components/sheets.dart';
 import 'package:home/components/title.dart';
 import 'package:home/pages/addDevicePage.dart';
 import 'package:home/pages/addScenePage.dart';
+import 'package:home/pages/removeDevicePage.dart';
 
 class ManagePage extends StatelessWidget {
   @override
@@ -52,6 +53,17 @@ class ManagePage extends StatelessWidget {
             text: "Add User",
             onTap: () {
               showAddUserSheet(context);
+            },
+          ),
+        ),
+        SliverToBoxAdapter(
+          child: ListItem(
+            text: "Remove Device",
+            onTap: () {
+              Navigator.push(
+                context,
+                FadeRoute(builder: (context) => RemoveDevicePage()),
+              );
             },
           ),
         ),
