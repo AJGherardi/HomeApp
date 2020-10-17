@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:home/components/switcher.dart';
-import 'package:home/pages/nameDevicePage.dart';
-import 'package:home/pages/availableDevicesPage.dart';
 import 'package:home/pages/availableGroupsPage.dart';
+import 'package:home/pages/devicesPage.dart';
 import 'package:home/services/graphql.dart';
 import 'package:provider/provider.dart';
 
@@ -37,8 +36,7 @@ class _RemoveDevicePageState extends State<RemoveDevicePage> {
             addr;
       },
     ),
-    AvailableDevicesPage(),
-    NameDevicePage()
+    DevicesPage(),
   ];
 
   @override

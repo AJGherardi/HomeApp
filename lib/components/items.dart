@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:home/pages/removeDevicePage.dart';
 import 'package:home/services/graphql.dart';
 import 'package:home/components/sheets.dart';
+import 'package:provider/provider.dart';
 
 String getState = """
   subscription GetState(\$addr: String!) {
@@ -403,6 +405,69 @@ class SelectableListItem extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class SelectDeviceItem extends StatefulWidget {
+  SelectDeviceItem({
+    @required this.device,
+  });
+  final dynamic device;
+
+  @override
+  _SelectDeviceItemState createState() => _SelectDeviceItemState();
+}
+
+class _SelectDeviceItemState extends State<SelectDeviceItem> {
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      onTap: () {
+        Provider.of<RemoveDeviceModel>(context, listen: false).devAddr =
+            widget.device["addr"];
+        setState(() {});
+      },
+      onLongPress: () {},
+      children: <Widget>[
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            SvgPicture.asset(
+              "assets/plug.svg",
+              color: Theme.of(context).primaryColor,
+              width: 35,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              // child: ,
+
+              child: Visibility(
+                child: Icon(Icons.check),
+                maintainSize: true,
+                maintainAnimation: true,
+                maintainState: true,
+                visible: (Provider.of<RemoveDeviceModel>(context, listen: false)
+                        .devAddr ==
+                    widget.device["addr"]),
+              ),
+            )
+          ],
+        ),
+        SizedBox(
+          height: 12,
+        ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            for (var element in widget.device["elements"])
+              Text(
+                element["name"],
+                style: Theme.of(context).textTheme.bodyText1,
+              ),
+          ],
+        )
+      ],
     );
   }
 }

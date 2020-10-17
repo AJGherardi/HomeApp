@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:home/components/items.dart';
 import 'package:home/components/title.dart';
-import 'package:home/pages/addDevicePage.dart';
-import 'package:provider/provider.dart';
 
 String listGroups = """
   query AvailableGroups {
@@ -66,19 +64,12 @@ class _AvailableGroupsPageState extends State<AvailableGroupsPage> {
                     return SelectableListItem(
                       text: groups[index]["name"],
                       onTap: () {
-                        // Provider.of<AddDeviceModel>(context, listen: false)
-                        //     .groupAddr = groups[index]["addr"];
                         widget.onSelected(context, groups[index]["addr"]);
                         setState(() {});
                       },
                       selected:
                           widget.checkSelected(context, groups[index]["addr"]),
                     );
-                    // (Provider.of<AddDeviceModel>(context, listen: false)
-                    //             .groupAddr ==
-                    //         groups[index]["addr"])
-                    //     ? true
-                    //     : false);
                   },
                   childCount: groups.length,
                 ),
