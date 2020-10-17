@@ -15,6 +15,8 @@ class TitleText extends StatelessWidget {
       child: Text(
         text,
         style: Theme.of(context).textTheme.headline1,
+        softWrap: true,
+        textAlign: TextAlign.center,
       ),
     );
   }

@@ -22,7 +22,7 @@ String getUserPin = """
   }
 """;
 
-void showSheet(context, childern) {
+void showSheet(context, childern, double height) {
   showModalBottomSheet(
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.only(
@@ -34,7 +34,7 @@ void showSheet(context, childern) {
     builder: (BuildContext bc) {
       return Padding(
         padding: EdgeInsets.only(
-          bottom: MediaQuery.of(context).viewInsets.bottom,
+          bottom: height,
           right: 24,
           left: 24,
         ),
@@ -90,6 +90,7 @@ void showAddUserSheet(context) {
       ),
       SizedBox(height: 48),
     ],
+    MediaQuery.of(context).viewInsets.bottom,
   );
 }
 
@@ -156,6 +157,7 @@ void showAddGroupSheet(context) {
       ),
       SizedBox(height: 24),
     ],
+    220,
   );
 }
 
@@ -190,6 +192,7 @@ void showDeviceSheet(context, name, addr) {
       ),
       SizedBox(height: 24),
     ],
+    MediaQuery.of(context).viewInsets.bottom,
   );
 }
 
@@ -266,6 +269,7 @@ void showEventSheet(context, name, addr, groupAddr) {
       ),
       SizedBox(height: 24),
     ],
+    MediaQuery.of(context).viewInsets.bottom,
   );
 }
 
@@ -318,5 +322,6 @@ void showSceneSheet(context, name, addr, number) {
       ),
       SizedBox(height: 24),
     ],
+    MediaQuery.of(context).viewInsets.bottom,
   );
 }
