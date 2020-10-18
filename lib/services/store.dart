@@ -32,6 +32,10 @@ Future<ClientModel> getClientModel() async {
   return model;
 }
 
+final policies = Policies(
+  fetch: FetchPolicy.networkOnly,
+);
+
 class ClientModel {
   ClientModel(String address) {
     setHost(address);
@@ -43,6 +47,11 @@ class ClientModel {
     GraphQLClient(
       cache: InMemoryCache(),
       link: WebSocketLink(url: ""),
+      defaultPolicies: DefaultPolicies(
+        watchQuery: policies,
+        query: policies,
+        mutate: policies,
+      ),
     ),
   );
 

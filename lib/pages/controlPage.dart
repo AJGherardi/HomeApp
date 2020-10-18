@@ -69,7 +69,7 @@ class GroupPage extends StatelessWidget {
         dynamic payload,
         dynamic error,
       }) {
-        if (error) {
+        if (error != null) {
           return ConnectError();
         }
         if (loading) {

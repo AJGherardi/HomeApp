@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:home/components/dialogs.dart';
 import 'package:home/pages/removeDevicePage.dart';
 import 'package:home/services/graphql.dart';
 import 'package:home/components/sheets.dart';
@@ -319,6 +320,9 @@ class _OnoffItemState extends State<OnoffItem> {
               dynamic payload,
               dynamic error,
             }) {
+              if (error != null) {
+                return ConnectError();
+              }
               if (loading) {
                 return Text(
                   "-",

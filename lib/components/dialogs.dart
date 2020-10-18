@@ -90,10 +90,6 @@ void showResetDialog(context) {
 }
 
 class ConnectError extends StatelessWidget {
-  const ConnectError({
-    Key key,
-  }) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Center(
