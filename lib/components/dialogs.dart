@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:home/components/routes.dart';
 import 'package:home/pages/onboardingPage.dart';
@@ -86,4 +87,32 @@ void showResetDialog(context) {
       );
     },
   );
+}
+
+class ConnectError extends StatelessWidget {
+  const ConnectError({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SvgPicture.asset(
+            "assets/connect-failed.svg",
+            color: Theme.of(context).primaryColor,
+            width: 150,
+          ),
+          Text(
+            "Can't connect\n to hub",
+            style: Theme.of(context).textTheme.headline1,
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ),
+    );
+  }
 }

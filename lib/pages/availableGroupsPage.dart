@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:home/components/dialogs.dart';
 import 'package:home/components/items.dart';
 import 'package:home/components/title.dart';
 
@@ -45,6 +46,9 @@ class _AvailableGroupsPageState extends State<AvailableGroupsPage> {
             ),
             builder: (QueryResult result,
                 {VoidCallback refetch, FetchMore fetchMore}) {
+              if (result.hasException) {
+                return SliverFillRemaining(child: ConnectError());
+              }
               if (result.loading) {
                 return SliverFillRemaining(
                   hasScrollBody: false,

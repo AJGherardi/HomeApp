@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:home/components/dialogs.dart';
 import 'package:home/components/items.dart';
 import 'package:home/components/title.dart';
 import 'package:home/pages/addDevicePage.dart';
@@ -34,6 +35,9 @@ class _AvailableDevicesPageState extends State<AvailableDevicesPage> {
             ),
             builder: (QueryResult result,
                 {VoidCallback refetch, FetchMore fetchMore}) {
+              if (result.hasException) {
+                return SliverFillRemaining(child: ConnectError());
+              }
               if (result.loading) {
                 return SliverFillRemaining(
                   hasScrollBody: false,

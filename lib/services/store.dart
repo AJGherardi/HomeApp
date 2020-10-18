@@ -39,10 +39,12 @@ class ClientModel {
   }
   String webKey;
   String host = "";
-  ValueNotifier<GraphQLClient> client = ValueNotifier(GraphQLClient(
-    cache: InMemoryCache(),
-    link: WebSocketLink(url: ""),
-  ));
+  ValueNotifier<GraphQLClient> client = ValueNotifier(
+    GraphQLClient(
+      cache: InMemoryCache(),
+      link: WebSocketLink(url: ""),
+    ),
+  );
 
   void setPin(int pin) {
     if (host != null) {

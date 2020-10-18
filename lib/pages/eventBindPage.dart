@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:home/components/bars.dart';
+import 'package:home/components/dialogs.dart';
 import 'package:home/components/items.dart';
 import 'package:home/pages/controlPage.dart';
 
@@ -22,6 +23,9 @@ class EventBindPage extends StatelessWidget {
         dynamic payload,
         dynamic error,
       }) {
+        if (error) {
+          return ConnectError();
+        }
         if (loading) {
           return Center(
             child: CircularProgressIndicator(

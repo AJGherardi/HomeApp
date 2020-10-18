@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:home/components/bars.dart';
+import 'package:home/components/dialogs.dart';
 import 'package:home/components/items.dart';
 import 'package:home/components/routes.dart';
 
@@ -67,6 +69,9 @@ class GroupPage extends StatelessWidget {
         dynamic payload,
         dynamic error,
       }) {
+        if (error) {
+          return ConnectError();
+        }
         if (loading) {
           return Center(
             child: CircularProgressIndicator(
@@ -192,6 +197,9 @@ class HomePage extends StatelessWidget {
       ),
       builder: (QueryResult result,
           {VoidCallback refetch, FetchMore fetchMore}) {
+        if (result.hasException) {
+          return ConnectError();
+        }
         if (result.loading) {
           return Center(
             child: CircularProgressIndicator(
