@@ -156,36 +156,44 @@ class GroupPage extends StatelessWidget {
                 ),
               ),
             ),
-            SliverPadding(
-              padding: EdgeInsets.only(left: 15, right: 15, bottom: 15),
-              sliver: SliverGrid(
-                gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                  maxCrossAxisExtent: 200,
-                  crossAxisSpacing: 15,
-                  mainAxisSpacing: 15,
-                  childAspectRatio: 1.4,
-                ),
-                delegate: SliverChildBuilderDelegate(
-                  (BuildContext context, int index) {
-                    if (groupElements[index]["stateType"] == "onoff") {
-                      return OnoffItem(
-                        name: groupElements[index]["name"],
-                        addr: groupElements[index]["addr"],
-                      );
-                    }
-                    if (groupElements[index]["stateType"] == "event") {
-                      return EventItem(
-                        name: groupElements[index]["name"],
-                        addr: groupElements[index]["addr"],
-                        groupAddr: group["addr"],
-                      );
-                    }
-                    return Container();
-                  },
-                  childCount: groupElements.length,
-                ),
-              ),
-            ),
+            (devices.length != 0)
+                ? SliverPadding(
+                    padding: EdgeInsets.only(left: 15, right: 15, bottom: 15),
+                    sliver: SliverGrid(
+                      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                        maxCrossAxisExtent: 200,
+                        crossAxisSpacing: 15,
+                        mainAxisSpacing: 15,
+                        childAspectRatio: 1.4,
+                      ),
+                      delegate: SliverChildBuilderDelegate(
+                        (BuildContext context, int index) {
+                          if (groupElements[index]["stateType"] == "onoff") {
+                            return OnoffItem(
+                              name: groupElements[index]["name"],
+                              addr: groupElements[index]["addr"],
+                            );
+                          }
+                          if (groupElements[index]["stateType"] == "event") {
+                            return EventItem(
+                              name: groupElements[index]["name"],
+                              addr: groupElements[index]["addr"],
+                              groupAddr: group["addr"],
+                            );
+                          }
+                          return Container();
+                        },
+                        childCount: groupElements.length,
+                      ),
+                    ),
+                  )
+                : SliverToBoxAdapter(
+                    child: Padding(
+                    padding: EdgeInsets.only(left: 15, right: 15, bottom: 15),
+                    child: AddDeviceSuggestion(
+                      parent: parent,
+                    ),
+                  )),
           ],
         );
       },
