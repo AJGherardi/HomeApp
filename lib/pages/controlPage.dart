@@ -38,12 +38,12 @@ class ControlPage extends StatelessWidget {
   final navigatorKey = GlobalKey<NavigatorState>();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext parent) {
     return Navigator(
       initialRoute: "/",
       onGenerateRoute: (routeSettings) {
         return MaterialPageRoute(
-          builder: (context) => HomePage(navigatorKey),
+          builder: (context) => HomePage(navigatorKey, parent),
         );
       },
       key: navigatorKey,
@@ -52,10 +52,11 @@ class ControlPage extends StatelessWidget {
 }
 
 class GroupPage extends StatelessWidget {
-  GroupPage(this.group, this.navigatorKey);
+  GroupPage(this.group, this.navigatorKey, this.parent);
 
   final Map<String, Object> group;
   final GlobalKey<NavigatorState> navigatorKey;
+  final BuildContext parent;
   @override
   Widget build(BuildContext context) {
     return Subscription(
@@ -115,27 +116,35 @@ class GroupPage extends StatelessWidget {
                 ),
               ),
             ),
-            SliverPadding(
-              padding: EdgeInsets.only(left: 15, right: 15, bottom: 15),
-              sliver: SliverGrid(
-                gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                  maxCrossAxisExtent: 200,
-                  crossAxisSpacing: 15,
-                  mainAxisSpacing: 15,
-                  childAspectRatio: 1.4,
-                ),
-                delegate: SliverChildBuilderDelegate(
-                  (BuildContext context, int index) {
-                    return SceneItem(
-                      name: scenes[index]["name"],
-                      number: scenes[index]["number"],
-                      addr: group["addr"],
-                    );
-                  },
-                  childCount: scenes.length,
-                ),
-              ),
-            ),
+            (scenes.length != 0)
+                ? SliverPadding(
+                    padding: EdgeInsets.only(left: 15, right: 15, bottom: 15),
+                    sliver: SliverGrid(
+                      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                        maxCrossAxisExtent: 200,
+                        crossAxisSpacing: 15,
+                        mainAxisSpacing: 15,
+                        childAspectRatio: 1.4,
+                      ),
+                      delegate: SliverChildBuilderDelegate(
+                        (BuildContext context, int index) {
+                          return SceneItem(
+                            name: scenes[index]["name"],
+                            number: scenes[index]["number"],
+                            addr: group["addr"],
+                          );
+                        },
+                        childCount: scenes.length,
+                      ),
+                    ),
+                  )
+                : SliverToBoxAdapter(
+                    child: Padding(
+                    padding: EdgeInsets.only(left: 15, right: 15, bottom: 15),
+                    child: AddSceneSuggestion(
+                      parent: parent,
+                    ),
+                  )),
             SliverPadding(
               padding: EdgeInsets.only(bottom: 15),
               sliver: SliverToBoxAdapter(
@@ -185,9 +194,10 @@ class GroupPage extends StatelessWidget {
 }
 
 class HomePage extends StatelessWidget {
-  HomePage(this.navigatorKey);
+  HomePage(this.navigatorKey, this.parent);
 
   final GlobalKey<NavigatorState> navigatorKey;
+  final BuildContext parent;
   @override
   Widget build(BuildContext context) {
     return Query(
@@ -249,7 +259,7 @@ class HomePage extends StatelessWidget {
                         navigatorKey.currentState.push(
                           FadeRoute(
                             builder: (context) =>
-                                GroupPage(groups[index], navigatorKey),
+                                GroupPage(groups[index], navigatorKey, parent),
                           ),
                         );
                       });
