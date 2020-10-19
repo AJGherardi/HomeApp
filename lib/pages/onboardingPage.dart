@@ -71,26 +71,66 @@ class _OnboardingPageState extends State<OnboardingPage> {
             },
             query: configHub,
             builder: (
-              RunMutation runMutation,
+              RunMutation runConfigHub,
               QueryResult result,
             ) {
-              return Container(
-                alignment: Alignment.centerRight,
-                child: FlatButton(
-                  onPressed: () {
-                    if (Provider.of<ClientModel>(context, listen: false).host !=
-                        "") {
-                      runMutation({});
-                    }
-                  },
-                  child: Container(
-                    margin: EdgeInsets.all(12),
-                    child: Text(
-                      "Done",
-                      style: Theme.of(context).textTheme.button,
+              return MutationWithBuilder(
+                query: addUser,
+                onCompleted: (resultData) async {
+                  // Get webKey from result
+                  final data = resultData as Map<String, Object>;
+                  final webKey = data["addUser"];
+                  // Set webKey in provider
+                  Provider.of<ClientModel>(context, listen: false).webKey =
+                      webKey;
+                  // Save data for future use
+                  await saveConnectionData(
+                    Provider.of<ClientModel>(context, listen: false).host,
+                    Provider.of<ClientModel>(context, listen: false).webKey,
+                  );
+                  // Navagate to HomePage
+                  Navigator.push(
+                    context,
+                    FadeRoute(
+                      builder: (context) => MainPage(),
                     ),
-                  ),
-                ),
+                  );
+                },
+                builder: (
+                  RunMutation runAddUser,
+                  QueryResult result,
+                ) {
+                  return Container(
+                    alignment: Alignment.centerRight,
+                    child: FlatButton(
+                      onPressed: () {
+                        if (Provider.of<ClientModel>(context, listen: false)
+                                .host !=
+                            "") {
+                          if (Provider.of<OnboardingModel>(context,
+                                      listen: false)
+                                  .provisioned ==
+                              false) {
+                            runConfigHub({});
+                          } else {
+                            runAddUser({
+                              'pin': Provider.of<OnboardingModel>(context,
+                                      listen: false)
+                                  .pin,
+                            });
+                          }
+                        }
+                      },
+                      child: Container(
+                        margin: EdgeInsets.all(12),
+                        child: Text(
+                          "Done",
+                          style: Theme.of(context).textTheme.button,
+                        ),
+                      ),
+                    ),
+                  );
+                },
               );
             },
           ),
