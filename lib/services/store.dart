@@ -77,7 +77,7 @@ class ClientModel {
       client.value = GraphQLClient(
         cache: InMemoryCache(),
         link: WebSocketLink(
-          url: "ws://" + address + ":8080/graphql",
+          url: "wss://" + address + ":2041/graphql",
           config: SocketClientConfig(
             initPayload: () => {
               'webKey': webKey,

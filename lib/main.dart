@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -7,7 +9,17 @@ import 'package:home/pages/onboardingPage.dart';
 import 'package:home/services/store.dart';
 import 'package:provider/provider.dart';
 
+class AppHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
+  }
+}
+
 void main() {
+  HttpOverrides.global = new AppHttpOverrides();
   runApp(
     FutureProvider<ClientModel>(
       create: (context) => getClientModel(),

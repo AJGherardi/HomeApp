@@ -9,7 +9,9 @@ class ActionsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final TextEditingController _urlController = TextEditingController(
-        text: "ws://" + Provider.of<ClientModel>(context).host + "/graphql");
+        text: "wss://" +
+            Provider.of<ClientModel>(context).host +
+            ":2041/graphql");
     final TextEditingController _webKeyController =
         TextEditingController(text: Provider.of<ClientModel>(context).webKey);
 
