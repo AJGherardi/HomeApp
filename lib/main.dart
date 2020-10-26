@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:home/pages/mainPage.dart';
@@ -31,17 +32,29 @@ void main() {
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent,
-        statusBarIconBrightness: Brightness.light,
-      ),
-    );
+    var brightness = SchedulerBinding.instance.window.platformBrightness;
+    if (brightness == Brightness.light) {
+      SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(
+          statusBarColor: Colors.transparent,
+          statusBarIconBrightness: Brightness.dark,
+        ),
+      );
+    } else {
+      SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(
+          statusBarColor: Colors.transparent,
+          statusBarIconBrightness: Brightness.light,
+        ),
+      );
+    }
     // Check if model is returned
     if (Provider.of<ClientModel>(context) == null) {
       return MaterialApp(
         home: Container(
-          color: Colors.grey[50],
+          color: (brightness == Brightness.light)
+              ? Colors.grey[50]
+              : Color(0xFF121212),
         ),
       );
     }
@@ -49,7 +62,8 @@ class App extends StatelessWidget {
       client: Provider.of<ClientModel>(context).client,
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        themeMode: ThemeMode.dark,
+        themeMode:
+            (brightness == Brightness.light) ? ThemeMode.light : ThemeMode.dark,
         theme: ThemeData(
           backgroundColor: Colors.grey[50],
           canvasColor: Colors.grey[50],
