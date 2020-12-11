@@ -1,22 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:home/components/switcher.dart';
+import 'package:home/graphql/graphql.dart';
 import 'package:home/pages/nameDevicePage.dart';
 import 'package:home/pages/availableDevicesPage.dart';
 import 'package:home/pages/availableGroupsPage.dart';
 import 'package:home/services/graphql.dart';
 import 'package:provider/provider.dart';
 
-String addDevice = """
-  mutation AddDevice(\$name: String!, \$devUUID: String!, \$addr: String!) {
-    addDevice(name: \$name, devUUID: \$devUUID, addr: \$addr) {
-      addr
-    }
-  }
-""";
-
 class AddDeviceModel {
-  String groupAddr;
+  num groupAddr;
   String devUUID;
   String name;
 }
@@ -46,7 +39,7 @@ class _AddDevicePageState extends State<AddDevicePage> {
     return Provider<AddDeviceModel>(
       create: (_) {
         var model = AddDeviceModel();
-        model.groupAddr = "";
+        model.groupAddr = 0;
         model.devUUID = "";
         model.name = "";
         return model;
@@ -57,9 +50,9 @@ class _AddDevicePageState extends State<AddDevicePage> {
           doneButton: MutationWithBuilder(
             onCompleted: (resultData) {
               // Get name and addr from result
-              var data = resultData["addDevice"] as Map<String, Object>;
+              var data = resultData["addDevice"];
             },
-            query: addDevice,
+            query: addDeviceMutation,
             builder: (
               RunMutation runMutation,
               QueryResult result,
@@ -75,7 +68,7 @@ class _AddDevicePageState extends State<AddDevicePage> {
                       'devUUID':
                           Provider.of<AddDeviceModel>(context, listen: false)
                               .devUUID,
-                      'addr':
+                      'groupAddr':
                           Provider.of<AddDeviceModel>(context, listen: false)
                               .groupAddr,
                     });

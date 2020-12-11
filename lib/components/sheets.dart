@@ -3,24 +3,10 @@ import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:home/components/buttons.dart';
 import 'package:home/components/items.dart';
 import 'package:home/components/routes.dart';
+import 'package:home/graphql/graphql.dart';
 import 'package:home/pages/eventBindPage.dart';
 import 'package:home/pages/mainPage.dart';
 import 'package:home/services/graphql.dart';
-
-String addGroup = """
-  mutation AddGroup(\$name: String!) {
-    addGroup(name: \$name) {
-      name
-      addr
-    }
-  }
-""";
-
-String getUserPin = """
-  query getUserPin {
-    getUserPin
-  }
-""";
 
 void showSheet(context, childern, double height) {
   showModalBottomSheet(
@@ -66,7 +52,7 @@ void showAddUserSheet(context) {
       SizedBox(height: 48),
       Query(
         options: QueryOptions(
-          documentNode: gql(getUserPin),
+          documentNode: gql(getUserPinQuery),
           variables: {},
         ),
         builder: (QueryResult result,
@@ -130,9 +116,7 @@ void showAddGroupSheet(context) {
         onCompleted: (resultData) {
           // Get name and addr from result
           var data = resultData as Map<String, Object>;
-          var addGroupResult = data["addGroup"] as Map<String, Object>;
-          print(addGroupResult["name"]);
-          print(addGroupResult["addr"]);
+          var addGroupResult = data["addGroup"];
           Navigator.push(
             context,
             FadeRoute(
@@ -140,7 +124,7 @@ void showAddGroupSheet(context) {
             ),
           );
         },
-        query: addGroup,
+        query: addGroupMutation,
         builder: (
           RunMutation runMutation,
           QueryResult result,
@@ -196,7 +180,7 @@ void showDeviceSheet(context, name, addr) {
   );
 }
 
-void showEventSheet(context, name, addr, groupAddr) {
+void showEventSheet(context, name, groupAddr, devAddr, elemAddr) {
   showSheet(
     context,
     <Widget>[
@@ -209,9 +193,11 @@ void showEventSheet(context, name, addr, groupAddr) {
       SizedBox(height: 24),
       Query(
         options: QueryOptions(
-          documentNode: gql(getState),
+          documentNode: gql(watchStateSubscription),
           variables: {
-            'addr': addr,
+            'groupAddr': groupAddr,
+            'devAddr': devAddr,
+            'elemAddr': elemAddr,
           },
         ),
         builder: (QueryResult result,
@@ -240,7 +226,8 @@ void showEventSheet(context, name, addr, groupAddr) {
                   Navigator.push(
                     context,
                     FadeRoute(
-                      builder: (context) => EventBindPage(groupAddr, addr),
+                      builder: (context) =>
+                          EventBindPage(groupAddr, devAddr, elemAddr),
                     ),
                   );
                 },
@@ -253,7 +240,7 @@ void showEventSheet(context, name, addr, groupAddr) {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            "address:",
+            "element address:",
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.bodyText1,
           ),
@@ -261,7 +248,7 @@ void showEventSheet(context, name, addr, groupAddr) {
             width: 12,
           ),
           Text(
-            addr,
+            elemAddr,
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.bodyText2,
           ),
@@ -273,7 +260,7 @@ void showEventSheet(context, name, addr, groupAddr) {
   );
 }
 
-void showSceneSheet(context, name, addr, number) {
+void showSceneSheet(context, name, groupAddr, number) {
   showSheet(
     context,
     <Widget>[
@@ -296,7 +283,7 @@ void showSceneSheet(context, name, addr, number) {
             width: 12,
           ),
           Text(
-            addr,
+            groupAddr,
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.bodyText2,
           ),

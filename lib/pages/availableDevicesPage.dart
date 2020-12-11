@@ -5,12 +5,7 @@ import 'package:home/components/items.dart';
 import 'package:home/components/title.dart';
 import 'package:home/pages/addDevicePage.dart';
 import 'package:provider/provider.dart';
-
-String availableDevices = """
-  query AvailableDevices {
-    availableDevices
-  }
-""";
+import 'package:home/graphql/graphql.dart';
 
 class AvailableDevicesPage extends StatefulWidget {
   @override
@@ -30,7 +25,7 @@ class _AvailableDevicesPageState extends State<AvailableDevicesPage> {
           ),
           Query(
             options: QueryOptions(
-              documentNode: gql(availableDevices),
+              documentNode: gql(availableDevicesQuery),
               variables: {},
             ),
             builder: (QueryResult result,

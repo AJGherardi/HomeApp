@@ -3,18 +3,11 @@ import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:home/components/dialogs.dart';
 import 'package:home/components/items.dart';
 import 'package:home/components/title.dart';
+import 'package:home/graphql/graphql.dart';
+import 'package:home/graphql/types.dart';
 
-String listGroups = """
-  query AvailableGroups {
-    availableGroups {
-      name
-      addr
-    }
-  }
-""";
-
-typedef bool CheckSelected(context, String addr);
-typedef void OnSelected(context, String addr);
+typedef bool CheckSelected(context, num addr);
+typedef void OnSelected(context, num addr);
 
 class AvailableGroupsPage extends StatefulWidget {
   AvailableGroupsPage({
@@ -41,7 +34,7 @@ class _AvailableGroupsPageState extends State<AvailableGroupsPage> {
           ),
           Query(
             options: QueryOptions(
-              documentNode: gql(listGroups),
+              documentNode: gql(availableGroupsQuery),
               variables: {},
             ),
             builder: (QueryResult result,
@@ -61,18 +54,22 @@ class _AvailableGroupsPageState extends State<AvailableGroupsPage> {
                   ),
                 );
               }
-              List groups = result.data["availableGroups"];
+              List<GroupResponse> groups = (result.data["availableGroups"]
+                      as List)
+                  ?.map(
+                      (e) => GroupResponse.fromJson(e as Map<String, dynamic>))
+                  .toList();
               return SliverList(
                 delegate: SliverChildBuilderDelegate(
                   (BuildContext context, int index) {
                     return SelectableListItem(
-                      text: groups[index]["name"],
+                      text: groups[index].group.name,
                       onTap: () {
-                        widget.onSelected(context, groups[index]["addr"]);
+                        widget.onSelected(context, groups[index].addr);
                         setState(() {});
                       },
                       selected:
-                          widget.checkSelected(context, groups[index]["addr"]),
+                          widget.checkSelected(context, groups[index].addr),
                     );
                   },
                   childCount: groups.length,

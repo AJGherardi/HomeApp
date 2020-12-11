@@ -2,19 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:home/components/switcher.dart';
+import 'package:home/graphql/graphql.dart';
 import 'package:home/pages/availableGroupsPage.dart';
 import 'package:home/pages/nameScenePage.dart';
 import 'package:home/services/graphql.dart';
 import 'package:provider/provider.dart';
 
-String sceneStore = """
-  mutation SceneStore(\$addr: String!, \$name: String!) {
-    sceneStore(addr: \$addr, name: \$name) 
-  }
-""";
-
 class AddSceneModel {
-  String groupAddr;
+  num groupAddr;
   String name;
 }
 
@@ -42,7 +37,7 @@ class _AddScenePageState extends State<AddScenePage> {
     return Provider<AddSceneModel>(
       create: (_) {
         var model = AddSceneModel();
-        model.groupAddr = "";
+        model.groupAddr = 0;
         model.name = "";
         return model;
       },
@@ -52,9 +47,9 @@ class _AddScenePageState extends State<AddScenePage> {
           doneButton: MutationWithBuilder(
             onCompleted: (resultData) {
               // Get name and addr from result
-              var data = resultData["addDevice"] as Map<String, Object>;
+              var data = resultData["addScene"];
             },
-            query: sceneStore,
+            query: sceneStoreMutation,
             builder: (
               RunMutation runMutation,
               QueryResult result,
@@ -66,8 +61,9 @@ class _AddScenePageState extends State<AddScenePage> {
                     runMutation({
                       'name': Provider.of<AddSceneModel>(context, listen: false)
                           .name,
-                      'addr': Provider.of<AddSceneModel>(context, listen: false)
-                          .groupAddr,
+                      'groupAddr':
+                          Provider.of<AddSceneModel>(context, listen: false)
+                              .groupAddr,
                     });
                     Navigator.of(context).pop();
                   },

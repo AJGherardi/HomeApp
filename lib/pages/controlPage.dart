@@ -4,34 +4,8 @@ import 'package:home/components/bars.dart';
 import 'package:home/components/dialogs.dart';
 import 'package:home/components/items.dart';
 import 'package:home/components/routes.dart';
-
-String listGroup = """
-  subscription ListGroup(\$addr: String!) {
-    listGroup(addr: \$addr) {
-      devices {
-        addr
-        elements{ 
-          name
-          addr
-          stateType
-        }
-      }
-      scenes {
-        name
-        number
-      }
-    }
-  }
-""";
-
-String listGroups = """
-  query AvailableGroups {
-    availableGroups {
-      name
-      addr
-    }
-  }
-""";
+import 'package:home/graphql/graphql.dart';
+import 'package:home/graphql/types.dart';
 
 class ControlPage extends StatelessWidget {
   final navigatorKey = GlobalKey<NavigatorState>();
@@ -53,16 +27,16 @@ class ControlPage extends StatelessWidget {
 class GroupPage extends StatelessWidget {
   GroupPage(this.group, this.navigatorKey, this.parent);
 
-  final Map<String, Object> group;
+  final GroupResponse group;
   final GlobalKey<NavigatorState> navigatorKey;
   final BuildContext parent;
   @override
   Widget build(BuildContext context) {
     return Subscription(
-      "ListGroup",
-      listGroup,
+      "WatchGroup",
+      watchGroupSubscription,
       variables: {
-        'addr': group["addr"],
+        'groupAddr': group.addr,
       },
       builder: ({
         bool loading,
@@ -81,13 +55,29 @@ class GroupPage extends StatelessWidget {
             ),
           );
         }
-        List devices = payload["listGroup"]["devices"];
-        List scenes = payload["listGroup"]["scenes"];
-        print(scenes);
         // Get list of elements
-        List groupElements = new List();
-        for (var device in devices) {
-          groupElements.addAll(device["elements"]);
+        List<Widget> elementItems = new List();
+        for (var device in group.group.devices) {
+          for (var element in device.device.elements) {
+            if (element.element.stateType == "onoff") {
+              elementItems.add(
+                OnoffItem(
+                  name: element.element.name,
+                  groupAddr: group.addr,
+                  devAddr: device.addr,
+                  elemAddr: element.addr,
+                ),
+              );
+            }
+            if (element.element.stateType == "event") {
+              return EventItem(
+                name: element.element.name,
+                groupAddr: group.addr,
+                devAddr: device.addr,
+                elemAddr: element.addr,
+              );
+            }
+          }
         }
         return CustomScrollView(
           slivers: [
@@ -98,7 +88,7 @@ class GroupPage extends StatelessWidget {
                     top: MediaQuery.of(context).padding.top,
                   ),
                   child: TopBar(
-                    text: group["name"],
+                    text: group.group.name,
                     rightIcon: Icons.arrow_back,
                   ),
                 ),
@@ -115,7 +105,7 @@ class GroupPage extends StatelessWidget {
                 ),
               ),
             ),
-            (scenes.length != 0)
+            (group.group.scenes.length != 0)
                 ? SliverPadding(
                     padding: EdgeInsets.only(left: 15, right: 15, bottom: 15),
                     sliver: SliverGrid(
@@ -128,12 +118,12 @@ class GroupPage extends StatelessWidget {
                       delegate: SliverChildBuilderDelegate(
                         (BuildContext context, int index) {
                           return SceneItem(
-                            name: scenes[index]["name"],
-                            number: scenes[index]["number"],
-                            addr: group["addr"],
+                            name: group.group.scenes[index].scene.name,
+                            number: group.group.scenes[index].number,
+                            groupAddr: group.addr,
                           );
                         },
-                        childCount: scenes.length,
+                        childCount: group.group.scenes.length,
                       ),
                     ),
                   )
@@ -155,7 +145,7 @@ class GroupPage extends StatelessWidget {
                 ),
               ),
             ),
-            (devices.length != 0)
+            (group.group.devices.length != 0)
                 ? SliverPadding(
                     padding: EdgeInsets.only(left: 15, right: 15, bottom: 15),
                     sliver: SliverGrid(
@@ -165,27 +155,8 @@ class GroupPage extends StatelessWidget {
                         mainAxisSpacing: 15,
                         childAspectRatio: 1.4,
                       ),
-                      delegate: SliverChildBuilderDelegate(
-                        (BuildContext context, int index) {
-                          if (groupElements[index]["stateType"] == "onoff") {
-                            return OnoffItem(
-                              name: groupElements[index]["name"],
-                              addr: groupElements[index]["addr"],
-                            );
-                          }
-                          if (groupElements[index]["stateType"] == "event") {
-                            return EventItem(
-                              name: groupElements[index]["name"],
-                              addr: groupElements[index]["addr"],
-                              groupAddr: group["addr"],
-                            );
-                          }
-                          return Container();
-                        },
-                        childCount: groupElements.length,
-                      ),
-                    ),
-                  )
+                      delegate: SliverChildListDelegate(elementItems),
+                    ))
                 : SliverToBoxAdapter(
                     child: Padding(
                     padding: EdgeInsets.only(left: 15, right: 15, bottom: 15),
@@ -209,7 +180,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Query(
       options: QueryOptions(
-        documentNode: gql(listGroups),
+        documentNode: gql(availableGroupsQuery),
         variables: {},
       ),
       builder: (QueryResult result,
@@ -226,7 +197,9 @@ class HomePage extends StatelessWidget {
             ),
           );
         }
-        List groups = result.data["availableGroups"];
+        List<GroupResponse> groups = (result.data["availableGroups"] as List)
+            ?.map((e) => GroupResponse.fromJson(e as Map<String, dynamic>))
+            .toList();
         return CustomScrollView(
           slivers: [
             SliverToBoxAdapter(
@@ -260,7 +233,7 @@ class HomePage extends StatelessWidget {
               delegate: SliverChildBuilderDelegate(
                 (BuildContext context, int index) {
                   return ListItem(
-                      text: groups[index]["name"],
+                      text: groups[index].group.name,
                       onTap: () {
                         print(groups[index]);
                         navigatorKey.currentState.push(

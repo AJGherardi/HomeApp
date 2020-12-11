@@ -2,34 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:home/components/dialogs.dart';
+import 'package:home/graphql/graphql.dart';
+import 'package:home/graphql/types.dart';
 import 'package:home/pages/removeDevicePage.dart';
 import 'package:home/services/graphql.dart';
 import 'package:home/components/sheets.dart';
 import 'package:provider/provider.dart';
-
-String getState = """
-  subscription GetState(\$addr: String!) {
-    getState(addr: \$addr)
-  }
-""";
-
-String _setState = """
-  mutation SetState(\$addr: String!, \$value: String!) {
-    setState(addr: \$addr, value: \$value)
-  }
-""";
-
-String _sceneRecall = """
-  mutation SceneRecall(\$addr: String!, \$sceneNumber: String!) {
-    sceneRecall(addr: \$addr, sceneNumber: \$sceneNumber) 
-  }
-""";
-
-String _eventBind = """
-  mutation EventBindMutation(\$sceneNumber: String!, \$groupAddr: String!, \$elemAddr: String!) {
-    eventBind(sceneNumber: \$sceneNumber, groupAddr: \$groupAddr, elemAddr: \$elemAddr)
-  }
-""";
 
 class Card extends StatelessWidget {
   Card({
@@ -74,12 +52,14 @@ class SelectSceneItem extends StatefulWidget {
     @required this.name,
     @required this.number,
     @required this.groupAddr,
+    @required this.devAddr,
     @required this.elemAddr,
   });
   final String name;
-  final String number;
-  final String groupAddr;
-  final String elemAddr;
+  final num number;
+  final num groupAddr;
+  final num devAddr;
+  final num elemAddr;
 
   @override
   _SelectSceneItemState createState() => _SelectSceneItemState();
@@ -90,7 +70,7 @@ class _SelectSceneItemState extends State<SelectSceneItem> {
   Widget build(BuildContext context) {
     return MutationWithBuilder(
       onCompleted: (resultData) {},
-      query: _eventBind,
+      query: eventBindMutation,
       builder: (
         RunMutation runMutation,
         QueryResult result,
@@ -101,6 +81,7 @@ class _SelectSceneItemState extends State<SelectSceneItem> {
               {
                 'sceneNumber': widget.number,
                 'groupAddr': widget.groupAddr,
+                'devAddr': widget.devAddr,
                 'elemAddr': widget.elemAddr
               },
             );
@@ -131,11 +112,11 @@ class SceneItem extends StatefulWidget {
   SceneItem({
     @required this.name,
     @required this.number,
-    @required this.addr,
+    @required this.groupAddr,
   });
   final String name;
-  final String number;
-  final String addr;
+  final num number;
+  final num groupAddr;
 
   @override
   _SceneItemState createState() => _SceneItemState();
@@ -146,7 +127,7 @@ class _SceneItemState extends State<SceneItem> {
   Widget build(BuildContext context) {
     return MutationWithBuilder(
       onCompleted: (resultData) {},
-      query: _sceneRecall,
+      query: sceneRecallMutation,
       builder: (
         RunMutation runMutation,
         QueryResult result,
@@ -154,11 +135,12 @@ class _SceneItemState extends State<SceneItem> {
         return Card(
           onTap: () {
             runMutation(
-              {'sceneNumber': widget.number, 'addr': widget.addr},
+              {'sceneNumber': widget.number, 'groupAddr': widget.groupAddr},
             );
           },
           onLongPress: () {
-            showSceneSheet(context, widget.name, widget.addr, widget.number);
+            showSceneSheet(
+                context, widget.name, widget.groupAddr, widget.number);
           },
           children: <Widget>[
             SvgPicture.asset(
@@ -228,12 +210,14 @@ class ListItem extends StatelessWidget {
 class EventItem extends StatefulWidget {
   EventItem({
     @required this.name,
-    @required this.addr,
     @required this.groupAddr,
+    @required this.devAddr,
+    @required this.elemAddr,
   });
   final String name;
-  final String addr;
-  final String groupAddr;
+  final num groupAddr;
+  final num devAddr;
+  final num elemAddr;
 
   @override
   _EventItemState createState() => _EventItemState();
@@ -244,7 +228,8 @@ class _EventItemState extends State<EventItem> {
   Widget build(BuildContext context) {
     return Card(
       onTap: () {
-        showEventSheet(context, widget.name, widget.addr, widget.groupAddr);
+        showEventSheet(context, widget.name, widget.groupAddr, widget.devAddr,
+            widget.elemAddr);
       },
       onLongPress: () {},
       children: <Widget>[
@@ -268,10 +253,14 @@ class _EventItemState extends State<EventItem> {
 class OnoffItem extends StatefulWidget {
   OnoffItem({
     @required this.name,
-    @required this.addr,
+    @required this.groupAddr,
+    @required this.devAddr,
+    @required this.elemAddr,
   });
   final String name;
-  final String addr;
+  final num groupAddr;
+  final num devAddr;
+  final num elemAddr;
 
   @override
   _OnoffItemState createState() => _OnoffItemState();
@@ -284,7 +273,7 @@ class _OnoffItemState extends State<OnoffItem> {
   Widget build(BuildContext context) {
     return MutationWithBuilder(
       onCompleted: (resultData) {},
-      query: _setState,
+      query: setStateMutation,
       builder: (
         RunMutation runMutation,
         QueryResult result,
@@ -297,7 +286,11 @@ class _OnoffItemState extends State<OnoffItem> {
             } else {
               newState = "AA==";
             }
-            runMutation({'addr': widget.addr, 'value': newState});
+            runMutation({
+              'groupAddr': widget.groupAddr,
+              'elemAddr': widget.elemAddr,
+              'value': newState
+            });
           },
           onLongPress: () {},
           children: <Widget>[
@@ -313,8 +306,10 @@ class _OnoffItemState extends State<OnoffItem> {
               widget.name,
               style: Theme.of(context).textTheme.bodyText1,
             ),
-            Subscription("GetState", getState, variables: {
-              'addr': widget.addr,
+            Subscription("WatchState", watchStateSubscription, variables: {
+              'groupAddr': widget.groupAddr,
+              'devAddr': widget.devAddr,
+              'elemAddr': widget.elemAddr,
             }, builder: ({
               bool loading,
               dynamic payload,
@@ -329,7 +324,7 @@ class _OnoffItemState extends State<OnoffItem> {
                   style: Theme.of(context).textTheme.bodyText2,
                 );
               }
-              state = payload["getState"];
+              state = payload["watchState"];
               return state == "AA=="
                   ? Text(
                       "Off",
@@ -417,7 +412,7 @@ class SelectDeviceItem extends StatefulWidget {
   SelectDeviceItem({
     @required this.device,
   });
-  final dynamic device;
+  final DeviceResponse device;
 
   @override
   _SelectDeviceItemState createState() => _SelectDeviceItemState();
@@ -429,7 +424,7 @@ class _SelectDeviceItemState extends State<SelectDeviceItem> {
     return Card(
       onTap: () {
         Provider.of<RemoveDeviceModel>(context, listen: false).devAddr =
-            widget.device["addr"];
+            widget.device.addr;
         setState(() {});
       },
       onLongPress: () {},
@@ -453,7 +448,7 @@ class _SelectDeviceItemState extends State<SelectDeviceItem> {
                 maintainState: true,
                 visible: (Provider.of<RemoveDeviceModel>(context, listen: false)
                         .devAddr ==
-                    widget.device["addr"]),
+                    widget.device.addr),
               ),
             )
           ],
@@ -464,9 +459,9 @@ class _SelectDeviceItemState extends State<SelectDeviceItem> {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            for (var element in widget.device["elements"])
+            for (var element in widget.device.device.elements)
               Text(
-                element["name"],
+                element.element.name,
                 style: Theme.of(context).textTheme.bodyText1,
               ),
           ],

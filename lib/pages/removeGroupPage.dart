@@ -1,20 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:home/components/switcher.dart';
+import 'package:home/graphql/graphql.dart';
 import 'package:home/pages/availableGroupsPage.dart';
 import 'package:home/services/graphql.dart';
 import 'package:provider/provider.dart';
 
-String removeGroup = """
-  mutation RemoveGroup(\$addr: String!) {
-    removeGroup(addr: \$addr) {
-      addr
-    }
-  }
-""";
-
 class RemoveGroupModel {
-  String groupAddr;
+  num groupAddr;
 }
 
 class RemoveGroupPage extends StatefulWidget {
@@ -41,7 +34,7 @@ class _RemoveGroupPageState extends State<RemoveGroupPage> {
     return Provider<RemoveGroupModel>(
       create: (_) {
         var model = RemoveGroupModel();
-        model.groupAddr = "";
+        model.groupAddr = 0;
         return model;
       },
       builder: (context, _) {
@@ -50,9 +43,9 @@ class _RemoveGroupPageState extends State<RemoveGroupPage> {
           doneButton: MutationWithBuilder(
             onCompleted: (resultData) {
               // Get name and addr from result
-              var data = resultData["removeGroup"] as Map<String, Object>;
+              var data = resultData["removeGroup"];
             },
-            query: removeGroup,
+            query: removeGroupMutation,
             builder: (
               RunMutation runMutation,
               QueryResult result,
@@ -62,7 +55,7 @@ class _RemoveGroupPageState extends State<RemoveGroupPage> {
                 child: FlatButton(
                   onPressed: () {
                     runMutation({
-                      'addr':
+                      'groupAddr':
                           Provider.of<RemoveGroupModel>(context, listen: false)
                               .groupAddr,
                     });

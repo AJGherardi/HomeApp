@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
-import 'package:home/components/bars.dart';
 import 'package:home/components/dialogs.dart';
 import 'package:home/components/items.dart';
 import 'package:home/components/title.dart';
-import 'package:home/pages/controlPage.dart';
+import 'package:home/graphql/graphql.dart';
+import 'package:home/graphql/types.dart';
 import 'package:home/pages/removeDevicePage.dart';
 import 'package:provider/provider.dart';
 
@@ -12,10 +12,10 @@ class DevicesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Subscription(
-      "ListGroup",
-      listGroup,
+      "WatchGroup",
+      watchGroupSubscription,
       variables: {
-        'addr':
+        'groupAddr':
             Provider.of<RemoveDeviceModel>(context, listen: false).groupAddr,
       },
       builder: ({
@@ -35,7 +35,7 @@ class DevicesPage extends StatelessWidget {
             ),
           );
         }
-        List devices = payload["listGroup"]["devices"];
+        GroupResponse group = GroupResponse.fromJson(payload["watchGroup"]);
         return CustomScrollView(
           slivers: [
             SliverToBoxAdapter(
@@ -54,10 +54,10 @@ class DevicesPage extends StatelessWidget {
                 delegate: SliverChildBuilderDelegate(
                   (BuildContext context, int index) {
                     return SelectDeviceItem(
-                      device: devices[index],
+                      device: group.group.devices[index],
                     );
                   },
-                  childCount: devices.length,
+                  childCount: group.group.devices.length,
                 ),
               ),
             ),

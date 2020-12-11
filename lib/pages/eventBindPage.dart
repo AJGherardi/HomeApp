@@ -3,18 +3,20 @@ import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:home/components/bars.dart';
 import 'package:home/components/dialogs.dart';
 import 'package:home/components/items.dart';
-import 'package:home/pages/controlPage.dart';
+import 'package:home/graphql/graphql.dart';
+import 'package:home/graphql/types.dart';
 
 class EventBindPage extends StatelessWidget {
-  EventBindPage(this.groupAddr, this.elemAddr);
+  EventBindPage(this.groupAddr, this.devAddr, this.elemAddr);
 
-  final String groupAddr;
-  final String elemAddr;
+  final num groupAddr;
+  final num devAddr;
+  final num elemAddr;
   @override
   Widget build(BuildContext context) {
     return Subscription(
-      "ListGroup",
-      listGroup,
+      "WatchGroup",
+      watchGroupSubscription,
       variables: {
         'addr': groupAddr,
       },
@@ -35,15 +37,14 @@ class EventBindPage extends StatelessWidget {
             ),
           );
         }
-        List devices = payload["listGroup"]["devices"];
-        List scenes = payload["listGroup"]["scenes"];
+        GroupResponse group = GroupResponse.fromJson(payload["watchGroup"]);
         // Add a no scene option
-        Map<String, dynamic> eventScene = {"number": "AA==", "name": "Event"};
-        scenes.insert(0, eventScene);
+        SceneResponse eventScene = SceneResponse(0, Scene("Event"));
+        group.group.scenes.insert(0, eventScene);
         // Get list of elements
         List groupElements = new List();
-        for (var device in devices) {
-          groupElements.addAll(device["elements"]);
+        for (var device in group.group.devices) {
+          groupElements.addAll(device.device.elements);
         }
         return CustomScrollView(
           slivers: [
@@ -72,13 +73,14 @@ class EventBindPage extends StatelessWidget {
                 delegate: SliverChildBuilderDelegate(
                   (BuildContext context, int index) {
                     return SelectSceneItem(
-                      name: scenes[index]["name"],
-                      number: scenes[index]["number"],
+                      name: group.group.scenes[index].scene.name,
+                      number: group.group.scenes[index].number,
                       groupAddr: groupAddr,
+                      devAddr: devAddr,
                       elemAddr: elemAddr,
                     );
                   },
-                  childCount: scenes.length,
+                  childCount: group.group.scenes.length,
                 ),
               ),
             ),

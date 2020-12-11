@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:home/components/items.dart' as items;
 import 'package:home/components/routes.dart';
+import 'package:home/graphql/graphql.dart';
 import 'package:home/pages/addDevicePage.dart';
 import 'package:home/pages/addScenePage.dart';
 import 'package:home/pages/onboardingPage.dart';
@@ -38,12 +39,6 @@ void showRemoveDialog(context, type) {
   );
 }
 
-String resetHub = """
-  mutation ResetHub {
-    resetHub
-  }
-""";
-
 void showResetDialog(context) {
   showDialog(
     context: context,
@@ -72,7 +67,7 @@ void showResetDialog(context) {
                 ),
               );
             },
-            query: resetHub,
+            query: resetHubMutation,
             builder: (
               RunMutation runMutation,
               QueryResult result,

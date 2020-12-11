@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:home/components/routes.dart';
 import 'package:home/components/switcher.dart';
+import 'package:home/graphql/graphql.dart';
 import 'package:home/pages/addHubPage.dart';
 import 'package:home/pages/availableHubsPage.dart';
 import 'package:home/pages/mainPage.dart';
@@ -10,18 +11,6 @@ import 'package:home/pages/welcomePage.dart';
 import 'package:home/services/graphql.dart';
 import 'package:home/services/store.dart';
 import 'package:provider/provider.dart';
-
-String configHub = """
-  mutation ConfigHub {
-    configHub
-  }
-""";
-
-String addUser = """
-  mutation AddUser {
-    addUser
-  }
-""";
 
 class OnboardingModel {
   bool provisioned;
@@ -69,13 +58,13 @@ class _OnboardingPageState extends State<OnboardingPage> {
                 ),
               );
             },
-            query: configHub,
+            query: configHubMutation,
             builder: (
               RunMutation runConfigHub,
               QueryResult result,
             ) {
               return MutationWithBuilder(
-                query: addUser,
+                query: addUserMutation,
                 onCompleted: (resultData) async {
                   // Get webKey from result
                   final data = resultData as Map<String, Object>;
